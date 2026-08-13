@@ -1,0 +1,17 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+/* Custom Dark Theme Overrides */
+:root {
+  /* Setting base dark theme colors */
+  --color-background: #1a1a1a; /* Dark background */
+  --color-text: #f0f0f0;      /* Light text */
+}
+
+/* Ensure the main container uses the dark theme variables if they are set globally or if we need an explicit override */
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
