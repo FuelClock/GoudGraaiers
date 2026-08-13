@@ -124,3 +124,4 @@ Scout will give you ALOT more captives so you're wasting your own and your squad
     Date: Mon 17th August 20:00
     Description: Escort/PVP Event
     Host: Rhakon
+ 
