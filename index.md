@@ -3,10 +3,10 @@
 If you're already a member, thinking about becoming a member or are part of a completely different guild and simply want to know more about us. Then you'll probably find the information you're looking for on this page.
 
 ## Chapters
-#### [Event Info & Schedule](./assets/pages/events.md#event-info)
-#### [Joining Teamspeak](#joining-the-teamspeak)
-#### [Ranks / Roles Info](#rank-information)
-#### [Joining the guild](#joining-the-guild-1)
+#### [Event Info & Schedule](/assets/pages/events.md#event-info)
+#### [Joining Teamspeak](/index.md#joining-the-teamspeak)
+#### [Ranks / Roles Info](/assets/pages/rankinfo.md#rank-information)
+#### [Joining the guild](/index.md#joining-the-guild-1)
 
 
 ## Guild Info
@@ -64,32 +64,3 @@ If you already have teamspeak installed on your computer you can connect to it b
 Otherwise proceed to the installing teamspeak section below
 
 #### [How to install teamspeak and connect to the guild server](/assets/pages/teamspeak.md#back-to-home-page)
-
-
-## Rank Information
-This section details the guild's ranking system, based on current rules:
-
-### Cabin Boy
-No perks, Just have fun, this is the default rank when joining the guild.
-
-### Midshipman
-**Perks:**
-*   Ability to see all other guild members' locations on the map.
-
-**Requirements:**
-*   Participate at least once every week in the Teamspeak to receive and keep the role.
-*   Be present in the Teamspeak voice chat during events when online for communication.
-
-### Admiral
-**Perks:**
-*   Ability to see all other guild members' locations on the map.
-*   Ability to accept or reject membership applications.
-*   Ability to kick members from the guild.
-*   Ability to give or take away Midshipman rank from members.
-
-**Requirements:**
-*   Take initiative to gather members and act on desired changes instead of waiting for others.
-*   Host an event at least once every week in the Teamspeak to receive and keep the role.
-*   Be present in the Teamspeak voice chat during events when online for communication.
-
-*Note: Exceptions may be made in special cases like vacations or unique contributions.*
