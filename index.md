@@ -3,7 +3,7 @@
 If you're already a member, thinking about becoming a member or are part of a completely different guild and simply want to know more about us. Then you'll probably find the information you're looking for on this page.
 
 ## Chapters
-#### [Event Info & Schedule](#event-info)
+#### [Event Info & Schedule](./assets/pages/events.md#event-info)
 #### [Joining Teamspeak](#joining-the-teamspeak)
 #### [Ranks / Roles Info](#rank-information)
 #### [Joining the guild](#joining-the-guild-1)
@@ -63,7 +63,7 @@ TeamSpeak is our primary way of communication, while it is not a must and we do 
 If you already have teamspeak installed on your computer you can connect to it by using the domain: `donkey.beauty`
 Otherwise proceed to the installing teamspeak section below
 
-#### [How to install teamspeak and connect to the guild server](teamspeak.md#back-to-home-page)
+#### [How to install teamspeak and connect to the guild server](/assets/pages/teamspeak.md#back-to-home-page)
 
 
 ## Rank Information
@@ -93,25 +93,3 @@ No perks, Just have fun, this is the default rank when joining the guild.
 *   Be present in the Teamspeak voice chat during events when online for communication.
 
 *Note: Exceptions may be made in special cases like vacations or unique contributions.*
-
-## Event Info
-This section will list scheduled guild events.
-
-**Escort/PVP Event**\
-Monday 17th August 20:00 / 8pm
-
-More details to follow
-
-
-
-## Upcoming Events
-**Event Schedule:**
-
-    Date: Fri 14th August 20:00
-    Description: Slave Capturing
-    Host: Gerrit Grijp
-
-    Date: Mon 17th August 20:00
-    Description: Escort/PVP Event
-    Host: Rhakon
- 
