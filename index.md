@@ -3,7 +3,7 @@
 If you're already a member, thinking about becoming a member or are part of a completely different guild and simply want to know more about us. Then you'll probably find the information you're looking for on this page.
 
 ## Chapters
-#### [Event Info & Schedule](#event-info-1)
+#### [Event Info & Schedule](#event-info)
 #### [Joining Teamspeak](#joining-the-teamspeak)
 #### [Ranks / Roles Info](#rank-information)
 #### [Joining the guild](#joining-the-guild-1)
