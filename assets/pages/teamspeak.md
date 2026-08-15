@@ -1,4 +1,3 @@
-# [Back to Home Page](/index.md#goud-graaiers-info)
 ## Installing teamspeak
 Before installing teamspeak you have a choice to make, teamspeak offers 2 different clients. The main difference between them is 3 has an old interface but you are not required to sign up for a teamspeak account. While 6 has a newer interface but requires a free teamspeak account.
 
@@ -75,5 +74,3 @@ OPTIONALLY you can right click your newly created bookmark and change it's displ
 ![Alt text](/img/ts6_bookmark2.png)
 <br>
 <br>
-
-# [Back to the Home Page](/index.md#goud-graaiers-info)

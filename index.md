@@ -67,4 +67,4 @@ Otherwise proceed to the installing teamspeak section below
 
 {% include_relative /assets/pages/rankinfo.md %}
 
-{% include_relative /assets/pages/rankinfo.md %}
+{% include_relative /assets/pages/events.md %}
