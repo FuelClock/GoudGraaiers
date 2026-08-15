@@ -66,3 +66,5 @@ Otherwise proceed to the installing teamspeak section below
 #### [How to install teamspeak and connect to the guild server](/assets/pages/teamspeak.md#back-to-home-page)
 
 {% include_relative /assets/pages/rankinfo.md %}
+
+{% include_relative /assets/pages/rankinfo.md %}
