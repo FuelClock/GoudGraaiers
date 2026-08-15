@@ -64,3 +64,5 @@ If you already have teamspeak installed on your computer you can connect to it b
 Otherwise proceed to the installing teamspeak section below
 
 #### [How to install teamspeak and connect to the guild server](/assets/pages/teamspeak.md#back-to-home-page)
+
+{% include_relative test.md %}
