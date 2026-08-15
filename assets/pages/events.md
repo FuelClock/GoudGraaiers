@@ -1,4 +1,3 @@
-# [Back to Home Page](/index.md#goud-graaiers-info)
 ## Event Info
 This section will list scheduled guild events.
 
