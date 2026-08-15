@@ -51,7 +51,7 @@ Now that you've saved the bookmark it will always show up in your bookmarks list
 <br>
 
 #### Ts6
-Teamspeak will ask you to back up your recovery key, if you forget your password you'll need this key to get your teamspeak identity back.
+After installing, the first time you launch the program Teamspeak will ask you to back up your recovery key, if you forget your password you'll need this key to get your teamspeak identity back.
 In order to proceed click the checkbox and hit continue.
 ![Alt text](/img/ts6_recoverykey.png)
 <br>
