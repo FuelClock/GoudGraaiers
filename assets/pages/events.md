@@ -20,6 +20,6 @@ The goal is efficiency and fun!
 ## Upcoming Events
 **Event Schedule:**
 
-    Date: Sat 20th August 20:00
+    Date: Sat 22th August 20:00
     Description: Escudo Farm - Endless Sea
     Host: Gerrit Grijp
