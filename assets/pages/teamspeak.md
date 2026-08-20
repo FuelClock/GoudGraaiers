@@ -45,10 +45,24 @@ Leave the password field empty
 <br>
 
 Now that you've saved the bookmark it will always show up in your bookmarks list as shown below.
+Simply click the bookmark and it will connect you to the server!
+<br>
+Once you are connected to the teamspeak server, send your nickname in the ingame guild chat and say that you are requesting acces to the server and someone will give you the appropriate permissions to acces the rest of the server.
 
 ![Alt text](/img/ts3_connect_bookmark.png)
 <br>
 <br>
+
+When you have acces to the rest of the server you can join any of the existing Squadron channels or if there are no Squadron channels currently, Then as seen in the screenshot below in the red box indicated with "1". You can simply join this channel and the bot will automatically create a new squad channel.
+This will make you the channel admin for that temporary squad channel so you can change its name, description and permissions if you'd like to do so.
+
+Joining the channel indicated with the green box in the screenshot will create a private channel locked by a password, the bot will send you a private message with the password of that channel.
+
+![Alt text](/img/ts3_channel1.png)
+<br>
+<br>
+
+
 
 #### Ts6
 After installing, the first time you launch the program Teamspeak will ask you to back up your recovery key, if you forget your password you'll need this key to get your teamspeak identity back.
@@ -69,8 +83,19 @@ Then type in `donkey.beauty` as the bookmark adress.
 <br>
 <br>
 
-OPTIONALLY you can right click your newly created bookmark and change it's display name to something memorable
+OPTIONALLY you can right click your newly created bookmark and change it's display name to something memorable.
+
+After joining the teamspeak server, send your nickname in the ingame guild chat and ask for someone to give you acces to the rest of the teamspeak server and someone will give you the appropriate permissions.
 
 ![Alt text](/img/ts6_bookmark2.png)
+<br>
+<br>
+
+
+Now that you have your correct permissions you can join any of the currently existing Squadron channels for example as shown in the screenshot highlighted in green "Squadron Alpha"
+
+If there are no squadron channels currently available you can create one by joining one of the channels highlighted in red like the "Create new squad" channel.
+
+![alt text](../../img/ts6_channel1.png)
 <br>
 <br>
