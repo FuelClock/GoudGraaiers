@@ -3,7 +3,7 @@ This section will list scheduled guild events.
 
 **Thursday Thunder!**
 
-Date:  27-08-2026<br>
+Date:  03-09-2026<br>
 Time: 2000
 
 **Goal**
@@ -35,18 +35,35 @@ Let's have some fun blowing these Imps to smithereens CPTNs!
 
 o7
 
+============================================================
+
+**SLAVE CAPTURING**\
+Sunday September 6th at 20:00 / 8pm
+
+**What will we be doing?**\
+Be sure to gather at Everston port before 20:00, at this time we will have a short mission briefing to coordinate ourselves. and then we will leave the port together.
+We'll sail into the direction of the iron mine to the North West of port Everston and we'll be blockading the trade routes to capture all the ships we can and have their crew "*voluntarily change employer*".
+
+We'll work together to capture as many slaves as possible so be sure to bring a boarding loadout. If you don't want to or dont have a boarding loadout to bring, you're more then welcome to help us get the health of the enemy ships down so your fellow squad mates can do the boarding instead as we will be sharing the loot in the end anyway.\
+**IMPORTANT!!**
+Everston is rate 2 shallows, so for those with rate 1 ships, you can sail it over from a rate 1 port and wait just outside the shallows.
+
+The goal is efficiency and fun!
+
+**Boarding must haves:**\
+Special crew: Scout & recruiter.
+Scout will give you ALOT more captives so you're wasting your own and your squadmates profit by boarding if you do not have this crew. And recruiter just makes boarding easier by allowing you to have a larger crew size
+
 
 
 
 ## Upcoming Events
 **Event Schedule:**
 
-    Date: Thu 27th August 20:00
-    Description: Thursday Thunder!
-    (Hunting Imperials)
+    Date: Thu 3rd September 20:00
+    Description: Thursday Thunder! (Hunting Imperials)
     Host: Fred de Houtman
 
-    Date: Thu 3rd September 20:00
-    Description: Thursday Thunder!
-    (Hunting Imperials)
-    Host: Fred de Houtman
+    Date: Sun 6th September 20:00
+    Description: Slave Capturing
+    Host Gerrit Grijp
