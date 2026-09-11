@@ -2,22 +2,80 @@
 This section will list scheduled guild events.
 
 
-**SLAVE CAPTURING**\
-Sunday September 6th at 20:00 / 8pm
+**Trade Fever Event**<br>
+Sunday September 13th 20:00 / 8pm
 
-**What will we be doing?**\
-Be sure to gather at Everston port before 20:00, at this time we will have a short mission briefing to coordinate ourselves. and then we will leave the port together.
-We'll sail into the direction of the iron mine to the North West of port Everston and we'll be blockading the trade routes to capture all the ships we can and have their crew "*voluntarily change employer*".
+**The plan:**
+We gather up at St Jean, Travel counterclockwise around the map, and buy/sell trade goods for profit.
 
-We'll work together to capture as many slaves as possible so be sure to bring a boarding loadout. If you don't want to or dont have a boarding loadout to bring, you're more then welcome to help us get the health of the enemy ships down so your fellow squad mates can do the boarding instead as we will be sharing the loot in the end anyway.\
-**IMPORTANT!!**
-Everston is rate 2 shallows, so for those with rate 1 ships, you can sail it over from a rate 1 port and wait just outside the shallows.
+**Important to know:**
+• Bring a ship with good cargo and decent speed (at least 13knots).
+• If an NPC shoots you, just keep on sailing, they will fire 1 broadside and then wont be able to hit you if you keep sailing.
+• Be quick in the port, go to warehouse > Market, buy the trade goods and exit at lighthouse. You only need to be in port 20-30 seconds.
+• To sell goods, move them to the port warehouse, go to Trading house > Market > Click By best price, and it will only sell the trade goods that are profitable there which is exactly what we want, and with 1 single click.
 
-The goal is efficiency and fun!
+**What to sell and buy?**
+In the North you buy:
+• Beer
+• Wine
+• Grog
+You sell the northern goods in port Assab 
 
-**Boarding must haves:**\
-Special crew: Scout & recruiter.
-Scout will give you ALOT more captives so you're wasting your own and your squadmates profit by boarding if you do not have this crew. And recruiter just makes boarding easier by allowing you to have a larger crew size
+In the Arabian you buy:
+• Paprika
+• Silk
+• Rugs
+• Saffron
+• Dates
+You sell the Arabian goods in San martinas
+
+In the South you buy:
+• Leather
+• Nuts
+• Oil
+• Tobacco
+• Coffee
+You sell the southern goods in Gray Island
+
+
+
+================================================
+
+
+
+**Thursday Thunder!**
+
+Date:  17-09-2026<br>
+Time: 2000
+
+**Goal**
+
+We will bring thunder to the "Lightning" and any other Imperial ship in our waters, and sink as many as we can!
+Any pirate we meet along the way can also sink, but the Imperials have priority.
+We gather at Devios Bay before departure time of: 2000
+(5-10 mins early so we can all leave at 2000)
+
+**Mission needs**
+
+Any ship you feel confidant in to combat Imperial vessels.
+Some of these targets can have up to 7k HP, or 15 Armor., and will deal significant damage to ships..
+(Advised is to use any ship class 4 or up, with decent armor and weapon penetration)
+Bring plenty of ammo (you like to use) and repair needs so we can stay out a while.
+
+**Mission Strategy**
+
+We use our tactics to outmanouver the Imperials and show them what's on the bottom of the Archipelago.
+We will all try to drop barrels and fire our main cannons.
+
+**Additional info**
+
+We will have lot's of fun hunting these Imps and that is the goal, but we have a great oppertunity to to practise our battle formations and buddy system to!
+(we don't have to always practise ofc, again main goal is the hunt)
+Everything is situational, and you being here means we can communicate, this is great!
+Even if you just listen in, this means you can hear whatever tactics we are putting in play.
+Let's have some fun blowing these Imps to smithereens CPTNs!
+
+o7
 
 
 
@@ -25,6 +83,14 @@ Scout will give you ALOT more captives so you're wasting your own and your squad
 ## Upcoming Events
 **Event Schedule:**
 
-    Date: Sun 6th September 20:00
-    Description: Slave Capturing
+    Date: Sun 13th September 20:00
+    Description: Trade Fever (Trade Run)
     Host Gerrit Grijp
+
+    Date: Thu 17th September 20:00
+    Description: Thursday Thunder (pve imp hunt)
+    Host: Frederik de Houtman
+
+    Date: Thu 24th September 20:00
+    Description: Thursday Thunder (pve imp hunt)
+    Host: Frederik de Houtman
