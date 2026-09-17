@@ -7,6 +7,7 @@ If you're already a member, thinking about becoming a member or are part of a co
 #### [Joining Teamspeak](/index.md#joining-the-teamspeak)
 #### [Ranks / Roles Info](/assets/pages/rankinfo.md#rank-information)
 #### [Joining the guild](/index.md#joining-the-guild-1)
+#### [Ingame Info / Guides](assets/pages/ingame_resources.md)
 
 
 ## Guild Info
@@ -66,5 +67,7 @@ Otherwise proceed to the installing teamspeak section below
 #### [How to install teamspeak and connect to the guild server](/assets/pages/teamspeak.md#back-to-home-page)
 
 {% include_relative /assets/pages/rankinfo.md %}
+
+{% include_relative /assets/pages/ingame_resources.md %}
 
 {% include_relative /assets/pages/events.md %}
