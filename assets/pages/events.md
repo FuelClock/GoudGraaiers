@@ -4,7 +4,7 @@ This section will list scheduled guild events.
 
 **Thursday Thunder!**
 
-Date:  17-09-2026<br>
+Date:  24-09-2026<br>
 Time: 2000
 
 **Goal**
@@ -41,10 +41,6 @@ o7
 
 ## Upcoming Events
 **Event Schedule:**
-
-    Date: Thu 17th September 20:00
-    Description: Thursday Thunder (pve imp hunt)
-    Host: Frederik de Houtman
 
     Date: Thu 24th September 20:00
     Description: Thursday Thunder (pve imp hunt)
