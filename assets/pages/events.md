@@ -3,7 +3,7 @@ This section will list scheduled guild events.
 
 
 **Escudo Hunt on the Endless Sea**
-Wednesday Oct 21th at 20:00 / 8pm
+Friday Oct 30th at 20:00 / 8pm
 
 **What will we be doing?**
 We will be grouping up at Freedom Bay, at 20:00 we will have a short briefing after which we'll sail east into the Endless Sea.
@@ -21,6 +21,6 @@ The goal is efficiency and fun!
 ## Upcoming Events
 **Event Schedule:**
 
-    Date: Wed 21th October 20:00
+    Date: Fri 30th October 20:00
     Description: Endless Escudo Farm
     Host: Gerrit Grijp
