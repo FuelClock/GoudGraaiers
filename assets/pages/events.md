@@ -21,6 +21,4 @@ The goal is efficiency and fun!
 ## Upcoming Events
 **Event Schedule:**
 
-    Date: Fri 30th October 20:00
-    Description: Endless Escudo Farm
-    Host: Gerrit Grijp
+*No events scheduled right now — keep an eye on TeamSpeak!*
