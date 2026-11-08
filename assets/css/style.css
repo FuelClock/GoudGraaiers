@@ -456,7 +456,51 @@ main { position: relative; z-index: 1; }
 .card-foot { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-top: auto; }
 .card-date { font-size: 1rem; color: var(--muted); }
 .deck-card.tone-3 .card-date { color: var(--gold-ink); }
-.card-link { font-size: 1rem; }
+.card-link { font-size: 1rem; background: none; border: none; padding: 0; font-family: inherit; cursor: pointer; color: inherit; }
+
+/* voyage plan modal: the full plan opens in place, GG field styling */
+.voyage-modal {
+  border: none;
+  padding: 0;
+  width: min(680px, calc(100vw - 48px));
+  max-height: calc(100vh - 96px);
+  background: var(--ground);
+  color: var(--ink);
+  box-shadow: 0 24px 80px rgba(4, 10, 14, 0.6);
+}
+.voyage-modal::backdrop { background: rgba(8, 13, 18, 0.72); }
+.voyage-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 28px;
+  background: var(--surface);
+}
+.voyage-modal-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--gold);
+}
+.voyage-modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 1.125rem;
+  line-height: 1;
+  padding: 6px;
+  transition: color 0.15s ease;
+}
+.voyage-modal-close:hover { color: var(--gold); }
+.voyage-modal-body { padding: 24px 28px 28px; overflow-y: auto; }
+.voyage-modal-date { margin: 0 0 16px; font-size: 1rem; color: var(--muted); font-style: italic; }
+.voyage-modal-body p { margin: 0 0 14px; line-height: 1.55; }
+.voyage-modal-body p:last-child { margin-bottom: 0; }
+.voyage-modal-body strong { color: var(--gold); font-weight: 500; }
 
 /* ---------- collapsible planner notes ---------- */
 

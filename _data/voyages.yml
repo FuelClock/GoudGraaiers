@@ -1,28 +1,57 @@
 # Recent voyages queue: max 3, newest first.
 # Maintained by sync_events_to_website.py; feeds the home deck cards.
-# Entries taken verbatim from the bot's event templates
-# (slavecapture, endlessescudo). Thimon 2026-11-08: invented voyages removed.
+# Plans are the real event templates from the old site files
+# (assets/event_templates/: fred_thunder, gerrit_slavecapture Sept version,
+# gerrit_trade). Thimon 2026-11-08: invented descriptions removed.
+- title: "Trade Fever"
+  slug: "trade-fever"
+  date_label: "13 September 2026"
+  excerpt: "We gather up at St Jean and travel counterclockwise around the map, buying and selling trade goods for profit: northern beer, wine and grog sold in Assab, Arabian silk and saffron sold in San martinas, southern coffee and tobacco sold in Gray Island."
+  url: "/events.html#trade-fever"
+  plan: |
+    **Trade Fever Event**
+    Sunday September 13th 20:00 / 8pm
+    **The plan:**
+    We gather up at St Jean, Travel counterclockwise around the map, and buy/sell trade goods for profit.
+    **Important to know:**
+    Bring a ship with good cargo and decent speed (at least 13knots).
+    If an NPC shoots you, just keep on sailing, they will fire 1 broadside and then wont be able to hit you if you keep sailing.
+    Be quick in the port, go to warehouse > Market, buy the trade goods and exit at lighthouse. You only need to be in port 20-30 seconds.
+    To sell goods, move them to the port warehouse, go to Trading house > Market > Click By best price, and it will only sell the trade goods that are profitable there which is exactly what we want, and with 1 single click.
+    **What to sell and buy?**
+    In the North you buy: Beer, Wine, Grog. You sell the northern goods in port Assab.
+    In the Arabian you buy: Paprika, Silk, Rugs, Saffron, Dates. You sell the Arabian goods in San martinas.
+    In the South you buy: Leather, Nuts, Oil, Tobacco, Coffee. You sell the southern goods in Gray Island.
 - title: "Slave Capturing"
   slug: "slave-capturing"
-  date_label: ""
-  excerpt: "Gather at Al-Khalif port before the scheduled time: we'll sail northeast and blockade the 2 trade routes to capture all the ships we can, sharing the loot at the end."
+  date_label: "6 September 2026"
+  excerpt: "Be sure to gather at Everston port before 20:00 as this is the time we will leave the port together. We'll sail towards the iron mine northwest of the port and blockade the trade routes to capture all the ships we can, sharing the loot in the end."
   url: "/events.html#slave-capturing"
   plan: |
+    **SLAVE CAPTURING**
+    Sunday 6th September at 20:00 / 8pm
     **What will we be doing?**
-    Be sure to gather at Al-Khalif port before the scheduled time as this is the time we will leave the port together.
-    We'll sail to the northeast of the port and we'll be blockading the 2 trade routes to capture all the ships we can and have their crew "voluntarily change employer".
-    Depending on how many people show up we might need dedicated hauling as the ammount of merchants is considerable.
+    Be sure to gather at Everston port before 20:00 as this is the time we will leave the port together.
+    We'll sail into the direction of the iron mine to the North West of port Everston and we'll be blockading the trade routes to capture all the ships we can and have their crew "voluntarily change employer".
     We'll work together to capture as many slaves as possible so be sure to bring a boarding loadout. If you don't want to or dont have a boarding loadout to bring, you're more then welcome to help us get the health of the enemy ships down so your fellow squad mates can do the boarding instead as we will be sharing the loot in the end anyway.
-- title: "Escudo Hunt on the Endless Sea"
-  slug: "escudo-hunt-on-the-endless-sea"
-  date_label: ""
-  excerpt: "Group up at Freedom Bay, sail east into the Endless Sea and hunt around the Altar: the goal is efficiency and fun. Endless Sea is a PVP zone, consider that when picking your crew and ship."
-  url: "/events.html#escudo-hunt-on-the-endless-sea"
+- title: "Thursday Thunder"
+  slug: "thursday-thunder"
+  date_label: "3 September 2026"
+  excerpt: "We will bring thunder to the Lightning and any other Imperial ship in our waters, and sink as many as we can! Gather at Devios Bay before departure time of 20:00. Advised: any ship class 4 or up, plenty of ammo and repairs."
+  url: "/events.html#thursday-thunder"
   plan: |
-    **What will we be doing?**
-    We will be grouping up at Freedom Bay, at the scheduled time we will have a short briefing after which we'll sail east into the Endless Sea.
-    On the Endless Sea we'll travel down to the Altar to hunt around that area.
-    The goal is efficiency and fun!
-    **Useful Info**
-    We'll spend quite some time on the endless sea, be sure to bring alot of cannonballs/wood/food etc.
-    Endless Sea is a PVP zone, you might want to consider this when deciding which crew/ship to bring.
+    **Thursday Thunder!**
+    Date: 03-09-2026, Time: 2000
+    **Goal**
+    We will bring thunder to the "Lightning" and any other Imperial ship in our waters, and sink as many as we can!
+    Any pirate we meet along the way can also sink, but the Imperials have priority.
+    We gather at Devios Bay before departure time of: 2000 (5-10 mins early so we can all leave at 2000)
+    **Mission needs**
+    Any ship you feel confidant in to combat Imperial vessels. Some of these targets can have up to 7k HP, or 15 Armor, and will deal significant damage to ships.
+    Advised is to use any ship class 4 or up, with decent armor and weapon penetration. Bring plenty of ammo (you like to use) and repair needs so we can stay out a while.
+    **Mission Strategy**
+    We use our tactics to outmanouver the Imperials and show them what's on the bottom of the Archipelago. We will all try to drop barrels and fire our main cannons.
+    **Additional info**
+    We will have lot's of fun hunting these Imps and that is the goal, but we have a great oppertunity to practise our battle formations and buddy system to! (we don't have to always practise ofc, again main goal is the hunt)
+    Everything is situational, and you being here means we can communicate, this is great! Even if you just listen in, this means you can hear whatever tactics we are putting in play.
+    Let's have some fun blowing these Imps to smithereens CPTNs! o7
