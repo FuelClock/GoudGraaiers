@@ -24,4 +24,4 @@ defaults:
       layout: "default"
 
 # Preview builds deploy under /redesign/ (see .github/workflows/deploy.yml)
-baseurl: "/redesign"
+baseurl: ""
