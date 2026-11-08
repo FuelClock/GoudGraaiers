@@ -11,10 +11,8 @@ nav:
     url: /crew.html
   - label: Sailing with us
     url: /join.html
-  - label: Cargo & Guides
+  - label: Cargo, Guides & Trade Tool
     url: /guides.html
-  - label: Trade Tool
-    url: /trade.html
 
 teamspeak: donkey.beauty
 guild_search: NL.
