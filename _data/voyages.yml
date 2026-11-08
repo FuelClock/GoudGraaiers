@@ -1,12 +1,24 @@
-- title: "Thursday Thunder"
-  date_label: "3 September 2026"
-  excerpt: "War hunt: bring thunder to the Lightning and any Imperial ship in our waters. Gather at Devios Bay, class 4 and up, plenty of ammo and repairs."
-  url: /events.html
-- title: "Slave Capturing"
-  date_label: "6 September 2026"
-  excerpt: "Boarding raid on the trade routes off Everston: scout and recruiter crew, blockade the iron-mine routes, share the loot at the end."
-  url: /events.html
+# Recent voyages queue: max 3, newest first.
+# Maintained by sync_events_to_website.py; feeds the home deck cards.
+# Seeded by hand 2026-11-08 with the September voyages.
 - title: "Trade Fever"
+  slug: "trade-fever"
   date_label: "13 September 2026"
   excerpt: "The classic counterclockwise loop from St Jean: beer, wine and grog in the north, silk and saffron from Arabia, coffee and tobacco from the south."
-  url: /events.html
+  url: "/events.html#trade-fever"
+  plan: |
+    The classic counterclockwise loop from St Jean: beer, wine and grog in the north, silk and saffron from Arabia, coffee and tobacco from the south.
+- title: "Slave Capturing"
+  slug: "slave-capturing"
+  date_label: "6 September 2026"
+  excerpt: "Boarding raid on the trade routes off Everston: scout and recruiter crew, blockade the iron-mine routes, share the loot at the end."
+  url: "/events.html#slave-capturing"
+  plan: |
+    Boarding raid on the trade routes off Everston: scout and recruiter crew, blockade the iron-mine routes, share the loot at the end.
+- title: "Thursday Thunder"
+  slug: "thursday-thunder"
+  date_label: "3 September 2026"
+  excerpt: "War hunt: bring thunder to the Lightning and any Imperial ship in our waters. Gather at Devios Bay, class 4 and up, plenty of ammo and repairs."
+  url: "/events.html#thursday-thunder"
+  plan: |
+    War hunt: bring thunder to the Lightning and any Imperial ship in our waters. Gather at Devios Bay, class 4 and up, plenty of ammo and repairs.
