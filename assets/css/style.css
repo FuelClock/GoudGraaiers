@@ -483,6 +483,9 @@ main { position: relative; z-index: 1; }
   background: var(--ground-2);
   padding: clamp(56px, 7vw, 96px) var(--margin);
   margin-top: var(--section-gap);
+  /* keep a chart gap between the FAQ band and the footer band: both are
+     ground-2 and would read as one merged field (2026-11-08, Thimon) */
+  margin-bottom: var(--section-gap);
 }
 .faq-heading {
   font-size: var(--step-head);
