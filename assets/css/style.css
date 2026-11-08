@@ -1,7 +1,9 @@
-/* De Goud Graaiers — editorial-report direction, dark ground (seed 778083357, rev 2)
-   Deep navy as the ground, parchment as the ink, brass gold as the single accent.
-   EB Garamond throughout. No gradients, no shadows at rest, no thin rules:
-   tone steps and flat fields only. */
+/* De Goud Graaiers: editorial dark ground, rev 3
+   Deep navy as the ground, parchment as the ink, and a metallic gold ramp
+   as the accent (the user asked for gold that reads as metal, not flat ochre:
+   the ramp runs light to deep in one hue, used on type, buttons and one field).
+   EB Garamond throughout. No shadows at rest, no thin rules:
+   tone steps and flat fields only, the gold ramp is the single licensed gradient. */
 
 :root {
   --ground: #132029;      /* page ground, deep navy */
@@ -16,7 +18,12 @@
   --paper-ink: #1b2b38;   /* ink on light fields */
   --paper-muted: #5a6b77;
 
-  --gold: #c9a227;        /* the accent */
+  --gold: #d4af37;        /* the accent, bright metallic base */
+  --gold-hi: #f2dc86;     /* highlight of the ramp */
+  --gold-lo: #a67f12;     /* depth of the ramp */
+  --gold-ramp: linear-gradient(168deg, var(--gold-hi) 0%, var(--gold) 42%, #b8922a 68%, var(--gold-lo) 100%); /* taste-skill-ignore: metallic gold is the brand request */
+  --gold-button: linear-gradient(180deg, #ecd271 0%, var(--gold) 55%, var(--gold-lo) 100%); /* taste-skill-ignore: metallic gold is the brand request */
+  --gold-text: linear-gradient(172deg, var(--gold-hi) 8%, var(--gold) 45%, #9a7418 92%); /* taste-skill-ignore: metallic gold is the brand request */
   --gold-ink: #14212c;
 
   --step-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.9375rem);
@@ -24,7 +31,7 @@
   --step-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
   --step-head: clamp(2rem, 1.3rem + 3.2vw, 4rem);
   --step-slogan: clamp(3rem, 8vw, 7.5rem);
-  --hero-size: clamp(3.5rem, 9vw, 8.5rem);
+  --hero-size: clamp(3.25rem, 6.5vw, 6.75rem);
 
   --margin: clamp(16px, 2.5vw, 32px);
   --section-gap: clamp(112px, 11vw, 176px);
@@ -38,7 +45,7 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   background-color: var(--ground);
-  background-image: url("/img/chart-bg.jpg");
+  background-image: url("../../img/chart-bg.jpg");
   background-size: cover;
   background-position: center top;
   background-attachment: fixed;
@@ -59,7 +66,7 @@ a { color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: 3p
 a:hover { color: var(--gold-ink); background: var(--gold); text-decoration: none; }
 
 :focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
-.cta :focus-visible, .tile-slogan :focus-visible { outline-color: var(--gold-ink); }
+.tile-slogan :focus-visible { outline-color: var(--gold-ink); }
 
 h1, h2, h3, h4 {
   font-weight: 500;
@@ -119,14 +126,16 @@ h1, h2, h3, h4 {
   margin-left: auto;
   display: flex;
   align-items: center;
-  background: var(--gold);
+  background: var(--gold-button);
   color: var(--gold-ink);
   padding: 0 24px;
   text-decoration: none;
   font-size: 1.0625rem;
+  font-weight: 500;
   white-space: nowrap;
+  transition: filter .15s ease;
 }
-.header-action:hover { background: var(--ink); color: var(--gold-ink); }
+.header-action:hover { filter: brightness(1.12); color: var(--gold-ink); }
 .header-action .ts-domain { color: inherit; opacity: 0.75; }
 
 /* ---------- masthead ---------- */
@@ -134,38 +143,30 @@ h1, h2, h3, h4 {
 .masthead { position: relative; }
 
 /* Paintings are shown WHOLE: native proportions, no cover-cropping.
-   Where a box ratio differs from the painting, contain letterboxes
-   into the same navy ground, so the bars read as gallery wall. */
+   The home masthead is one split composition: the painting on the left,
+   the title block beside it on the navy, so the first screen carries both. */
+.masthead-open {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: clamp(16px, 2vw, 32px);
+  align-items: center;
+  padding: clamp(16px, 2vw, 32px) var(--margin) clamp(48px, 6vw, 88px);
+}
+.masthead-hero { grid-column: 1 / 9; }
 .masthead-hero img {
   width: 100%;
   height: auto;
-  max-height: 86svh;
+  max-height: 80svh;
   object-fit: contain;
 }
 .masthead-hero--slim img { height: clamp(220px, 34svh, 420px); object-fit: contain; }
 
-.masthead-strip {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  padding: 8px;
-}
-.masthead-strip figure { overflow: hidden; aspect-ratio: 16 / 10; }
-.masthead-strip img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-/* title under the paintings */
-
-.masthead-under {
-  padding: clamp(40px, 5vw, 72px) var(--margin) clamp(48px, 7vw, 96px);
-}
+/* title beside the painting */
+.masthead-under { grid-column: 9 / 13; }
 .standfirst {
   font-size: clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
   line-height: 1.45;
-  max-width: 34ch;
+  max-width: 30ch;
   margin: 0 0 clamp(24px, 3vw, 40px);
   color: var(--muted);
 }
@@ -186,14 +187,15 @@ h1, h2, h3, h4 {
   min-height: 52px;
   margin-top: clamp(24px, 3vw, 36px);
   padding: 0 30px;
-  background: var(--gold);
+  background: var(--gold-button);
   color: var(--gold-ink);
   font-size: 1.0625rem;
+  font-weight: 500;
   text-decoration: none;
   width: max-content;
-  transition: transform .15s ease;
+  transition: transform .15s ease, filter .15s ease;
 }
-.hero-button:hover { transform: translateY(-2px); }
+.hero-button:hover { transform: translateY(-2px); filter: brightness(1.12); }
 
 .page-title-band {
   padding: clamp(32px, 5vw, 64px) var(--margin) clamp(24px, 3vw, 40px);
@@ -211,9 +213,10 @@ h1, h2, h3, h4 {
   min-height: 48px;
   padding: 0 24px;
   margin-top: 20px;
-  background: var(--gold);
+  background: var(--gold-button);
   color: var(--gold-ink);
   font-size: 1.0625rem;
+  font-weight: 500;
   text-decoration: none;
   width: max-content;
 }
@@ -258,7 +261,7 @@ section.statement { padding: var(--margin); }
 }
 .tile-slogan {
   grid-column: 1 / 9; grid-row: 1 / 3;
-  background: var(--gold);
+  background: var(--gold-ramp);
   color: var(--gold-ink);
   display: flex; align-items: flex-end;
   padding: clamp(20px, 3vw, 40px);
@@ -301,6 +304,7 @@ section.statement { padding: var(--margin); }
   font-size: clamp(1.25rem, 1.4vw, 1.5rem);
   line-height: 1.4;
   margin: 0;
+  max-width: 62ch;
   color: var(--ink);
   padding-right: var(--margin);
 }
@@ -313,13 +317,14 @@ section.statement { padding: var(--margin); }
 .doctrine .grid12 { align-items: start; }
 .doctrine-facts {
   grid-column: 1 / 3;
-  font-size: 1rem;
+  font-size: 1.0625rem;
   line-height: 1.45;
   color: var(--muted);
   margin: 0;
 }
-.doctrine-facts dt { color: var(--ink); margin-top: 14px; }
+.doctrine-facts dt { color: var(--ink); font-weight: 500; margin-top: 18px; }
 .doctrine-facts dt:first-child { margin-top: 0; }
+.doctrine-facts dd { margin: 2px 0 0; }
 .doctrine-body {
   grid-column: 3 / 13;
   font-size: clamp(1.375rem, 2vw, 1.875rem);
@@ -334,85 +339,56 @@ section.statement { padding: var(--margin); }
   margin-right: 0.5em;
   object-fit: cover;
 }
-.doctrine-body .soft { color: var(--muted); margin-top: 1em; display: block; }
+.doctrine-body.soft { color: var(--muted); margin-top: 1.25em; }
 .doctrine-body a { color: var(--ink); }
 
-/* ---------- voyages: spine deck ---------- */
+/* ---------- voyages: stepped deck ---------- */
 
-.voyages { background: var(--ground); }
-.voyages-stage {
-  position: sticky;
-  top: 0;
-  height: 100svh;
-  min-height: 620px;
-  padding: 120px 0 0;
-  overflow: hidden;
+.voyages {
+  padding: 0 var(--margin);
+  margin-top: var(--section-gap);
 }
 .voyages-heading {
-  position: absolute;
-  top: clamp(48px, 6vh, 96px);
-  left: var(--margin);
-  font-size: clamp(3rem, 4.2vw, 4rem);
-  z-index: 3;
-  background: rgba(19, 32, 41, 0.82);
-  color: var(--ink);
-  padding-right: 16px;
+  font-size: var(--step-head);
+  margin: 0 0 clamp(40px, 6vw, 72px);
 }
 .deck {
-  position: relative;
-  height: 360px;
-  margin-top: clamp(64px, 12vh, 120px);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 32px);
+  align-items: start;
 }
 .deck-card {
-  position: absolute;
-  overflow: hidden;
-  top: 0; left: 0;
-  width: min(620px, 82vw);
-  height: 100%;
-  padding: 32px;
+  min-height: 300px;
+  padding: 28px 32px;
   display: flex;
   flex-direction: column;
   background: var(--surface);
   color: var(--ink);
-  transition: transform 0.18s ease-out, width 0.18s ease-out;
-  will-change: transform;
 }
-.deck-card.tone-2 { background: var(--surface-2); }
-.deck-card.tone-3 { background: var(--gold); color: var(--gold-ink); }
-.deck-card.tone-3 .card-date, .deck-card.tone-3 .card-link { color: var(--gold-ink); opacity: 0.8; }
-.deck-card.tone-3 .card-link:hover { background: var(--gold-ink); color: var(--gold); }
+.deck-card.tone-2 { background: var(--surface-2); margin-top: 48px; }
+.deck-card.tone-3 { background: var(--gold-ramp); color: var(--gold-ink); margin-top: 96px; }
+.deck-card.tone-3 .card-date, .deck-card.tone-3 .card-link { color: var(--gold-ink); opacity: 0.85; }
+.deck-card.tone-3 .card-link:hover { background: var(--gold-ink); color: var(--gold-hi); }
 .card-title { font-size: 1.875rem; line-height: 1.1; max-width: 24ch; }
-.deck-card.is-spine { width: 120px; }
-.deck-card.is-spine .card-title,
-.deck-card.is-spine .card-excerpt,
-.deck-card.is-spine .card-foot { visibility: hidden; }
-.deck-card.is-spine::before {
-  content: attr(data-letter);
-  position: absolute;
-  top: 28px; left: 32px;
-  font-size: 1.875rem;
-  font-weight: 500;
-}
 .card-excerpt {
   font-size: 1rem;
   line-height: 1.45;
-  margin: auto 0 24px;
+  margin: 16px 0 24px;
   max-width: 52ch;
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.card-foot { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.card-foot { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-top: auto; }
 .card-date { font-size: 1rem; color: var(--muted); }
+.deck-card.tone-3 .card-date { color: var(--gold-ink); }
 .card-link { font-size: 1rem; }
 .deck-more {
-  position: absolute;
-  bottom: clamp(32px, 6vh, 64px);
-  left: var(--margin);
+  margin: clamp(48px, 6vw, 72px) 0 0;
   font-size: 1rem;
-  z-index: 3;
-  background: rgba(19, 32, 41, 0.82);
+  color: var(--muted);
 }
-.voyages-spacer { height: 120svh; }
+.deck-more a { color: var(--ink); }
 
 /* ---------- joining: many into one ---------- */
 
@@ -465,8 +441,6 @@ section.statement { padding: var(--margin); }
 /* ---------- cta: the gold close ---------- */
 
 .cta {
-  background: var(--gold);
-  color: var(--gold-ink);
   min-height: 72svh;
   display: flex;
   flex-direction: column;
@@ -480,7 +454,11 @@ section.statement { padding: var(--margin); }
   font-style: italic;
   font-weight: 500;
   margin: 0 0 auto;
-  color: var(--gold-ink);
+  color: var(--gold);
+  background: var(--gold-text);
+  -webkit-background-clip: text;
+  background-clip: text; /* taste-skill-ignore: metallic gold is the brand request */
+  -webkit-text-fill-color: transparent;
 }
 .cta-row {
   display: grid;
@@ -494,8 +472,7 @@ section.statement { padding: var(--margin); }
   font-size: 1.25rem;
   line-height: 1.4;
   margin: 0;
-  color: var(--gold-ink);
-  opacity: 0.85;
+  color: var(--ink);
 }
 .cta-button {
   grid-column: 10 / 13;
@@ -505,13 +482,14 @@ section.statement { padding: var(--margin); }
   justify-content: center;
   min-height: 56px;
   padding: 0 32px;
-  background: var(--gold-ink);
-  color: var(--gold);
+  background: var(--gold-button);
+  color: var(--gold-ink);
   font-size: 1.1875rem;
+  font-weight: 500;
   text-decoration: none;
-  transition: transform 0.15s ease;
+  transition: transform 0.15s ease, filter 0.15s ease;
 }
-.cta-button:hover { background: var(--ground-2); color: var(--gold); transform: translateY(-2px); }
+.cta-button:hover { transform: translateY(-2px); filter: brightness(1.12); }
 .cta-button:active { transform: translateY(0); }
 
 /* ---------- footer ---------- */
@@ -540,7 +518,11 @@ section.statement { padding: var(--margin); }
   letter-spacing: 0.01em;
   font-weight: 500;
   white-space: nowrap;
-  color: var(--ink);
+  color: var(--gold);
+  background: var(--gold-text);
+  -webkit-background-clip: text;
+  background-clip: text; /* taste-skill-ignore: metallic gold is the brand request */
+  -webkit-text-fill-color: transparent;
   text-align: center;
 }
 .footer-legal {
@@ -627,14 +609,16 @@ section.statement { padding: var(--margin); }
 }
 .skip-link:focus { left: 0; }
 
-.no-motion .masthead-hero img,
-.no-motion .masthead-strip img { animation: none; }
+.no-motion .masthead-hero img { animation: none; }
 /* ---------- tablet ---------- */
 
 @media (max-width: 900px) {
   .cta { min-height: 60svh; }
   .header-nav a { padding: 0 10px; font-size: 1rem; }
   .header-action .ts-domain { display: none; }
+  .deck { grid-template-columns: 1fr 1fr; }
+  .deck-card.tone-3 { grid-column: 1 / 3; margin-top: 0; }
+  .deck-card.tone-2 { margin-top: 32px; }
 }
 
 /* ---------- phone ---------- */
@@ -658,21 +642,21 @@ section.statement { padding: var(--margin); }
     flex: 1 1 auto;
     justify-content: center;
     min-height: 48px;
-    padding: 12px 8px;
+    padding: 12px 14px;
     font-size: 1rem;
     white-space: normal;
   }
 
-  .masthead-strip { grid-template-columns: 1fr; }
-
-  .masthead-strip { display: none; }
-
-  .masthead-under { padding-bottom: 48px; }
+  /* masthead stacks: painting first at a modest height so the title
+     and the join button stay on the first screen */
+  .masthead-open { display: block; padding: 8px 8px 48px; }
+  .masthead-hero img { max-height: 46svh; }
+  .masthead-under { padding: 24px var(--margin) 0; }
   .hero-title { font-size: 15vw; }
 
   .tile-board { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; }
   .tile-slogan { grid-column: 1 / 3; grid-row: auto; min-height: 42svh; }
-  .tile-slogan .slogan { font-size: 12vw; }
+  .tile-slogan .slogan { font-size: 10.5vw; }
   .tile-word { grid-column: 1; grid-row: auto; aspect-ratio: 1; }
   .tile-word .word { font-size: 10vw; }
   .tile-photo { grid-column: 2; grid-row: auto; aspect-ratio: 1; }
@@ -684,15 +668,12 @@ section.statement { padding: var(--margin); }
   .doctrine-portrait { width: 110px; height: 110px; }
   .doctrine-facts { margin-top: 32px; }
 
-  .voyages-stage { height: auto; min-height: 0; position: static; padding: 64px var(--margin) 0; }
-  .voyages-heading { position: static; }
-  .deck { height: auto; margin-top: 8px; display: flex; flex-direction: column; gap: 36px; }
-  .deck-card { position: static; width: 100%; height: auto; min-height: 0; transform: none !important; background: var(--surface); padding: 24px; }
-  .deck-card.tone-3 { color: var(--gold-ink); }
-  .deck-card.tone-3 .card-date, .deck-card.tone-3 .card-link { color: var(--gold-ink); opacity: 0.8; }
+  .voyages { margin-top: var(--section-gap); }
+  .deck { grid-template-columns: 1fr; }
+  .deck-card, .deck-card.tone-2, .deck-card.tone-3 { margin-top: 0; min-height: 0; }
+  .deck-card.tone-3 { grid-column: auto; color: var(--gold-ink); }
   .card-title { font-size: 1.75rem; }
-  .voyages-spacer { height: 0; }
-  .deck-more { position: static; display: inline-block; margin: 32px 0 48px; }
+  .deck-more { margin-top: 32px; }
 
   .joining .section-heading, .joining-intro { grid-column: 1 / 13; }
   .joining-steps { grid-template-columns: 1fr; }
@@ -716,6 +697,5 @@ section.statement { padding: var(--margin); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .masthead-hero img, .masthead-strip img { animation: none; }
   .deck-card { transition: none !important; }
 }
