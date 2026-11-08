@@ -133,8 +133,10 @@ lead: Pick your ship's rate and whether you sail the PvP circle, and get the opt
         t.textContent = String(i + 1);
         stopsG.appendChild(t);
         var lbl = document.createElementNS(NS, 'text');
-        lbl.setAttribute('x', x); lbl.setAttribute('y', y + 58);
-        lbl.setAttribute('text-anchor', 'middle');
+        if (x > 2050) { lbl.setAttribute('x', x - 26); lbl.setAttribute('text-anchor', 'end'); }
+        else if (x < 350) { lbl.setAttribute('x', x + 26); lbl.setAttribute('text-anchor', 'start'); }
+        else { lbl.setAttribute('x', x); lbl.setAttribute('text-anchor', 'middle'); }
+        lbl.setAttribute('y', y + 58);
         lbl.setAttribute('font-size', 46); lbl.setAttribute('font-weight', 600);
         lbl.setAttribute('fill', '#14212c');
         lbl.setAttribute('stroke', '#e8e2d2'); lbl.setAttribute('stroke-width', 10);
