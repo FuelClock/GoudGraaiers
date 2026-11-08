@@ -390,6 +390,24 @@ section.statement { padding: var(--margin); }
 }
 .deck-more a { color: var(--ink); }
 
+/* ---------- gallery: the fleet at sea ---------- */
+
+.gallery {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(16px, 2vw, 32px);
+  align-items: end;
+  padding: 0 var(--margin);
+  margin-top: var(--section-gap);
+}
+.gallery-figure { margin: 0; }
+.gallery-figure img { width: 100%; height: auto; }
+.gallery-figure figcaption {
+  font-size: 0.9375rem;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
 /* ---------- joining: many into one ---------- */
 
 .joining .section-heading { grid-column: 1 / 5; margin-bottom: 24px; }
@@ -674,6 +692,8 @@ section.statement { padding: var(--margin); }
   .deck-card.tone-3 { grid-column: auto; color: var(--gold-ink); }
   .card-title { font-size: 1.75rem; }
   .deck-more { margin-top: 32px; }
+
+  .gallery { grid-template-columns: 1fr; align-items: start; gap: 32px; }
 
   .joining .section-heading, .joining-intro { grid-column: 1 / 13; }
   .joining-steps { grid-template-columns: 1fr; }
