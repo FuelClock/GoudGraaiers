@@ -1,12 +1,12 @@
-<a class="site-header" href="{{ '/' | relative_url }}">
-  <span class="brand-block">
+<header class="site-header">
+  <a class="brand" href="{{ '/' | relative_url }}">
     <span class="brand-flag" aria-hidden="true">{% include flag.html %}</span>
     <span class="brand-name">Goud Graaiers</span>
-  </span>
+  </a>
   <nav class="header-nav" aria-label="Site">
     {% for item in site.nav %}
     <a href="{{ item.url | relative_url }}">{{ item.label }}</a>
     {% endfor %}
   </nav>
-  <a class="header-action" href="ts3server://{{ site.teamspeak }}">TeamSpeak&ensp;·&ensp;{{ site.teamspeak }}</a>
-</a>
+  <a class="header-action" href="ts3server://{{ site.teamspeak }}">TeamSpeak <span class="ts-domain">&ensp;·&ensp;{{ site.teamspeak }}</span></a>
+</header>
