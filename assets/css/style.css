@@ -572,6 +572,10 @@ section.statement { padding: var(--margin); }
 .article-body ul, .article-body ol { padding-left: 1.4em; line-height: 1.55; }
 .article-body img { max-width: 100%; height: auto; margin: 24px 0; }
 .trade-chart, .article-body svg { width: 100%; height: auto; margin: 24px 0; }
+.map-figure { margin: 24px 0; }
+.map-figure img { width: 100%; height: auto; display: block; }
+.map-figure figcaption { font-size: 0.9375rem; color: var(--muted); margin-top: 8px; }
+.map-figure a:hover { background: none; }
 
 /* event log styling (bot-written markdown) */
 .event-log > p:first-child { font-size: 1.75rem; }
