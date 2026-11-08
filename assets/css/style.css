@@ -45,18 +45,38 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   background-color: var(--ground);
-  background-image: url("../../img/chart-bg.jpg");
-  background-size: cover;
-  background-position: center top;
-  background-attachment: fixed;
   color: var(--ink);
   font-family: "EB Garamond", Georgia, serif;
   font-size: var(--step-body);
   line-height: 1.5;
   font-weight: 400;
 }
-@media (max-width: 760px) {
-  body { background-attachment: scroll; }
+
+/* ---------- parallax chart sky ---------- */
+/* The old sea chart drifts slower than the page scrolls: a fixed oversized
+   layer, JS nudges it down by a fraction of the scroll (see site.js). Without
+   JS it is a static oversized background, the same chart as before. */
+.chart-sky {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: -45%;
+  height: 190%;
+  z-index: -1;
+  overflow: hidden;
+  animation: chart-drift 70s ease-in-out infinite alternate;
+}
+.chart-layer {
+  width: 100%;
+  height: 100%;
+  background-image: url("../../img/chart-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+}
+@keyframes chart-drift {
+  from { transform: translate3d(0, 0, 0) scale(1.03); }
+  to   { transform: translate3d(-1.6%, -1.2%, 0) scale(1.03); }
 }
 
 img { display: block; max-width: 100%; }
@@ -327,7 +347,7 @@ main { position: relative; z-index: 1; }
 .doctrine-body.soft { color: var(--muted); margin-top: 1.25em; }
 .doctrine-body a { color: var(--ink); }
 
-/* ---------- voyages: stepped deck ---------- */
+/* ---------- voyages: flat deck ---------- */
 
 .voyages {
   padding: 0 var(--margin);
@@ -367,34 +387,39 @@ main { position: relative; z-index: 1; }
 .card-date { font-size: 1rem; color: var(--muted); }
 .deck-card.tone-3 .card-date { color: var(--gold-ink); }
 .card-link { font-size: 1rem; }
-.deck-more {
-  margin: clamp(48px, 6vw, 72px) 0 0;
-  font-size: 1rem;
-  color: var(--muted);
-}
-.deck-more a { color: var(--ink); }
 
-/* ---------- gallery: the fleet at sea ---------- */
+/* ---------- collapsible planner notes ---------- */
 
-.gallery {
-  display: grid;
-  grid-template-columns: 5fr 7fr;
-  gap: clamp(16px, 2vw, 32px);
-  align-items: stretch;
-  padding: 0 var(--margin);
-  margin-top: var(--section-gap);
+.planner-notes {
+  margin: clamp(40px, 5vw, 64px) 0 0;
+  max-width: 62ch;
 }
-.gallery-figure { margin: 0; }
-.gallery-figure img {
-  width: 100%;
-  height: clamp(240px, 32vw, 460px);
-  object-fit: contain;
+.planner-notes + .planner-notes { margin-top: 20px; }
+.planner-notes summary {
+  cursor: pointer;
+  color: var(--gold);
+  font-size: clamp(1.375rem, 2vw, 1.75rem);
+  line-height: 1.2;
+  font-weight: 500;
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
 }
-.gallery-figure figcaption {
-  font-size: 0.9375rem;
-  color: var(--muted);
-  margin-top: 10px;
+.planner-notes summary::-webkit-details-marker { display: none; }
+.planner-notes summary::before {
+  content: "\203A";
+  font-size: 1.4em;
+  line-height: 1;
+  transition: transform 0.2s ease;
 }
+.planner-notes[open] summary::before { transform: rotate(90deg); }
+.planner-notes summary:hover { color: var(--gold-hi); }
+.planner-notes p {
+  margin: 18px 0 0;
+  line-height: 1.55;
+}
+.planner-notes p + p { margin-top: 12px; }
 
 /* ---------- joining: many into one ---------- */
 
@@ -681,10 +706,6 @@ main { position: relative; z-index: 1; }
   .deck { grid-template-columns: 1fr; }
   .deck-card.tone-3 { grid-column: auto; color: var(--gold-ink); }
   .card-title { font-size: 1.75rem; }
-  .deck-more { margin-top: 32px; }
-
-  .gallery { grid-template-columns: 1fr; align-items: start; gap: 32px; }
-  .gallery-figure img { height: auto; }
 
   .joining-side, .joining-steps { grid-column: 1 / 13; }
   .joining-steps { margin-top: 40px; }
@@ -707,4 +728,5 @@ main { position: relative; z-index: 1; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .deck-card { transition: none !important; }
+  .chart-sky { animation: none; }
 }
