@@ -60,8 +60,8 @@ body {
   position: fixed;
   left: 0;
   right: 0;
-  top: -45%;
-  height: 190%;
+  top: -9vh;
+  height: 118vh;
   z-index: -1;
   overflow: hidden;
 }
@@ -69,8 +69,14 @@ body {
   width: 100%;
   height: 100%;
   background-image: url("../../img/chart-bg.jpg");
-  background-size: cover;
-  background-position: center;
+  /* the map spans the full site width: its left and right edges align with
+     the page edges, and the chart renders at natural scale instead of the
+     cover zoom (Thimon, 2026-11-08). At desktop widths one tile is 132vh+
+     tall, so it covers viewport + drift with no seam; below ~800px the
+     tile is shorter than the box and repeat-y continues the chart. */
+  background-size: 100% auto;
+  background-repeat: repeat-y;
+  background-position: center top;
   will-change: transform;
 }
 

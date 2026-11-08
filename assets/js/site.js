@@ -50,9 +50,10 @@
   /* parallax chart: the fixed chart layer drifts UP by a fraction of the
      scroll (Thimon: opposite direction reads better), so the sea slides
      towards the top of the screen as the fleet sails down the page. The
-     layer is oversized (top -45%, height 190%): the factor is derived from
-     the page's real scroll range so the drift uses that headroom exactly and
-     never shows an edge. Reduced motion: the layer stays put. */
+     layer box is 118vh (top -9vh) and the width-fit chart tile is taller
+     than box + max drift at desktop widths, so no edge ever shows. The
+     factor is derived from the page's real scroll range so the drift uses
+     that headroom exactly. Reduced motion: the layer stays put. */
   function parallax() {
     var layer = d.getElementById('chart-layer');
     if (!layer || reduce) return;
