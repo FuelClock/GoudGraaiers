@@ -4,9 +4,11 @@
     {% if page.lead %}<p class="page-lead">{{ page.lead }}</p>{% endif %}
     {% if page.ts_action %}<a class="page-action" href="ts3server://{{ site.teamspeak }}">Connect to TeamSpeak</a>{% endif %}
   </div>
+  {% if page.plate_spot != 'band' %}
   {% if page.plate %}
   <figure class="title-plate">
     <img src="{{ page.plate | relative_url }}" alt="{{ page.plate_alt }}" loading="lazy" decoding="async">
   </figure>
+  {% endif %}
   {% endif %}
 </div>

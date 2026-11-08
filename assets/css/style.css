@@ -256,6 +256,18 @@ h1, h2, h3, h4 {
   object-fit: contain;
   display: block;
 }
+/* large plate variant: the painting lives inside the content band itself
+   (voyage page, 2026-11-08, Thimon) instead of beside the page title;
+   scoped under .article-body to out-rank its generic img rule */
+.article-body .band-plate { margin: 0 0 28px; }
+.article-body .band-plate img {
+  display: block;
+  margin: 0 auto;
+  height: clamp(220px, 24vw, 330px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
 .page-lead {
   font-size: var(--step-lead);
   max-width: 46ch;
