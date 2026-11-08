@@ -5,6 +5,8 @@ lead: "The flotilla's shared knowledge: plan your optimal trade loop, sail the g
 scripts:
   - /assets/js/trade-data.js?v=10
   - /assets/js/trade-planner.js?v=2
+plate: /img/paintings/porcellis-ships-in-distress-stormy-sea.jpg
+plate_alt: Ships in distress on a stormy sea, oil painting by Jan Porcellis
 ---
 ## Plan your trade loop
 

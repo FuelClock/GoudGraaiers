@@ -3,6 +3,8 @@ layout: article
 title: Join the fleet
 lead: "Two ways aboard: apply in-game, or step onto our TeamSpeak first and meet the fleet."
 ts_action: true
+plate: /img/paintings/bakhuizen-ships-in-distress-rocky-coast.jpg
+plate_alt: Ships in distress off a rocky coast, oil painting by Ludolf Bakhuizen
 ---
 {% include_relative assets/pages/joining.md %}
 

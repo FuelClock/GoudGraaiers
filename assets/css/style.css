@@ -204,7 +204,6 @@ h1, h2, h3, h4 {
   max-height: 80svh;
   object-fit: contain;
 }
-.masthead-hero--slim img { height: clamp(220px, 34svh, 420px); object-fit: contain; }
 
 /* title beside the painting */
 .masthead-under { grid-column: 9 / 13; }
@@ -248,7 +247,15 @@ h1, h2, h3, h4 {
 .page-title-band {
   padding: clamp(32px, 5vw, 64px) var(--margin) clamp(24px, 3vw, 40px);
 }
-.page-title { font-size: clamp(2.5rem, 5.5vw, 5rem); font-style: italic; }
+.page-title { font-size: clamp(2.5rem, 5.5vw, 5rem); }
+.title-plate { margin: 0; justify-self: end; align-self: center; }
+.title-plate img {
+  height: clamp(110px, 11vw, 150px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+}
 .page-lead {
   font-size: var(--step-lead);
   max-width: 46ch;
@@ -269,9 +276,10 @@ h1, h2, h3, h4 {
   width: max-content;
 }
 @media (min-width: 761px) {
-  .page-title-band { display: grid; grid-template-columns: 1.2fr 1fr; column-gap: clamp(16px, 2vw, 32px); align-items: end; }
+  .page-title-band { display: grid; grid-template-columns: 1.2fr 1fr auto; column-gap: clamp(16px, 2vw, 32px); align-items: end; }
   .page-title-band .page-title { grid-column: 1; grid-row: 1; }
   .page-title-band .page-side { grid-column: 2; grid-row: 1; padding-bottom: 8px; }
+  .page-title-band .title-plate { grid-column: 3; grid-row: 1; }
   .page-lead { margin-top: 0; }
 }
 
@@ -585,15 +593,18 @@ main { position: relative; z-index: 1; }
 }
 .footer-wordmark {
   margin-top: 8px;
-  /* quiet close: the page and section titles now carry the loud gold caps,
-     so the footer wordmark steps back to a small flat gold mark (Thimon,
-     2026-11-08: it screamed for attention over the FAQ) */
-  font-size: clamp(1.75rem, 4.2vw, 2.5rem);
+  /* quiet close, Thimon 2026-11-08: small again but back on the metallic
+     ramp after he approved it at this size */
+  font-size: clamp(1.4rem, 3.4vw, 1.9rem);
   line-height: 1;
   letter-spacing: 0.01em;
   font-weight: 500;
   white-space: nowrap;
   color: var(--gold);
+  background: var(--gold-text);
+  -webkit-background-clip: text;
+  background-clip: text; /* taste-skill-ignore: metallic gold is the brand request */
+  -webkit-text-fill-color: transparent;
   text-align: center;
 }
 .footer-legal {
@@ -725,6 +736,9 @@ main { position: relative; z-index: 1; }
   .masthead-hero img { max-height: 46svh; }
   .masthead-under { padding: 24px var(--margin) 0; }
   .hero-title { font-size: 11vw; }
+  /* the title plate is a desktop decoration; on phones it would only
+     push the article body down */
+  .title-plate { display: none; }
 
   .statement-band { flex-direction: column; align-items: flex-start; gap: 12px; }
   .statement-band .slogan { font-size: 11vw; }
