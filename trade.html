@@ -60,7 +60,7 @@ lead: Pick your ship's rate and whether you sail the PvP circle, and get the opt
 
       <h2>How the route is chosen</h2>
       <p>Trading in World of Sea Battle works like this: you fill your hold with whatever is cheap at your current port, sail on, and sell the whole stock the moment you reach the first port that pays a good's maximum price, freeing the hold for the next region's cheap goods. The planner computes that exactly: it is a capacity-planning problem, solved so that no ton of hold space ever sits idle when a profitable good could be carried.</p>
-      <p>One caveat for the biggest ships: shallow-water zones on the map restrict the sailing routes of 1st and 2nd rates, and a few ports limit docking for them too. The planner assumes full docking access for every port; if you sail a 1st or 2nd rate, double-check the stops in-game.</p>
+      <p>Docking is modeled per port from the game's own shallows map: ports in a shallow zone of tier N can only be docked by ships of rate N and smaller (a 6th rate port like Everston, for example, excludes everything from 5th rate up), while ports in open water or on the endless sea take any ship. So a rate 1 trader cannot dock at St Jean (tier 3) but can dock at Devios (open water), exactly as in the game.</p>
       <p>Amounts are shown per 100 tons of hold space and scale linearly with your real capacity: a ship with a 300 ton hold can triple every number.</p>
 
       <h2>Stock: every market is a little different each cycle</h2>
