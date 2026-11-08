@@ -64,7 +64,6 @@ body {
   height: 190%;
   z-index: -1;
   overflow: hidden;
-  animation: chart-drift 70s ease-in-out infinite alternate;
 }
 .chart-layer {
   width: 100%;
@@ -73,10 +72,6 @@ body {
   background-size: cover;
   background-position: center;
   will-change: transform;
-}
-@keyframes chart-drift {
-  from { transform: translate3d(0, 0, 0) scale(1.03); }
-  to   { transform: translate3d(-1.6%, -1.2%, 0) scale(1.03); }
 }
 
 img { display: block; max-width: 100%; }
@@ -764,5 +759,4 @@ main { position: relative; z-index: 1; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .deck-card { transition: none !important; }
-  .chart-sky { animation: none; }
 }
