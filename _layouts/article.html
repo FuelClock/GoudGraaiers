@@ -3,6 +3,13 @@ layout: frame
 ---
 <div class="article">
   <div class="article-body {{ page.body_class }}">
+    {% if page.plate_spot == 'band' %}
+    {% if page.plate %}
+    <figure class="band-plate">
+      <img src="{{ page.plate | relative_url }}" alt="{{ page.plate_alt }}" loading="lazy" decoding="async">
+    </figure>
+    {% endif %}
+    {% endif %}
     {{ content }}
   </div>
 </div>
