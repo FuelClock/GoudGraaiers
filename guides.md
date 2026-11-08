@@ -53,17 +53,17 @@ The planner computes the single best counterclockwise trade loop for your ship: 
 <h3 class="route-heading">Your trading stops</h3>
 <ol id="route-list" class="route-list"></ol>
 
-## How the route is chosen
+<details class="planner-notes">
+<summary>How the route is chosen</summary>
+<p>Trading in World of Sea Battle works like this: you fill your hold with whatever is cheap at your current port, sail on, and sell the whole stock the moment you reach the first port that pays a good's maximum price, freeing the hold for the next region's cheap goods. The planner applies exactly that rule at every port on your loop: each stop lists every cargo worth loading there, ranked by gold earned per hold of cargo space, and names the port where each cargo sells at top price. Hold space is deliberately not part of the planning, so no port gets skipped to make room for a bigger haul elsewhere: sail the loop, trade at every stop, and sell whatever your hold carries the moment it reaches a top price.</p>
+<p>Docking is modeled per port from tiers verified in game: a port in a shallow zone of tier N can only be docked by ships of rate N and smaller, while ports in open water or on the endless sea take any ship. A rate 2 port like Everston, for example, turns away only 1st rates, while a rate 6 port like Fiji takes 6th rates and smaller only. So a rate 1 trader cannot dock at Everston (tier 2) but can dock at Gray Island (open water), exactly as in the game.</p>
+<p>Amounts are shown per full 100 ton hold of each good and scale linearly with your real capacity: a ship with a 300 ton hold can triple every number. The buy list at each stop is ranked by money per cargo space, best first, so work down it until your hold is full. No gold figures are shown because market stock is partly random anyway: the ranking comes from the price spread, your actual earnings come from the market. When several ports ship the same good to one market, the sale is shown as full holds, for example Rugs x8: that is eight separate loads arriving over the loop, not one cargo.</p>
+</details>
 
-Trading in World of Sea Battle works like this: you fill your hold with whatever is cheap at your current port, sail on, and sell the whole stock the moment you reach the first port that pays a good's maximum price, freeing the hold for the next region's cheap goods. The planner applies exactly that rule at every port on your loop: each stop lists every cargo worth loading there, ranked by gold earned per hold of cargo space, and names the port where each cargo sells at top price. Hold space is deliberately not part of the planning, so no port gets skipped to make room for a bigger haul elsewhere: sail the loop, trade at every stop, and sell whatever your hold carries the moment it reaches a top price.
-
-Docking is modeled per port from tiers verified in game: a port in a shallow zone of tier N can only be docked by ships of rate N and smaller, while ports in open water or on the endless sea take any ship. A rate 2 port like Everston, for example, turns away only 1st rates, while a rate 6 port like Fiji takes 6th rates and smaller only. So a rate 1 trader cannot dock at Everston (tier 2) but can dock at Gray Island (open water), exactly as in the game.
-
-Amounts are shown per full 100 ton hold of each good and scale linearly with your real capacity: a ship with a 300 ton hold can triple every number. The buy list at each stop is ranked by money per cargo space, best first, so work down it until your hold is full. No gold figures are shown because market stock is partly random anyway: the ranking comes from the price spread, your actual earnings come from the market. When several ports ship the same good to one market, the sale is shown as full holds, for example Rugs x8: that is eight separate loads arriving over the loop, not one cargo.
-
-## Stock: every market is a little different each cycle
-
-Port markets restock on a server cycle (roughly every 24 to 48 hours, depending on your server), and which goods a port stocks after a cycle is partly random: one visit a port may only have Wine, the next the whole range. Guild production and how much players buy shift the amounts further, so treat the plan as the route and the market as the weather. When a planned good is sold out at a port, skip that purchase and carry on: the loop stays valid, one leg simply earns a little less. Provisions (Beer, Nuts, Dates) are almost always in stock but pay little per ton, so they are hold filler, not the main cargo.
+<details class="planner-notes">
+<summary>Stock: every market is a little different each cycle</summary>
+<p>Port markets restock on a server cycle (roughly every 24 to 48 hours, depending on your server), and which goods a port stocks after a cycle is partly random: one visit a port may only have Wine, the next the whole range. Guild production and how much players buy shift the amounts further, so treat the plan as the route and the market as the weather. When a planned good is sold out at a port, skip that purchase and carry on: the loop stays valid, one leg simply earns a little less. Provisions (Beer, Nuts, Dates) are almost always in stock but pay little per ton, so they are hold filler, not the main cargo.</p>
+</details>
 
 ## The Trade Fever loop, on the chart
 

@@ -47,9 +47,41 @@
     });
   }
 
+  /* parallax chart: the fixed chart layer drifts down by a fraction of the
+     scroll, so the sea moves slower than the fleet. The layer is oversized
+     (top -45%, height 190%): the factor is derived from the page's real
+     scroll range so the drift uses that headroom exactly and never shows an
+     edge. Reduced motion: the layer stays put. */
+  function parallax() {
+    var layer = d.getElementById('chart-layer');
+    if (!layer || reduce) return;
+    var sky = layer.parentElement;
+    var f = 0;
+    var ticking = false;
+    function measure() {
+      var headroom = sky.offsetHeight * 0.15 - 32; /* slack beyond the viewport, safety margin */
+      var range = d.documentElement.scrollHeight - window.innerHeight;
+      f = range > 0 ? Math.max(0, headroom / range) : 0;
+    }
+    function update() {
+      ticking = false;
+      /* images resize the page after load; re-derive the factor when it moves */
+      if (d.documentElement.scrollHeight !== lastH) { lastH = d.documentElement.scrollHeight; measure(); }
+      layer.style.transform = 'translate3d(0,' + (window.scrollY * f).toFixed(1) + 'px,0)';
+    }
+    var lastH = 0;
+    function onScroll() {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function () { measure(); onScroll(); });
+    measure();
+    update();
+  }
+
   if (d.readyState === 'loading') {
-    d.addEventListener('DOMContentLoaded', function () { hero(); entrances(); });
+    d.addEventListener('DOMContentLoaded', function () { hero(); entrances(); parallax(); });
   } else {
-    hero(); entrances();
+    hero(); entrances(); parallax();
   }
 })();
