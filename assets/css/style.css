@@ -192,10 +192,10 @@ h1, h2, h3, h4 {
   grid-template-columns: repeat(12, 1fr);
   column-gap: clamp(16px, 2vw, 32px);
   align-items: center;
-  /* equal air around the painting: top and left match the space between
-     the painting's bottom edge and the statement band, which is exactly
-     one section-gap (the band's own margin-top supplies it) */
-  padding: var(--section-gap) var(--section-gap) 0;
+  /* the hero painting's left edge aligns with the content edge of the
+     bands below (both use --margin); top and bottom keep one section-gap
+     of air (2026-11-08, Thimon) */
+  padding: var(--section-gap) var(--margin) 0;
 }
 .masthead-hero { grid-column: 1 / 9; }
 .masthead-hero img {
@@ -732,7 +732,7 @@ main { position: relative; z-index: 1; }
 
   /* masthead stacks: painting first at a modest height so the title
      and the join button stay on the first screen */
-  .masthead-open { display: block; padding: var(--section-gap) var(--section-gap) 0; }
+  .masthead-open { display: block; padding: var(--section-gap) var(--margin) 0; }
   .masthead-hero img { max-height: 46svh; }
   .masthead-under { padding: 24px var(--margin) 0; }
   .hero-title { font-size: 11vw; }
