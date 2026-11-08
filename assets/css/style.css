@@ -304,7 +304,8 @@ main { position: relative; z-index: 1; }
   grid-template-columns: 7fr 5fr;
   gap: clamp(24px, 3vw, 48px);
   align-items: center;
-  padding-top: clamp(32px, 4vw, 56px);
+  background: var(--surface);
+  padding: clamp(24px, 3vw, 44px);
 }
 .statement-photo img { width: 100%; height: auto; }
 .statement-text {
@@ -318,8 +319,9 @@ main { position: relative; z-index: 1; }
 /* ---------- about: facts beside the two squad claims ---------- */
 
 .doctrine {
-  padding: 0 var(--margin);
-  margin-top: var(--section-gap);
+  margin: var(--section-gap) var(--margin) 0;
+  padding: clamp(32px, 4vw, 64px) clamp(24px, 3vw, 48px);
+  background: var(--surface);
 }
 .doctrine .grid12 { align-items: start; }
 .doctrine-side {
@@ -356,7 +358,8 @@ main { position: relative; z-index: 1; }
 /* ---------- voyages: flat deck ---------- */
 
 .voyages {
-  padding: 0 var(--margin);
+  background: var(--ground-2);
+  padding: clamp(56px, 7vw, 96px) var(--margin);
   margin-top: var(--section-gap);
 }
 .voyages-heading {
@@ -429,6 +432,12 @@ main { position: relative; z-index: 1; }
 
 /* ---------- joining: many into one ---------- */
 
+.joining {
+  margin: var(--section-gap) var(--margin) 0;
+  padding: clamp(32px, 4vw, 64px) clamp(24px, 3vw, 48px);
+  background: var(--surface);
+}
+
 .joining-side { grid-column: 1 / 6; }
 .joining-side .section-heading { margin-bottom: 24px; }
 .joining-intro {
@@ -454,7 +463,8 @@ main { position: relative; z-index: 1; }
 /* ---------- faq ---------- */
 
 .faq {
-  padding: 0 var(--margin);
+  background: var(--ground-2);
+  padding: clamp(56px, 7vw, 96px) var(--margin);
   margin-top: var(--section-gap);
 }
 .faq-rows { display: block; }
@@ -485,12 +495,9 @@ main { position: relative; z-index: 1; }
 /* ---------- cta: the gold close ---------- */
 
 .cta {
-  min-height: 44svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 0 var(--margin) 48px;
-  margin-top: var(--section-gap);
+  margin: var(--section-gap) var(--margin) 0;
+  padding: clamp(40px, 6vw, 80px) clamp(24px, 3vw, 48px);
+  background: var(--gold-ramp);
 }
 .cta-headline {
   font-size: clamp(3.5rem, 10vw, 10.5rem);
@@ -498,11 +505,7 @@ main { position: relative; z-index: 1; }
   font-style: italic;
   font-weight: 500;
   margin: 0;
-  color: var(--gold);
-  background: var(--gold-text);
-  -webkit-background-clip: text;
-  background-clip: text; /* taste-skill-ignore: metallic gold is the brand request */
-  -webkit-text-fill-color: transparent;
+  color: var(--gold-ink);
 }
 .cta-row {
   display: grid;
@@ -516,7 +519,7 @@ main { position: relative; z-index: 1; }
   font-size: 1.25rem;
   line-height: 1.4;
   margin: 0;
-  color: var(--ink);
+  color: var(--gold-ink);
 }
 .cta-button {
   grid-column: 10 / 13;
@@ -526,15 +529,16 @@ main { position: relative; z-index: 1; }
   justify-content: center;
   min-height: 56px;
   padding: 0 32px;
-  background: var(--gold-button);
-  color: var(--gold-ink);
+  background: var(--gold-ink);
+  color: var(--gold-hi);
   font-size: 1.1875rem;
   font-weight: 500;
   text-decoration: none;
   transition: transform 0.15s ease, filter 0.15s ease;
 }
-.cta-button:hover { transform: translateY(-2px); filter: brightness(1.12); }
+.cta-button:hover { transform: translateY(-2px); filter: brightness(1.25); color: var(--gold-hi); }
 .cta-button:active { transform: translateY(0); }
+.cta :focus-visible { outline-color: var(--gold-ink); }
 
 /* ---------- footer ---------- */
 
@@ -700,7 +704,7 @@ main { position: relative; z-index: 1; }
   .statement-band { flex-direction: column; align-items: flex-start; gap: 12px; }
   .statement-band .slogan { font-size: 11vw; }
   .statement-lang { font-size: 1.5rem; }
-  .statement-body { grid-template-columns: 1fr; padding-top: 32px; }
+  .statement-body { grid-template-columns: 1fr; gap: 32px; }
   .statement-text { font-size: 1.125rem; }
 
   .doctrine .grid12 { display: block; }
@@ -721,7 +725,6 @@ main { position: relative; z-index: 1; }
   .faq-q { font-size: 1.5rem; }
   .faq-a { margin-top: 12px; }
 
-  .cta { min-height: 64svh; }
   .cta-row { display: block; }
   .cta-button { display: flex; width: 100%; margin-top: 24px; }
 
