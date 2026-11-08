@@ -80,6 +80,21 @@ body {
   will-change: transform;
 }
 
+/* narrow or portrait screens: the width-fit tile is shorter than the layer
+   box there (a 390px-wide tile is only ~38vh tall), so restore the old
+   full-bleed cover treatment Thimon prefers on mobile (2026-11-08) */
+@media (max-aspect-ratio: 7/5) {
+  .chart-sky {
+    top: -45%;
+    height: 190%;
+  }
+  .chart-layer {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
 img { display: block; max-width: 100%; }
 figure { margin: 0; }
 
