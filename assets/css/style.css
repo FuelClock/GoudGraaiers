@@ -616,6 +616,9 @@ section.statement { padding: var(--margin); }
 .route-list em { color: var(--gold); font-style: italic; }
 .route-margin { color: var(--muted); font-size: 0.9375rem; }
 .route-alts { color: var(--muted); font-size: 0.875rem; }
+.act-sell { color: var(--gold); }
+.act-buy { color: var(--gold); }
+.goods { color: var(--ink); }
 .map-route-frame img { margin: 0; }
 .route-list, .route-heading { max-width: 62ch; }
 
