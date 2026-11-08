@@ -33,20 +33,18 @@
       var stIdx = active.findIndex(function (a) { return a.name === 'St. Jean'; });
       if (stIdx > 0) active = active.slice(stIdx).concat(active.slice(0, stIdx));
       summary.textContent = 'Loop: ' + active.length + ' trading stops, ' + plan.skipped.length +
-        ' sailed past without a profitable trade. Combined trade profit: ' + plan.totalProfit +
-        ' gold, one full 100 ton hold per trade (scales with your cargo capacity).';
+        ' sailed past without a profitable trade. Amounts assume a full 100 ton hold per cargo and scale with your real capacity.';
       skippedEl.textContent = plan.skipped.length ? 'Sail past without trading: ' + plan.skipped.join(', ') + '.' : '';
 
       active.forEach(function (a, i) {
         var li = document.createElement('li');
         var parts = [];
         if (Object.keys(a.sell).length) {
-          parts.push('<b class="act-sell">SELL</b> <span class="goods">sell by best profit margins' +
-            (a.goldIn ? ' (+' + a.goldIn + 'g)' : '') + '</span>');
+          parts.push('<b class="act-sell">SELL</b> <span class="goods">sell by best profit margins</span>');
         }
         if ((a.buys || []).length) {
           var bl = a.buys.map(function (t) {
-            return '<span class="goods">' + t.g + ' ' + t.qty + 't &rarr; ' + t.sellTo + ' (+' + t.perHold + 'g per hold)</span>';
+            return '<span class="goods">' + t.g + ' ' + t.qty + 't &rarr; ' + t.sellTo + '</span>';
           }).join(' &nbsp; ');
           parts.push('<b class="act-buy">BUY, best first:</b> ' + bl);
         }
