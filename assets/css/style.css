@@ -703,6 +703,26 @@ main { position: relative; z-index: 1; }
 .article-body p, .article-body ul, .article-body ol { max-width: 62ch; }
 .article-body ul, .article-body ol { padding-left: 1.4em; line-height: 1.55; }
 .article-body img { max-width: min(100%, 720px); height: auto; margin: 24px 0; }
+
+/* upcoming voyage cards: deck-card styling inside the article panel
+   (sync script emits .upcoming-card markup, 2026-11-08 Thimon) */
+.article-body .upcoming-card {
+  background: var(--ground-2);
+  padding: clamp(20px, 2.5vw, 32px);
+  margin: 0 0 28px;
+}
+.article-body .upcoming-card-title {
+  font-size: 1.875rem;
+  line-height: 1.1;
+  font-weight: 500;
+  margin: 0;
+}
+.article-body .upcoming-card-date { margin: 14px 0 0; font-size: 1rem; color: var(--muted); }
+.article-body .upcoming-card-host { margin: 6px 0 0; font-size: 1rem; color: var(--muted); }
+.article-body .upcoming-card-plan { margin-top: 20px; }
+.article-body .upcoming-card-plan p { margin: 0 0 14px; line-height: 1.55; }
+.article-body .upcoming-card-plan p:last-child { margin-bottom: 0; }
+.article-body .upcoming-card-plan p.upcoming-card-section { color: var(--gold); }
 .article-body a { color: var(--gold); }
 .trade-chart, .article-body svg { width: 100%; height: auto; margin: 24px 0; }
 .map-figure { margin: 24px 0; }
