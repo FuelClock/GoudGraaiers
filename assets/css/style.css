@@ -489,7 +489,7 @@ section.statement { padding: var(--margin); }
   flex-direction: column;
   justify-content: flex-end;
   padding: clamp(48px, 8vw, 120px) var(--margin) 40px;
-  margin-top: var(--section-gap);
+  margin-top: 0;
 }
 .cta-headline {
   font-size: clamp(3.5rem, 10vw, 9.5rem);
@@ -548,7 +548,7 @@ section.statement { padding: var(--margin); }
 .footer-col a { color: var(--navy-muted); text-decoration: none; }
 .footer-col a:hover { color: var(--gold-ink); background: var(--gold); }
 .col-head { color: var(--navy-ink); font-weight: 500; margin: 0 0 10px; }
-.footer-col--credits p { color: var(--navy-muted); }
+.footer-col--credits p { color: var(--navy-muted); overflow-wrap: anywhere; }
 .footer-wordmark {
   margin-top: clamp(64px, 12vh, 160px);
   font-size: min(10.4vw, 11.5rem);
@@ -661,7 +661,7 @@ section.statement { padding: var(--margin); }
   .tile-text p { grid-column: 1; font-size: 1.125rem; }
 
   .doctrine .grid12 { display: block; }
-  .doctrine-body { font-size: 1.375rem; margin-top: 24px; }
+  .doctrine-body { font-size: 1.125rem; margin-top: 24px; }
   .doctrine-portrait { width: 110px; height: 110px; }
   .doctrine-facts { margin-top: 32px; }
 
