@@ -752,7 +752,6 @@ main { position: relative; z-index: 1; }
 .stop-goods li { display: flex; align-items: baseline; gap: 12px; padding: 4px 0; }
 .stop-rank { color: var(--muted); font-size: 0.9375rem; min-width: 1.3em; font-variant-numeric: tabular-nums; }
 .stop-good { color: #e5cf82; font-size: 1.125rem; }
-.stop-qty { color: var(--muted); font-size: 0.9375rem; }
 /* sell stops: green marker (map dot and list number), explained once in the caption */
 .stop--sell .stop-no { color: #3f8f5f; }
 .stop-empty { grid-column: 2; margin: 6px 0 0; color: var(--muted); font-style: italic; }
