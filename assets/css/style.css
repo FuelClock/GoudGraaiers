@@ -1,0 +1,770 @@
+/* De Goud Graaiers: editorial dark ground, rev 3
+   Deep navy as the ground, parchment as the ink, and a metallic gold ramp
+   as the accent (the user asked for gold that reads as metal, not flat ochre:
+   the ramp runs light to deep in one hue, used on type, buttons and one field).
+   EB Garamond throughout. No shadows at rest, no thin rules:
+   tone steps and flat fields only, the gold ramp is the single licensed gradient. */
+
+:root {
+  --ground: #132029;      /* page ground, deep navy */
+  --ground-2: #0d1720;    /* deeper navy: header, footer */
+  --surface: #1c2e3b;     /* raised navy surface: cards, panels */
+  --surface-2: #243a49;   /* second raised step */
+
+  --ink: #e8e2d2;         /* parchment ink on dark */
+  --muted: #9aaebc;       /* muted ink on dark */
+
+  --paper: #e8e2d2;       /* light accent field */
+  --paper-ink: #1b2b38;   /* ink on light fields */
+  --paper-muted: #5a6b77;
+
+  --gold: #d4af37;        /* the accent, bright metallic base */
+  --gold-hi: #f2dc86;     /* highlight of the ramp */
+  --gold-lo: #a67f12;     /* depth of the ramp */
+  --gold-ramp: linear-gradient(168deg, var(--gold-hi) 0%, var(--gold) 42%, #b8922a 68%, var(--gold-lo) 100%); /* taste-skill-ignore: metallic gold is the brand request */
+  --gold-button: linear-gradient(180deg, #ecd271 0%, var(--gold) 55%, var(--gold-lo) 100%); /* taste-skill-ignore: metallic gold is the brand request */
+  --gold-text: linear-gradient(172deg, var(--gold-hi) 8%, var(--gold) 45%, #9a7418 92%); /* taste-skill-ignore: metallic gold is the brand request */
+  --gold-ink: #14212c;
+
+  --step-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.9375rem);
+  --step-body: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --step-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --step-head: clamp(2rem, 1.3rem + 3.2vw, 4rem);
+  --step-slogan: clamp(3rem, 8vw, 7.5rem);
+  --hero-size: clamp(2.6rem, 4.8vw, 4.25rem);
+
+  --margin: clamp(16px, 2.5vw, 32px);
+  --section-gap: clamp(44px, 4.5vw, 68px);
+}
+
+* { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background-color: var(--ground);
+  color: var(--ink);
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: var(--step-body);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* ---------- parallax chart sky ---------- */
+/* The old sea chart drifts slower than the page scrolls: a fixed oversized
+   layer, JS nudges it down by a fraction of the scroll (see site.js). Without
+   JS it is a static oversized background, the same chart as before. */
+.chart-sky {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: -9vh;
+  height: 118vh;
+  z-index: -1;
+  overflow: hidden;
+}
+.chart-layer {
+  width: 100%;
+  height: 100%;
+  background-image: url("../../img/chart-bg.jpg");
+  /* the map spans the full site width: its left and right edges align with
+     the page edges, and the chart renders at natural scale instead of the
+     cover zoom (Thimon, 2026-11-08). At desktop widths one tile is 132vh+
+     tall, so it covers viewport + drift with no seam; below ~800px the
+     tile is shorter than the box and repeat-y continues the chart. */
+  background-size: 100% auto;
+  background-repeat: repeat-y;
+  background-position: center top;
+  will-change: transform;
+}
+
+/* narrow or portrait screens: the width-fit tile is shorter than the layer
+   box there (a 390px-wide tile is only ~38vh tall), so restore the old
+   full-bleed cover treatment Thimon prefers on mobile (2026-11-08) */
+@media (max-aspect-ratio: 7/5) {
+  .chart-sky {
+    top: -45%;
+    height: 190%;
+  }
+  .chart-layer {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+img { display: block; max-width: 100%; }
+figure { margin: 0; }
+
+a { color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--gold-ink); background: var(--gold); text-decoration: none; }
+
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.tile-slogan :focus-visible { outline-color: var(--gold-ink); }
+
+h1, h2, h3, h4 {
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* ---------- header ---------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  min-height: 64px;
+  background: var(--ground-2);
+  color: var(--ink);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 22px 0 var(--margin);
+  color: var(--ink);
+  text-decoration: none;
+}
+.brand:hover { background: var(--ground-2); color: var(--gold); }
+.brand .flag { width: 34px; height: 23px; display: block; }
+.brand-logo {
+  height: 38px;
+  width: auto;
+  display: block;
+  background: var(--ground-2);
+}
+.brand-name {
+  font-size: 1.25rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.header-nav {
+  display: flex;
+  align-items: stretch;
+  margin-left: 8px;
+}
+.header-nav a {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 1.0625rem;
+  white-space: nowrap;
+}
+.header-nav a:hover { background: var(--gold); color: var(--gold-ink); }
+
+.header-action {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  background: var(--gold-button);
+  color: var(--gold-ink);
+  padding: 0 24px;
+  text-decoration: none;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: filter .15s ease;
+}
+.header-action:hover { filter: brightness(1.12); color: var(--gold-ink); }
+.header-action .ts-domain { color: inherit; opacity: 0.75; }
+
+/* ---------- masthead ---------- */
+
+.masthead { position: relative; }
+
+/* Paintings are shown WHOLE: native proportions, no cover-cropping.
+   The home masthead is one split composition: the painting on the left,
+   the title block beside it on the navy, so the first screen carries both. */
+.masthead-open {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: clamp(16px, 2vw, 32px);
+  align-items: center;
+  /* equal air around the painting: top and left match the space between
+     the painting's bottom edge and the statement band, which is exactly
+     one section-gap (the band's own margin-top supplies it) */
+  padding: var(--section-gap) var(--section-gap) 0;
+}
+.masthead-hero { grid-column: 1 / 9; }
+.masthead-hero img {
+  width: 100%;
+  height: auto;
+  max-height: 80svh;
+  object-fit: contain;
+}
+
+/* title beside the painting */
+.masthead-under { grid-column: 9 / 13; }
+.standfirst {
+  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
+  line-height: 1.45;
+  max-width: 30ch;
+  margin: 0 0 clamp(24px, 3vw, 40px);
+  color: var(--muted);
+}
+.hero-title {
+  font-size: var(--hero-size);
+  font-weight: 500;
+  line-height: 1.0;
+  letter-spacing: 0.01em;
+  color: var(--gold);
+  background: var(--gold-text);
+  -webkit-background-clip: text;
+  background-clip: text; /* taste-skill-ignore: metallic gold is the brand request */
+  -webkit-text-fill-color: transparent;
+}
+.hero-line { display: block; }
+.hero-button {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  margin-top: clamp(24px, 3vw, 36px);
+  padding: 0 30px;
+  background: var(--gold-button);
+  color: var(--gold-ink);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  text-decoration: none;
+  width: max-content;
+  transition: transform .15s ease, filter .15s ease;
+}
+.hero-button:hover { transform: translateY(-2px); filter: brightness(1.12); }
+
+.page-title-band {
+  padding: clamp(32px, 5vw, 64px) var(--margin) clamp(24px, 3vw, 40px);
+}
+.page-title { font-size: clamp(2.5rem, 5.5vw, 5rem); }
+.title-plate { margin: 0; justify-self: end; align-self: center; }
+.title-plate img {
+  height: clamp(110px, 11vw, 150px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+}
+.page-lead {
+  font-size: var(--step-lead);
+  max-width: 46ch;
+  margin: 16px 0 0;
+  color: var(--muted);
+}
+.page-action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 24px;
+  margin-top: 20px;
+  background: var(--gold-button);
+  color: var(--gold-ink);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  text-decoration: none;
+  width: max-content;
+}
+@media (min-width: 761px) {
+  .page-title-band { display: grid; grid-template-columns: 1.2fr 1fr auto; column-gap: clamp(16px, 2vw, 32px); align-items: end; }
+  .page-title-band .page-title { grid-column: 1; grid-row: 1; }
+  .page-title-band .page-side { grid-column: 2; grid-row: 1; padding-bottom: 8px; }
+  .page-title-band .title-plate { grid-column: 3; grid-row: 1; }
+  .page-lead { margin-top: 0; }
+}
+
+/* ---------- generic section frame ---------- */
+
+main { position: relative; z-index: 1; }
+
+.section {
+  padding-left: var(--margin);
+  padding-right: var(--margin);
+  margin-top: var(--section-gap);
+}
+
+.grid12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: clamp(16px, 2vw, 32px);
+}
+
+.section-heading {
+  font-size: var(--step-head);
+  grid-column: 5 / 13;
+}
+
+/* page and section titles carry the footer wordmark's identity:
+   caps and the metallic gold ramp (2026-11-08, Thimon) */
+.hero-title,
+.page-title,
+.section-heading,
+.faq-heading {
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.page-title,
+.section-heading,
+.faq-heading {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--gold);
+  background: var(--gold-text);
+  -webkit-background-clip: text;
+  background-clip: text; /* taste-skill-ignore: metallic gold is the brand request */
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---------- intro: statement band ---------- */
+
+.statement {
+  padding: 0 var(--margin);
+  margin-top: var(--section-gap);
+}
+.statement-band {
+  background: var(--gold-ramp);
+  color: var(--gold-ink);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(24px, 3vw, 48px) clamp(20px, 3vw, 48px);
+}
+.statement-band .slogan {
+  font-size: clamp(2.75rem, 6vw, 5.5rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+  margin: 0;
+}
+.statement-lang {
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  margin: 0;
+}
+.statement-body {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: clamp(24px, 3vw, 48px);
+  align-items: center;
+  background: var(--surface);
+  padding: clamp(24px, 3vw, 44px);
+}
+.statement-photo img { width: 100%; height: auto; }
+.statement-text {
+  font-size: clamp(1.25rem, 1.4vw, 1.5rem);
+  line-height: 1.4;
+  margin: 0;
+  max-width: 62ch;
+  color: var(--ink);
+}
+
+/* ---------- about: facts beside the two squad claims ---------- */
+
+.doctrine {
+  margin: var(--section-gap) var(--margin) 0;
+  padding: clamp(32px, 4vw, 64px) clamp(24px, 3vw, 48px);
+  background: var(--surface);
+}
+.doctrine .grid12 { align-items: center; }
+.doctrine-portrait {
+  grid-column: 1 / 4;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+.doctrine-claims { grid-column: 4 / 13; }
+.doctrine-body {
+  font-size: clamp(1.375rem, 2vw, 1.875rem);
+  line-height: 1.3;
+  margin: 0;
+  max-width: 46ch;
+}
+.doctrine-body.soft { color: var(--muted); margin-top: 1.25em; }
+.doctrine-body a { color: var(--ink); }
+
+/* facts miniband: a deeper strip along the panel's foot */
+.doctrine-facts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(16px, 2vw, 32px);
+  margin: clamp(28px, 3vw, 44px) 0 0;
+  padding: clamp(18px, 2vw, 26px) clamp(20px, 2.5vw, 32px);
+  background: var(--ground);
+}
+.doctrine-fact dt { color: var(--gold); font-weight: 500; font-size: 1.0625rem; }
+.doctrine-fact dd { color: var(--muted); margin: 4px 0 0; font-size: 1rem; }
+
+/* ---------- voyages: flat deck ---------- */
+
+.voyages {
+  background: var(--ground-2);
+  padding: clamp(56px, 7vw, 96px) var(--margin);
+  margin-top: var(--section-gap);
+}
+.voyages-heading {
+  font-size: var(--step-head);
+  margin: 0 0 clamp(40px, 6vw, 72px);
+}
+.deck {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 32px);
+  align-items: stretch;
+}
+.deck-card {
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  color: var(--ink);
+}
+.deck-card.tone-2 { background: var(--surface-2); }
+.deck-card.tone-3 { background: var(--gold-ramp); color: var(--gold-ink); }
+.deck-card.tone-3 .card-date, .deck-card.tone-3 .card-link { color: var(--gold-ink); opacity: 0.85; }
+.deck-card.tone-3 .card-link:hover { background: var(--gold-ink); color: var(--gold-hi); }
+.card-title { font-size: 1.875rem; line-height: 1.1; max-width: 24ch; }
+.card-excerpt {
+  font-size: 1rem;
+  line-height: 1.45;
+  margin: 16px 0 24px;
+  max-width: 52ch;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card-foot { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-top: auto; }
+.card-date { font-size: 1rem; color: var(--muted); }
+.deck-card.tone-3 .card-date { color: var(--gold-ink); }
+.card-link { font-size: 1rem; }
+
+/* ---------- collapsible planner notes ---------- */
+
+.planner-notes {
+  margin: clamp(40px, 5vw, 64px) 0 0;
+  max-width: 62ch;
+}
+.planner-notes + .planner-notes { margin-top: 20px; }
+.planner-notes summary {
+  cursor: pointer;
+  color: var(--gold);
+  font-size: clamp(1.375rem, 2vw, 1.75rem);
+  line-height: 1.2;
+  font-weight: 500;
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+.planner-notes summary::-webkit-details-marker { display: none; }
+.planner-notes summary::before {
+  content: "\203A";
+  font-size: 1.4em;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+.planner-notes[open] summary::before { transform: rotate(90deg); }
+.planner-notes summary:hover { color: var(--gold-hi); }
+.planner-notes p {
+  margin: 18px 0 0;
+  line-height: 1.55;
+}
+.planner-notes p + p { margin-top: 12px; }
+
+/* ---------- joining: many into one ---------- */
+
+.joining {
+  margin: var(--section-gap) var(--margin) 0;
+  padding: clamp(32px, 4vw, 64px) clamp(24px, 3vw, 48px);
+  background: var(--surface);
+}
+
+.joining-side { grid-column: 1 / 6; }
+.joining-side .section-heading { margin-bottom: 24px; }
+.joining-intro {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0;
+}
+.joining-steps {
+  grid-column: 7 / 13;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3vw, 40px);
+}
+.joining-steps b {
+  font-size: 1.375rem;
+  font-weight: 500;
+  display: block;
+  color: var(--gold);
+}
+.joining-steps p { font-size: 1rem; line-height: 1.5; margin: 6px 0 0; color: var(--muted); max-width: 46ch; }
+
+/* ---------- faq: accordion cards on a calm band ---------- */
+
+.faq {
+  background: var(--ground-2);
+  padding: clamp(56px, 7vw, 96px) var(--margin);
+  margin-top: var(--section-gap);
+  /* keep a chart gap between the FAQ band and the footer band: both are
+     ground-2 and would read as one merged field (2026-11-08, Thimon) */
+  margin-bottom: var(--section-gap);
+}
+.faq-heading {
+  font-size: var(--step-head);
+  margin: 0 0 clamp(32px, 4vw, 56px);
+}
+.faq-list { max-width: 960px; }
+.faq-item {
+  background: var(--surface);
+  padding: 0 clamp(18px, 2vw, 28px);
+}
+.faq-item + .faq-item { margin-top: 10px; }
+.faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: clamp(16px, 2vw, 22px) 0;
+  font-size: clamp(1.25rem, 1.8vw, 1.625rem);
+  line-height: 1.2;
+  font-weight: 500;
+  color: var(--ink);
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "\203A";
+  font-size: 1.5em;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+.faq-item[open] summary::after { transform: rotate(90deg); }
+.faq-item summary:hover { color: var(--gold-hi); }
+.faq-item[open] summary { color: var(--gold-hi); }
+.faq-answer {
+  padding: 0 0 clamp(16px, 2vw, 22px);
+  color: var(--ink);
+  line-height: 1.55;
+}
+.faq-answer p { margin: 0; max-width: 75ch; }
+.faq-answer a { color: var(--gold); }
+.faq-answer a:hover { background: var(--gold); color: var(--gold-ink); text-decoration: none; }
+
+/* on wide screens the painting fills the space beside the accordion;
+   below 1100px the accordion is full width and the painting steps out */
+.faq-figure { display: none; }
+@media (min-width: 1100px) {
+  .faq-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 960px) minmax(280px, 1fr);
+    column-gap: clamp(32px, 4vw, 64px);
+    align-items: start;
+  }
+  .faq-heading { grid-column: 1 / -1; }
+  .faq-figure { display: block; margin: 0; align-self: center; }
+  .faq-figure img { width: 100%; height: auto; }
+  .faq-figure figcaption {
+    font-size: 0.9375rem;
+    color: var(--muted);
+    margin-top: 0;
+    background: var(--surface);
+    padding: 12px 16px;
+  }
+}
+
+/* ---------- footer ---------- */
+
+.site-footer {
+  position: relative;
+  background: var(--ground-2);
+  color: var(--ink);
+  padding: 40px var(--margin) 24px;
+}
+.footer-wordmark {
+  margin-top: 8px;
+  /* quiet close, Thimon 2026-11-08: small again but back on the metallic
+     ramp after he approved it at this size */
+  font-size: clamp(1.4rem, 3.4vw, 1.9rem);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--gold);
+  background: var(--gold-text);
+  -webkit-background-clip: text;
+  background-clip: text; /* taste-skill-ignore: metallic gold is the brand request */
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+.footer-legal {
+  margin: 20px 0 0;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ---------- article pages: framed field ---------- */
+
+.article {
+  margin: var(--section-gap) var(--margin);
+  padding: clamp(32px, 4vw, 64px) clamp(24px, 3vw, 48px);
+  background: var(--surface);
+}
+.article-body { max-width: 1200px; }
+
+.article-body h2 { font-size: clamp(2rem, 3.6vw, 3.25rem); margin-top: clamp(64px, 8vw, 104px); }
+.article-body h2:first-child { margin-top: clamp(24px, 4vw, 56px); }
+.article-body h3 { font-size: 1.5rem; margin-top: 48px; }
+.article-body h4 { font-size: 1.25rem; margin-top: 32px; }
+.article-body p, .article-body ul, .article-body ol { max-width: 62ch; }
+.article-body ul, .article-body ol { padding-left: 1.4em; line-height: 1.55; }
+.article-body img { max-width: min(100%, 720px); height: auto; margin: 24px 0; }
+.article-body a { color: var(--gold); }
+.trade-chart, .article-body svg { width: 100%; height: auto; margin: 24px 0; }
+.map-figure { margin: 24px 0; }
+.map-figure img { width: 100%; height: auto; display: block; }
+.map-figure figcaption { font-size: 0.9375rem; color: var(--muted); margin-top: 8px; }
+.map-figure a:hover { background: none; }
+.map-route { margin: 24px 0; }
+.map-route-frame { position: relative; }
+.map-route-frame img { width: 100%; height: auto; display: block; margin: 0; max-width: none; }
+.map-figure img { margin: 0; }
+.map-route-frame svg { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; pointer-events: none; }
+.map-route figcaption { font-size: 0.9375rem; color: var(--muted); margin-top: 8px; }
+.port-name { font-size: 44px; }
+.port-goods { font-size: 30px; }
+
+/* ---------- trade planner ---------- */
+
+.trade-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: end;
+  margin: 24px 0;
+}
+.trade-control { display: flex; flex-direction: column; gap: 6px; }
+.trade-control span { font-size: 0.9375rem; color: var(--muted); }
+.trade-control select {
+  font-family: inherit;
+  font-size: 1.0625rem;
+  padding: 10px 14px;
+  min-width: 260px;
+  background: var(--ground);
+  color: var(--ink);
+  border: 1px solid var(--surface-2);
+}
+.trade-control--check { flex-direction: row; align-items: center; gap: 10px; padding-bottom: 10px; }
+.trade-control--check input { width: 20px; height: 20px; accent-color: var(--gold); }
+.trade-control--check span { font-size: 1.0625rem; color: var(--ink); }
+.trade-note { color: var(--muted); font-size: 1rem; line-height: 1.55; }
+.route-heading { font-size: clamp(1.75rem, 3vw, 2.5rem); margin-top: clamp(40px, 5vw, 64px); }
+.route-list { padding-left: 1.2em; line-height: 1.6; }
+.route-list li { margin-bottom: 14px; }
+.route-list em { color: var(--gold); font-style: italic; }
+.route-margin { color: var(--muted); font-size: 0.9375rem; }
+.route-alts { color: var(--muted); font-size: 0.875rem; }
+.act-sell { color: var(--gold); }
+.act-buy { color: var(--gold); }
+.goods { color: var(--ink); }
+.map-route-frame img { margin: 0; }
+.route-list, .route-heading { max-width: 62ch; }
+
+/* event log styling (bot-written markdown) */
+.event-log > p:first-child { font-size: 1.75rem; }
+.event-log strong { font-size: 1.25rem; }
+
+/* ---------- shared small bits ---------- */
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0;
+  background: var(--gold); color: var(--gold-ink);
+  padding: 10px 20px; z-index: 50;
+}
+.skip-link:focus { left: 0; }
+
+.no-motion .masthead-hero img { animation: none; }
+/* ---------- tablet ---------- */
+
+@media (max-width: 900px) {
+  .header-action .ts-domain { display: none; }
+  .site-header { flex-wrap: wrap; }
+  .header-nav {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    flex-wrap: wrap;
+    background: var(--surface);
+  }
+  .header-nav a {
+    flex: 1 1 auto;
+    justify-content: center;
+    min-height: 48px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    white-space: normal;
+  }
+  .deck { grid-template-columns: 1fr 1fr; }
+  .deck-card.tone-3 { grid-column: 1 / 3; }
+}
+
+/* ---------- phone ---------- */
+
+@media (max-width: 760px) {
+  :root { --margin: 20px; }
+
+  .site-header { flex-wrap: wrap; min-height: 0; }
+  .brand { padding: 12px var(--margin); min-height: 56px; }
+  .brand-name { font-size: 1.0625rem; }
+  .brand-logo { height: 32px; }
+  .header-action { padding: 0 20px; min-height: 56px; }
+
+  /* masthead stacks: painting first at a modest height so the title
+     and the join button stay on the first screen */
+  .masthead-open { display: block; padding: var(--section-gap) var(--section-gap) 0; }
+  .masthead-hero img { max-height: 46svh; }
+  .masthead-under { padding: 24px var(--margin) 0; }
+  .hero-title { font-size: 11vw; }
+  /* the title plate is a desktop decoration; on phones it would only
+     push the article body down */
+  .title-plate { display: none; }
+
+  .statement-band { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .statement-band .slogan { font-size: 11vw; }
+  .statement-lang { font-size: 1.5rem; }
+  .statement-body { grid-template-columns: 1fr; gap: 32px; }
+  .statement-text { font-size: 1.125rem; }
+
+  .doctrine .grid12 { display: block; }
+  .doctrine-portrait { width: 220px; }
+  .doctrine-claims { margin-top: 24px; }
+  .doctrine-body { font-size: 1.125rem; }
+  .doctrine-facts { grid-template-columns: 1fr; gap: 16px; }
+
+  .voyages { margin-top: var(--section-gap); }
+  .deck { grid-template-columns: 1fr; }
+  .deck-card.tone-3 { grid-column: auto; color: var(--gold-ink); }
+  .card-title { font-size: 1.75rem; }
+
+  .joining-side, .joining-steps { grid-column: 1 / 13; }
+   .joining-steps { margin-top: 40px; }
+
+  .port-name { font-size: 82px; }
+  .port-goods { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .deck-card { transition: none !important; }
+}
