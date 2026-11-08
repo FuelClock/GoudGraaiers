@@ -120,6 +120,12 @@ h1, h2, h3, h4 {
 }
 .brand:hover { background: var(--ground-2); color: var(--gold); }
 .brand .flag { width: 34px; height: 23px; display: block; }
+.brand-logo {
+  height: 38px;
+  width: auto;
+  display: block;
+  background: var(--ground-2);
+}
 .brand-name {
   font-size: 1.25rem;
   letter-spacing: 0.02em;
@@ -681,6 +687,7 @@ main { position: relative; z-index: 1; }
   .site-header { flex-wrap: wrap; min-height: 0; }
   .brand { padding: 12px var(--margin); min-height: 56px; }
   .brand-name { font-size: 1.0625rem; }
+  .brand-logo { height: 32px; }
   .header-action { padding: 0 20px; min-height: 56px; }
 
   /* masthead stacks: painting first at a modest height so the title
