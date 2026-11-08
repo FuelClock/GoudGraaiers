@@ -323,29 +323,15 @@ main { position: relative; z-index: 1; }
   padding: clamp(32px, 4vw, 64px) clamp(24px, 3vw, 48px);
   background: var(--surface);
 }
-.doctrine .grid12 { align-items: start; }
-.doctrine-side {
-  grid-column: 1 / 4;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
-.doctrine-facts {
-  font-size: 1.0625rem;
-  line-height: 1.45;
-  color: var(--muted);
-  margin: 0;
-}
-.doctrine-facts dt { color: var(--ink); font-weight: 500; margin-top: 18px; }
-.doctrine-facts dt:first-child { margin-top: 0; }
-.doctrine-facts dd { margin: 2px 0 0; }
+.doctrine .grid12 { align-items: center; }
 .doctrine-portrait {
+  grid-column: 1 / 4;
   width: 100%;
   height: auto;
   aspect-ratio: 1 / 1;
   object-fit: cover;
 }
-.doctrine-claims { grid-column: 5 / 13; }
+.doctrine-claims { grid-column: 4 / 13; }
 .doctrine-body {
   font-size: clamp(1.375rem, 2vw, 1.875rem);
   line-height: 1.3;
@@ -354,6 +340,18 @@ main { position: relative; z-index: 1; }
 }
 .doctrine-body.soft { color: var(--muted); margin-top: 1.25em; }
 .doctrine-body a { color: var(--ink); }
+
+/* facts miniband: a deeper strip along the panel's foot */
+.doctrine-facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 32px);
+  margin: clamp(28px, 3vw, 44px) 0 0;
+  padding: clamp(18px, 2vw, 26px) clamp(20px, 2.5vw, 32px);
+  background: var(--ground);
+}
+.doctrine-fact dt { color: var(--gold); font-weight: 500; font-size: 1.0625rem; }
+.doctrine-fact dd { color: var(--muted); margin: 4px 0 0; font-size: 1rem; }
 
 /* ---------- voyages: flat deck ---------- */
 
@@ -710,10 +708,10 @@ main { position: relative; z-index: 1; }
   .statement-text { font-size: 1.125rem; }
 
   .doctrine .grid12 { display: block; }
-  .doctrine-side { flex-direction: row; align-items: flex-start; justify-content: space-between; gap: 24px; }
-  .doctrine-portrait { width: 180px; }
+  .doctrine-portrait { width: 220px; }
   .doctrine-claims { margin-top: 24px; }
   .doctrine-body { font-size: 1.125rem; }
+  .doctrine-facts { grid-template-columns: 1fr; gap: 16px; }
 
   .voyages { margin-top: var(--section-gap); }
   .deck { grid-template-columns: 1fr; }
