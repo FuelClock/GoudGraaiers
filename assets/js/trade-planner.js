@@ -33,7 +33,7 @@
       var stIdx = active.findIndex(function (a) { return a.name === 'St. Jean'; });
       if (stIdx > 0) active = active.slice(stIdx).concat(active.slice(0, stIdx));
       summary.textContent = 'Loop: ' + active.length + ' stops from the St Jean gathering point (no market there: gather, then sail), ' + plan.skipped.length +
-        ' sailed past without a profitable trade. Amounts assume a full 100 ton hold per cargo and scale with your real capacity.';
+        ' sailed past without a profitable trade.';
       skippedEl.textContent = plan.skipped.length ? 'Sail past without trading: ' + plan.skipped.join(', ') + '.' : '';
 
       active.forEach(function (a, i) {
@@ -47,8 +47,7 @@
           var rows = '';
           buys.forEach(function (t, k) {
             rows += '<li><span class="stop-rank">' + (k + 1) + '</span>' +
-              '<span class="stop-good">' + t.g + '</span>' +
-              '<span class="stop-qty">' + t.qty + ' t per full 100 t hold</span></li>';
+              '<span class="stop-good">' + t.g + '</span></li>';
           });
           html += '<ul class="stop-goods">' + rows + '</ul>';
         } else {
