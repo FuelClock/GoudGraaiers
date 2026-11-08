@@ -2,6 +2,7 @@
 layout: article
 title: Sailing with us
 lead: "Two ways aboard: apply in-game, or step onto our TeamSpeak first and meet the fleet."
+ts_action: true
 ---
 {% include_relative assets/pages/joining.md %}
 
