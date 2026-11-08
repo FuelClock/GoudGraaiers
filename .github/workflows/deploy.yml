@@ -47,9 +47,13 @@ jobs:
 
       - name: Assemble production + preview
         run: |
-          cp -a ./site-redesign ./site/redesign
-          rm -f ./site/redesign/CNAME
-          echo "Assembled: $(find ./site -maxdepth 1 -type f | wc -l) root files, $(find ./site/redesign -type f | wc -l) preview files"
+          # jekyll-build-pages outputs root-owned dirs, so use sudo to read-copy
+          mkdir -p ./assembled
+          sudo cp -a ./site/. ./assembled/
+          sudo cp -a ./site-redesign ./assembled/redesign
+          sudo rm -f ./assembled/redesign/CNAME
+          sudo chown -R "$(id -u):$(id -g)" ./assembled
+          echo "Assembled: $(find ./assembled -maxdepth 1 -type f | wc -l) root files, $(find ./assembled/redesign -type f | wc -l) preview files"
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
@@ -57,7 +61,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
-          path: ./site
+          path: ./assembled
 
   deploy:
     needs: build
