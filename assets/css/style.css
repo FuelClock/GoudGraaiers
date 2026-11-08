@@ -126,15 +126,17 @@ h1, h2, h3, h4 {
 
 .masthead { position: relative; background: var(--ground); }
 
+/* Paintings are shown WHOLE: native proportions, no cover-cropping.
+   Where a box ratio differs from the painting, contain letterboxes
+   into the same navy ground, so the bars read as gallery wall. */
 .masthead-hero img {
   width: 100%;
-  height: clamp(320px, 52svh, 620px);
-  object-fit: cover;
-  object-position: center 28%;
-  transform-origin: center;
-  animation: drift 26s ease-in-out infinite alternate;
+  height: auto;
+  max-height: 86svh;
+  object-fit: contain;
+  background: var(--ground);
 }
-.masthead-hero--slim img { height: clamp(220px, 34svh, 420px); object-position: center 40%; }
+.masthead-hero--slim img { height: clamp(220px, 34svh, 420px); object-fit: contain; background: var(--ground); }
 
 .masthead-strip {
   display: grid;
@@ -143,19 +145,12 @@ h1, h2, h3, h4 {
   padding: 8px;
   background: var(--ground);
 }
-.masthead-strip figure { overflow: hidden; }
+.masthead-strip figure { overflow: hidden; background: var(--ground); aspect-ratio: 16 / 10; }
 .masthead-strip img {
   width: 100%;
   height: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  transform-origin: center;
-  animation: drift 26s ease-in-out infinite alternate;
-}
-
-@keyframes drift {
-  from { transform: scale(1) translate(0, 0); }
-  to   { transform: scale(1.06) translate(-1%, -0.8%); }
+  object-fit: contain;
+  background: var(--ground);
 }
 
 /* title under the paintings */
@@ -290,7 +285,7 @@ section.statement { padding: var(--margin); }
   grid-column: 9 / 13; grid-row: 2;
   overflow: hidden;
 }
-.tile-photo img { width: 100%; height: 100%; object-fit: cover; }
+.tile-photo img { width: 100%; height: 100%; object-fit: contain; background: var(--ground-2); }
 
 .tile-text {
   grid-column: 1 / 13;
@@ -593,7 +588,6 @@ section.statement { padding: var(--margin); }
 
 .no-motion .masthead-hero img,
 .no-motion .masthead-strip img { animation: none; }
-
 /* ---------- tablet ---------- */
 
 @media (max-width: 900px) {
@@ -626,9 +620,7 @@ section.statement { padding: var(--margin); }
     font-size: 1rem;
   }
 
-  .masthead-hero img { height: 44svh; min-height: 240px; }
   .masthead-strip { grid-template-columns: 1fr; }
-  .masthead-strip img { aspect-ratio: 16 / 10; }
 
   .masthead-under { padding-bottom: 48px; }
   .hero-title { font-size: 15vw; }
