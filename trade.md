@@ -1,0 +1,66 @@
+---
+layout: article
+title: Trade Route Planner
+lead: Pick your ship's rate and whether you sail the PvP circle, and get the optimal counterclockwise trade loop with exact buy and sell points.
+scripts:
+  - /assets/js/trade-data.js?v=6
+  - /assets/js/trade-planner.js?v=1
+---
+## Plan your trade loop
+
+The planner computes the single best counterclockwise trade loop for your ship: it uses the per-port market prices from the flotilla trading spreadsheet, keeps you out of the PvP circle and pirate ports unless you ask for them, and fills your hold with the goods that earn the most gold per ton of hold space. When you reach the first port that pays a good's top price, you sell the whole stock there and refill with the local cheap goods.
+
+<div class="trade-controls">
+  <label class="trade-control">
+    <span>Your ship's rate</span>
+    <select id="rate-select">
+      <option value="1">1st rate (Victory class)</option>
+      <option value="2">2nd rate</option>
+      <option value="3" selected>3rd rate</option>
+      <option value="4">4th rate</option>
+      <option value="5">5th rate</option>
+      <option value="6">6th rate</option>
+      <option value="7">7th rate (small, docks anywhere)</option>
+    </select>
+  </label>
+  <label class="trade-control trade-control--check">
+    <input type="checkbox" id="pvp-toggle">
+    <span>I will sail into the PvP circle and pirate ports</span>
+  </label>
+</div>
+
+<p class="trade-note" id="trade-summary"></p>
+<p class="trade-note" id="trade-skipped"></p>
+
+<figure class="map-route">
+  <div class="map-route-frame">
+    <img src="{{ '/img/map-web.jpg' | relative_url }}" alt="The world chart with your optimal trade loop drawn on it" width="2400" height="1987" loading="lazy" decoding="async">
+    <svg viewBox="0 0 2400 1987" xmlns="http://www.w3.org/2000/svg" aria-label="Your optimal trade loop drawn on the world chart.">
+      <defs>
+        <marker id="plan-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#d4af37"/>
+        </marker>
+      </defs>
+      <g fill="none" stroke="#d4af37" stroke-width="6" stroke-dasharray="20 14" opacity="0.95">
+        <path id="plan-route" d="" marker-end="url(#plan-arrow)"/>
+      </g>
+      <g id="plan-stops" font-family="EB Garamond, Georgia, serif"></g>
+    </svg>
+  </div>
+  <figcaption id="plan-caption">Your loop is drawn in gold; port names are on the map and the stops match the list below. BUY stops list every cargo worth loading, best first; at SELL stops just dock and use the game's Sell by best profit margins button. Amounts assume a 100 ton hold and scale with your real cargo capacity.</figcaption>
+</figure>
+
+<h3 class="route-heading">Your trading stops</h3>
+<ol id="route-list" class="route-list"></ol>
+
+## How the route is chosen
+
+Trading in World of Sea Battle works like this: you fill your hold with whatever is cheap at your current port, sail on, and sell the whole stock the moment you reach the first port that pays a good's maximum price, freeing the hold for the next region's cheap goods. The planner applies exactly that rule at every port on your loop: each stop lists every cargo worth loading there, ranked by gold earned per hold of cargo space, and names the port where each cargo sells at top price. Hold space is deliberately not part of the planning, so no port gets skipped to make room for a bigger haul elsewhere: sail the loop, trade at every stop, and sell whatever your hold carries the moment it reaches a top price.
+
+Docking is modeled per port from tiers verified in game: a port in a shallow zone of tier N can only be docked by ships of rate N and smaller, while ports in open water or on the endless sea take any ship. A rate 2 port like Everston, for example, turns away only 1st rates, while a rate 6 port like Fiji takes 6th rates and smaller only. So a rate 1 trader cannot dock at Everston (tier 2) but can dock at Gray Island (open water), exactly as in the game.
+
+Amounts are shown per full 100 ton hold of each good and scale linearly with your real capacity: a ship with a 300 ton hold can triple every number. Each buy entry shows the gold a full hold of that cargo earns, so the list is ranked by money per cargo space: work down it until your hold is full. When several ports ship the same good to one market, the sale is shown as full holds, for example Rugs x8: that is eight separate loads arriving over the loop, not one cargo.
+
+## Stock: every market is a little different each cycle
+
+Port markets restock on a server cycle (roughly every 24 to 48 hours, depending on your server), and which goods a port stocks after a cycle is partly random: one visit a port may only have Wine, the next the whole range. Guild production and how much players buy shift the amounts further, so treat the plan as the route and the market as the weather. When a planned good is sold out at a port, skip that purchase and carry on: the loop stays valid, one leg simply earns a little less. Provisions (Beer, Nuts, Dates) are almost always in stock but pay little per ton, so they are hold filler, not the main cargo.

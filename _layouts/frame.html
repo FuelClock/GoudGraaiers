@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en' }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} · {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="description" content="{{ page.lead | default: site.description }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v=11">
+</head>
+<body {% if page.body_class %}class="{{ page.body_class }}"{% endif %}>
+  <a class="skip-link" href="#content">Skip to content</a>
+  {% include header.html %}
+
+  {% if page.hero %}
+  {% include masthead-home.html %}
+  {% else %}
+  {% include masthead-page.html %}
+  {% endif %}
+
+  <main id="content">
+    {{ content }}
+  </main>
+
+  {% include footer.html %}
+  <script src="{{ '/assets/js/site.js' | relative_url }}?v=11" defer></script>
+  {% for s in page.scripts %}
+  <script src="{{ s | relative_url }}" defer></script>
+  {% endfor %}
+</body>
+</html>

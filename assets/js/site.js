@@ -27,7 +27,7 @@
 
   /* section entrances */
   function entrances() {
-    var targets = d.querySelectorAll('.deck-card, .tile-board > *, .faq-row, .joining-steps > div, .doctrine-body, .cta-headline, .article-body > *, .page-title-band .page-side > *');
+    var targets = d.querySelectorAll('.deck-card, .statement-band, .statement-body > *, .faq-row, .joining-steps > div, .doctrine-body, .cta-headline, .article-body > *, .page-title-band .page-side > *');
     if (reduce || !('IntersectionObserver' in window)) return;
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
