@@ -1,5 +1,18 @@
-remote_theme: pages-themes/cayman@v0.2.0
-plugins:
-- jekyll-remote-theme # add this line to the plugins list if you already have one
-title: [Goud Graaiers Info]
-description: [The complete information on everything about our guild!]
+title: De Goud Graaiers
+description: >-
+  A proud Dutch flotilla in World of Sea Battle. Dutch and English sailors,
+  every voyage, one flag.
+lang: en
+
+nav:
+  - label: Voyages
+    url: /events.html
+  - label: The Crew
+    url: /crew.html
+  - label: Sailing with us
+    url: /join.html
+  - label: Cargo & Guides
+    url: /guides.html
+
+teamspeak: donkey.beauty
+guild_search: NL.
