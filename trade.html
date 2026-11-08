@@ -14,7 +14,7 @@ lead: Pick your ship's rate and whether you sail the PvP circle, and get the opt
     </nav>
     <div class="article-body">
       <h2>Plan your trade loop</h2>
-      <p>The planner computes the single best counterclockwise trade loop for your ship: it uses the per-port market prices from the flotilla trading spreadsheet, respects every port's shallow-water tier from the game's own files (a rate 3 ship cannot dock at a tier 5 port, and so on), keeps you out of the PvP circle and pirate ports unless you ask for them, and fills your hold with the goods that earn the most gold per ton of hold space. When you reach the first port that pays a good's top price, you sell the whole stock there and refill with the local cheap goods.</p>
+      <p>The planner computes the single best counterclockwise trade loop for your ship: it uses the per-port market prices from the flotilla trading spreadsheet, keeps you out of the PvP circle and pirate ports unless you ask for them, and fills your hold with the goods that earn the most gold per ton of hold space. When you reach the first port that pays a good's top price, you sell the whole stock there and refill with the local cheap goods.</p>
 
       <div class="trade-controls">
         <label class="trade-control">
@@ -59,7 +59,8 @@ lead: Pick your ship's rate and whether you sail the PvP circle, and get the opt
       <ol id="route-list" class="route-list"></ol>
 
       <h2>How the route is chosen</h2>
-      <p>Trading in World of Sea Battle works like this: you fill your hold with whatever is cheap at your current port, sail on, and sell the whole stock the moment you reach the first port that pays a good's maximum price, freeing the hold for the next region's cheap goods. The planner computes that exactly: it is a capacity-planning problem, solved so that no ton of hold space ever sits idle when a profitable good could be carried. Every port you cannot dock at is excluded before the computation, so the loop always fits your ship.</p>
+      <p>Trading in World of Sea Battle works like this: you fill your hold with whatever is cheap at your current port, sail on, and sell the whole stock the moment you reach the first port that pays a good's maximum price, freeing the hold for the next region's cheap goods. The planner computes that exactly: it is a capacity-planning problem, solved so that no ton of hold space ever sits idle when a profitable good could be carried.</p>
+      <p>One caveat for the biggest ships: shallow-water zones on the map restrict the sailing routes of 1st and 2nd rates, and a few ports limit docking for them too. The planner assumes full docking access for every port; if you sail a 1st or 2nd rate, double-check the stops in-game.</p>
       <p>Amounts are shown per 100 tons of hold space and scale linearly with your real capacity: a ship with a 300 ton hold can triple every number.</p>
 
       <h2>Stock: every market is a little different each cycle</h2>
