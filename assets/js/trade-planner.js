@@ -38,18 +38,26 @@
 
       active.forEach(function (a, i) {
         var li = document.createElement('li');
-        var parts = [];
-        if (Object.keys(a.sell).length) {
-          parts.push('<b class="act-sell">SELL</b> <span class="goods">sell by best profit margins</span>');
+        li.className = 'stop';
+        var hasSell = !!Object.keys(a.sell).length;
+        var buys = a.buys || [];
+        var html = '<span class="stop-no">' + (i + 1) + '</span>' +
+          '<h4 class="stop-name">' + a.name + '</h4>';
+        if (hasSell || buys.length) {
+          var rows = '';
+          if (hasSell) {
+            rows += '<li class="stop-sell"><b>SELL</b>: dock and use the game\'s Sell by best profit margins button</li>';
+          }
+          buys.forEach(function (t, k) {
+            rows += '<li><span class="stop-rank">' + (k + 1) + '</span>' +
+              '<span class="stop-good">' + t.g + '</span>' +
+              '<span class="stop-qty">' + t.qty + ' t per full 100 t hold</span></li>';
+          });
+          html += '<ul class="stop-goods">' + rows + '</ul>';
+        } else {
+          html += '<p class="stop-empty">' + (a.name === 'St. Jean' ? 'gather here, start the loop' : 'sail on, no profitable trade here') + '</p>';
         }
-        if ((a.buys || []).length) {
-          var bl = a.buys.map(function (t) {
-            return '<span class="goods">' + t.g + ' ' + t.qty + 't</span>';
-          }).join(' &nbsp; ');
-          parts.push('<b class="act-buy">BUY, best first:</b> ' + bl);
-        }
-        li.innerHTML = '<b>' + a.name + '</b>' +
-          (parts.length ? ': ' + parts.join(' &nbsp; ') : ': sail on, no trade here');
+        li.innerHTML = html;
         list.appendChild(li);
       });
 
@@ -69,16 +77,43 @@
         t.textContent = String(i + 1);
         stopsG.appendChild(t);
         var lbl = document.createElementNS(NS, 'text');
-        if (x > 2050) { lbl.setAttribute('x', x - 26); lbl.setAttribute('text-anchor', 'end'); }
-        else if (x < 350) { lbl.setAttribute('x', x + 26); lbl.setAttribute('text-anchor', 'start'); }
+        var anchoredEnd = x > 2050, anchoredStart = x < 350;
+        if (anchoredEnd) { lbl.setAttribute('x', x - 26); lbl.setAttribute('text-anchor', 'end'); }
+        else if (anchoredStart) { lbl.setAttribute('x', x + 26); lbl.setAttribute('text-anchor', 'start'); }
         else { lbl.setAttribute('x', x); lbl.setAttribute('text-anchor', 'middle'); }
         lbl.setAttribute('y', y + 58);
-        lbl.setAttribute('font-size', 46); lbl.setAttribute('font-weight', 600);
-        lbl.setAttribute('fill', '#14212c');
-        lbl.setAttribute('stroke', '#e8e2d2'); lbl.setAttribute('stroke-width', 10);
+        lbl.setAttribute('class', 'plan-name');
+        lbl.setAttribute('font-size', 46); lbl.setAttribute('font-weight', 500);
+        lbl.setAttribute('fill', '#e8e2d2');
+        lbl.setAttribute('stroke', '#14212c'); lbl.setAttribute('stroke-width', 10);
         lbl.setAttribute('paint-order', 'stroke'); lbl.setAttribute('stroke-linejoin', 'round');
         lbl.textContent = a.name;
         stopsG.appendChild(lbl);
+        var hasSell = !!Object.keys(a.sell).length;
+        var buys = a.buys || [];
+        var goodsLine = '';
+        if (hasSell) {
+          goodsLine = 'sell by best profit margins';
+        } else if (buys.length) {
+          goodsLine = 'buy ' + buys.slice(0, 3).map(function (t) { return t.g; }).join(' + ') +
+            (buys.length > 3 ? ' +' + (buys.length - 3) + ' more' : '');
+        } else if (a.name === 'St. Jean') {
+          goodsLine = 'gather here, start the loop';
+        }
+        if (goodsLine) {
+          var gl = document.createElementNS(NS, 'text');
+          if (anchoredEnd) { gl.setAttribute('x', x - 26); gl.setAttribute('text-anchor', 'end'); }
+          else if (anchoredStart) { gl.setAttribute('x', x + 26); gl.setAttribute('text-anchor', 'start'); }
+          else { gl.setAttribute('x', x); gl.setAttribute('text-anchor', 'middle'); }
+          gl.setAttribute('y', y + 96);
+          gl.setAttribute('class', 'plan-goods');
+          gl.setAttribute('font-size', 28); gl.setAttribute('font-weight', 500);
+          gl.setAttribute('fill', '#e5cf82');
+          gl.setAttribute('stroke', '#14212c'); gl.setAttribute('stroke-width', 8);
+          gl.setAttribute('paint-order', 'stroke'); gl.setAttribute('stroke-linejoin', 'round');
+          gl.textContent = goodsLine;
+          stopsG.appendChild(gl);
+        }
       });
       if (pts.length > 1) {
         pts.push(pts[0].slice());

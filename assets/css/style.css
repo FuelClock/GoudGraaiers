@@ -743,16 +743,25 @@ main { position: relative; z-index: 1; }
 .trade-control--check span { font-size: 1.0625rem; color: var(--ink); }
 .trade-note { color: var(--muted); font-size: 1rem; line-height: 1.55; }
 .route-heading { font-size: clamp(1.75rem, 3vw, 2.5rem); margin-top: clamp(40px, 5vw, 64px); }
-.route-list { padding-left: 1.2em; line-height: 1.6; }
-.route-list li { margin-bottom: 14px; }
-.route-list em { color: var(--gold); font-style: italic; }
-.route-margin { color: var(--muted); font-size: 0.9375rem; }
-.route-alts { color: var(--muted); font-size: 0.875rem; }
-.act-sell { color: var(--gold); }
-.act-buy { color: var(--gold); }
-.goods { color: var(--ink); }
+.route-list { list-style: none; padding: 0; margin: 28px 0 0; }
+/* stops styled after the Trade Fever chart: parchment port name, gold goods below it */
+.stop { display: grid; grid-template-columns: 2.2em 1fr; column-gap: 12px; margin-bottom: 30px; }
+.stop-no { grid-column: 1; grid-row: 1; color: var(--gold); font-size: 1.4rem; font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1.15; }
+.stop-name { grid-column: 2; margin: 0; font-size: 1.5rem; font-weight: 500; color: var(--ink); line-height: 1.15; }
+.stop-goods { grid-column: 2; list-style: none; margin: 8px 0 0; padding: 0; }
+.stop-goods li { display: flex; align-items: baseline; gap: 12px; padding: 4px 0; }
+.stop-rank { color: var(--muted); font-size: 0.9375rem; min-width: 1.3em; font-variant-numeric: tabular-nums; }
+.stop-good { color: #e5cf82; font-size: 1.125rem; }
+.stop-qty { color: var(--muted); font-size: 0.9375rem; }
+.stop-sell { color: var(--gold); font-weight: 500; }
+.stop-empty { grid-column: 2; margin: 6px 0 0; color: var(--muted); font-style: italic; }
 .map-route-frame img { margin: 0; }
 .route-list, .route-heading { max-width: 62ch; }
+@media (max-width: 760px) {
+  .stop { grid-template-columns: 1.8em 1fr; column-gap: 8px; margin-bottom: 24px; }
+  .stop-name { font-size: 1.3rem; }
+  .stop-goods li { gap: 8px; }
+}
 
 /* event log styling (bot-written markdown) */
 .event-log > p:first-child { font-size: 1.75rem; }
@@ -835,6 +844,11 @@ main { position: relative; z-index: 1; }
 
   .port-name { font-size: 82px; }
   .port-goods { display: none; }
+  /* planner map labels mirror the static chart on phones: bigger names,
+     goods lines hidden (they are unreadable at that scale; the ranked
+     stops list below carries the full cargo) */
+  .plan-name { font-size: 82px; }
+  .plan-goods { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
