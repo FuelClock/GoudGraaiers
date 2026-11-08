@@ -16,3 +16,9 @@ nav:
 
 teamspeak: donkey.beauty
 guild_search: NL.
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
