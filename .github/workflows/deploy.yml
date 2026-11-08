@@ -1,0 +1,71 @@
+name: Deploy guild site (main + redesign preview)
+
+# Builds the production site from main AND the redesign branch in one run,
+# deploys both: main at https://gg.donkey.beauty/ and the redesign preview
+# at https://gg.donkey.beauty/redesign/
+on:
+  push:
+    branches: [main, redesign]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main (production)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
+
+      - name: Checkout redesign (preview)
+        uses: actions/checkout@v4
+        with:
+          ref: redesign
+          path: redesign
+
+      - name: Build production site (main)
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./main
+          destination: ./site
+
+      - name: Build redesign preview
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./redesign
+          destination: ./site-redesign
+
+      - name: Assemble production + preview
+        run: |
+          cp -a ./site-redesign ./site/redesign
+          rm -f ./site/redesign/CNAME
+          echo "Assembled: $(find ./site -maxdepth 1 -type f | wc -l) root files, $(find ./site/redesign -type f | wc -l) preview files"
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
