@@ -556,16 +556,8 @@ section.statement { padding: var(--margin); }
   padding: 0 var(--margin) clamp(96px, 12vw, 160px);
 }
 .article .grid12 { align-items: start; }
-.side-nav {
-  grid-column: 1 / 5;
-  position: sticky;
-  top: 32px;
-  font-size: 0.9375rem;
-}
-.side-nav p { margin: 0 0 10px; color: var(--muted); }
-.side-nav a { display: block; text-decoration: none; padding: 6px 0; color: var(--ink); }
-.side-nav a:hover { background: var(--gold); }
-.article-body { grid-column: 5 / 13; }
+.article-body { grid-column: 3 / 13; }
+
 .article-body h2 { font-size: clamp(2rem, 3.6vw, 3.25rem); margin-top: clamp(64px, 8vw, 104px); }
 .article-body h2:first-child { margin-top: clamp(24px, 4vw, 56px); }
 .article-body h3 { font-size: 1.5rem; margin-top: 48px; }
@@ -718,7 +710,6 @@ section.statement { padding: var(--margin); }
   .footer-wordmark { font-size: 13.5vw; }
 
   .article .grid12 { display: block; }
-  .side-nav { position: static; margin-bottom: 24px; }
   .port-name { font-size: 82px; }
   .port-goods { display: none; }
 }
