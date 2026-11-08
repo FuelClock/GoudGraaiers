@@ -38,16 +38,13 @@
 
       active.forEach(function (a, i) {
         var li = document.createElement('li');
-        li.className = 'stop';
         var hasSell = !!Object.keys(a.sell).length;
         var buys = a.buys || [];
+        li.className = 'stop' + (hasSell ? ' stop--sell' : '');
         var html = '<span class="stop-no">' + (i + 1) + '</span>' +
           '<h4 class="stop-name">' + a.name + '</h4>';
-        if (hasSell || buys.length) {
+        if (buys.length) {
           var rows = '';
-          if (hasSell) {
-            rows += '<li class="stop-sell"><b>SELL</b>: dock and use the game\'s Sell by best profit margins button</li>';
-          }
           buys.forEach(function (t, k) {
             rows += '<li><span class="stop-rank">' + (k + 1) + '</span>' +
               '<span class="stop-good">' + t.g + '</span>' +
@@ -64,10 +61,15 @@
       var MUW = 120.0516;
       active.forEach(function (a, i) {
         var x = a.lng / MUW * 2400, y = (1 - a.lat / 100) * 1987;
+        var hasSell = !!Object.keys(a.sell).length;
+        var buys = a.buys || [];
         pts.push([x, y]);
         var c = document.createElementNS(NS, 'circle');
         c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', 18);
-        c.setAttribute('fill', '#d4af37'); c.setAttribute('stroke', '#14212c'); c.setAttribute('stroke-width', 5);
+        /* sell stops get the green marker: dock, then the game's
+           Sell by best profit margins button does the rest */
+        c.setAttribute('fill', hasSell ? '#3f8f5f' : '#d4af37');
+        c.setAttribute('stroke', '#14212c'); c.setAttribute('stroke-width', 5);
         stopsG.appendChild(c);
         var t = document.createElementNS(NS, 'text');
         t.setAttribute('x', x); t.setAttribute('y', y + 13);
@@ -91,28 +93,35 @@
         stopsG.appendChild(lbl);
         var hasSell = !!Object.keys(a.sell).length;
         var buys = a.buys || [];
-        var goodsLine = '';
-        if (hasSell) {
-          goodsLine = 'sell by best profit margins';
-        } else if (buys.length) {
-          goodsLine = 'buy ' + buys.slice(0, 3).map(function (t) { return t.g; }).join(' + ') +
-            (buys.length > 3 ? ' +' + (buys.length - 3) + ' more' : '');
+        var goods = buys.slice(0, 3);
+        if (goods.length) {
+          goods.forEach(function (t, k) {
+            var gl = document.createElementNS(NS, 'text');
+            if (anchoredEnd) { gl.setAttribute('x', x - 26); gl.setAttribute('text-anchor', 'end'); }
+            else if (anchoredStart) { gl.setAttribute('x', x + 26); gl.setAttribute('text-anchor', 'start'); }
+            else { gl.setAttribute('x', x); gl.setAttribute('text-anchor', 'middle'); }
+            gl.setAttribute('y', y + 96 + k * 34);
+            gl.setAttribute('class', 'plan-goods');
+            gl.setAttribute('font-size', 28); gl.setAttribute('font-weight', 500);
+            gl.setAttribute('fill', '#e5cf82');
+            gl.setAttribute('stroke', '#14212c'); gl.setAttribute('stroke-width', 8);
+            gl.setAttribute('paint-order', 'stroke'); gl.setAttribute('stroke-linejoin', 'round');
+            gl.textContent = t.g;
+            stopsG.appendChild(gl);
+          });
         } else if (a.name === 'St. Jean') {
-          goodsLine = 'gather here, start the loop';
-        }
-        if (goodsLine) {
-          var gl = document.createElementNS(NS, 'text');
-          if (anchoredEnd) { gl.setAttribute('x', x - 26); gl.setAttribute('text-anchor', 'end'); }
-          else if (anchoredStart) { gl.setAttribute('x', x + 26); gl.setAttribute('text-anchor', 'start'); }
-          else { gl.setAttribute('x', x); gl.setAttribute('text-anchor', 'middle'); }
-          gl.setAttribute('y', y + 96);
-          gl.setAttribute('class', 'plan-goods');
-          gl.setAttribute('font-size', 28); gl.setAttribute('font-weight', 500);
-          gl.setAttribute('fill', '#e5cf82');
-          gl.setAttribute('stroke', '#14212c'); gl.setAttribute('stroke-width', 8);
-          gl.setAttribute('paint-order', 'stroke'); gl.setAttribute('stroke-linejoin', 'round');
-          gl.textContent = goodsLine;
-          stopsG.appendChild(gl);
+          var sj = document.createElementNS(NS, 'text');
+          if (anchoredEnd) { sj.setAttribute('x', x - 26); sj.setAttribute('text-anchor', 'end'); }
+          else if (anchoredStart) { sj.setAttribute('x', x + 26); sj.setAttribute('text-anchor', 'start'); }
+          else { sj.setAttribute('x', x); sj.setAttribute('text-anchor', 'middle'); }
+          sj.setAttribute('y', y + 96);
+          sj.setAttribute('class', 'plan-goods');
+          sj.setAttribute('font-size', 28); sj.setAttribute('font-weight', 500);
+          sj.setAttribute('fill', '#e5cf82');
+          sj.setAttribute('stroke', '#14212c'); sj.setAttribute('stroke-width', 8);
+          sj.setAttribute('paint-order', 'stroke'); sj.setAttribute('stroke-linejoin', 'round');
+          sj.textContent = 'gather here, start the loop';
+          stopsG.appendChild(sj);
         }
       });
       if (pts.length > 1) {
