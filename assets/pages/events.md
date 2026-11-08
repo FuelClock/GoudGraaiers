@@ -1,4 +1,4 @@
-## Upcoming Events
-**Event Schedule:**
+## Upcoming voyages
+**Voyage Schedule:**
 
-*No events scheduled right now, keep an eye on TeamSpeak!*
+*No voyages scheduled right now, keep an eye on TeamSpeak!*
