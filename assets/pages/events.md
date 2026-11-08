@@ -2,7 +2,9 @@
 **Voyage Schedule:**
 
 **Ship Hunt at Al-Khalif**: Wed 11th November 20:00 until Wed 11th November 22:00
+
 Host: Gerrit Grijp / FuelClock
+
 **SHIP HUNT AT AL-KHALIF**
 
 11/11/2026 at 20:00
