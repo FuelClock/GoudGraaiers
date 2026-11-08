@@ -14,5 +14,3 @@ title_line2: Graaiers
 {% include home-joining.html %}
 
 {% include home-faq.html %}
-
-{% include home-cta.html %}
