@@ -4,7 +4,7 @@ title: Guides & Trade Tool
 lead: "The flotilla's shared knowledge: plan your optimal trade loop, sail the guild route, and find the tools we use."
 scripts:
   - /assets/js/trade-data.js?v=10
-  - /assets/js/trade-planner.js?v=3
+  - /assets/js/trade-planner.js?v=4
 plate: /img/paintings/porcellis-ships-in-distress-stormy-sea.jpg
 plate_alt: Ships in distress on a stormy sea, oil painting by Jan Porcellis
 ---
@@ -49,7 +49,7 @@ The planner computes the single best counterclockwise trade loop for your ship: 
       <g id="plan-stops" font-family="EB Garamond, Georgia, serif"></g>
     </svg>
   </div>
-  <figcaption id="plan-caption">Your loop is drawn in gold; each port carries its name and what to buy there, styled like the Trade Fever chart: the map label shows the three best cargos, and the full ranked list, best profit first, is below. At SELL stops just dock and use the game's Sell by best profit margins button. Amounts assume a 100 ton hold and scale with your real cargo capacity.</figcaption>
+  <figcaption id="plan-caption">Your loop is drawn in gold; green markers are the sell stops: dock there and use the game's Sell by best profit margins button, so selling is never written out per port. Buy stops carry their cargos under the port name, the three best on the map and the full ranked list, best profit first, below. Amounts assume a 100 ton hold and scale with your real cargo capacity.</figcaption>
 </figure>
 
 <h3 class="route-heading">Your trading stops</h3>
