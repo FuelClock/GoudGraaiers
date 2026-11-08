@@ -9,7 +9,47 @@
     var pvpToggle = document.getElementById('pvp-toggle');
     var summary = document.getElementById('trade-summary');
     var skippedEl = document.getElementById('trade-skipped');
-    var list = document.getElementById('route-list');
+
+    /* hover popup: hovering (or tapping) a port dot opens a small window
+       with that port's full ranked goods list */
+    var frame = document.getElementById('plan-stops').closest('.map-route-frame');
+    var popup = document.createElement('div');
+    popup.className = 'plan-popup';
+    popup.hidden = true;
+    frame.appendChild(popup);
+    var hideTimer = null;
+    function hidePopup() { popup.hidden = true; }
+    function showPopup(a, x, y) {
+      var hasSell = !!Object.keys(a.sell).length;
+      var buys = a.buys || [];
+      var html = '<p class="pp-title">' + (hasSell ? '<span class="pp-selldot"></span>' : '') + a.name + '</p>';
+      if (buys.length) {
+        html += '<ol class="pp-goods">' + buys.map(function (t, k) {
+          return '<li><span class="pp-rank">' + (k + 1) + '</span>' + t.g + '</li>';
+        }).join('') + '</ol>';
+      } else {
+        html += '<p class="pp-note">' + (a.name === 'St. Jean' ? 'gather here, start the loop' : 'no profitable trade here') + '</p>';
+      }
+      popup.innerHTML = html;
+      popup.hidden = false;
+      /* keep the little window inside the map frame: above the dot when it
+         fits, otherwise below, otherwise clamped to the frame edge */
+      var fw = frame.clientWidth, fh = frame.clientHeight;
+      var px = x / 2400 * fw, py = y / 1987 * fh;
+      popup.style.maxHeight = Math.max(160, fh - 40) + 'px';
+      var ph = popup.offsetHeight;
+      var tx = x > 2050 ? '-95%' : (x < 350 ? '-5%' : '-50%');
+      var tyPx;
+      if (py - ph - 26 >= 0) tyPx = py - ph - 26;
+      else if (py + ph + 26 <= fh) tyPx = py + 26;
+      else tyPx = Math.max(10, Math.min(fh - ph - 10, py - ph / 2));
+      popup.style.left = px + 'px';
+      popup.style.top = '0px';
+      popup.style.transform = 'translate(' + tx + ', ' + tyPx + 'px)';
+    }
+    document.addEventListener('click', function (ev) {
+      if (!popup.contains(ev.target) && !(ev.target.classList && ev.target.classList.contains('plan-dot'))) hidePopup();
+    });
 
     function render() {
       var rate = rateSel.value;
@@ -17,7 +57,6 @@
       var key = rate + (allowPvp ? 'p' : '');
       var plan = TRADE_PLANS[key];
       var pts = [];
-      list.innerHTML = '';
       document.getElementById('plan-route').setAttribute('d', '');
       var stopsG = document.getElementById('plan-stops');
       stopsG.innerHTML = '';
@@ -36,27 +75,6 @@
         ' sailed past without a profitable trade.';
       skippedEl.textContent = plan.skipped.length ? 'Sail past without trading: ' + plan.skipped.join(', ') + '.' : '';
 
-      active.forEach(function (a, i) {
-        var li = document.createElement('li');
-        var hasSell = !!Object.keys(a.sell).length;
-        var buys = a.buys || [];
-        li.className = 'stop' + (hasSell ? ' stop--sell' : '');
-        var html = '<span class="stop-no">' + (i + 1) + '</span>' +
-          '<h4 class="stop-name">' + a.name + '</h4>';
-        if (buys.length) {
-          var rows = '';
-          buys.forEach(function (t, k) {
-            rows += '<li><span class="stop-rank">' + (k + 1) + '</span>' +
-              '<span class="stop-good">' + t.g + '</span></li>';
-          });
-          html += '<ul class="stop-goods">' + rows + '</ul>';
-        } else {
-          html += '<p class="stop-empty">' + (a.name === 'St. Jean' ? 'gather here, start the loop' : 'sail on, no profitable trade here') + '</p>';
-        }
-        li.innerHTML = html;
-        list.appendChild(li);
-      });
-
       var MUW = 120.0516;
       active.forEach(function (a, i) {
         var x = a.lng / MUW * 2400, y = (1 - a.lat / 100) * 1987;
@@ -69,6 +87,15 @@
            Sell by best profit margins button does the rest */
         c.setAttribute('fill', hasSell ? '#3f8f5f' : '#d4af37');
         c.setAttribute('stroke', '#14212c'); c.setAttribute('stroke-width', 5);
+        c.setAttribute('class', 'plan-dot');
+        c.addEventListener('mouseenter', function () {
+          clearTimeout(hideTimer);
+          showPopup(a, x, y);
+        });
+        c.addEventListener('mouseleave', function () {
+          hideTimer = setTimeout(function () { if (!popup.matches(':hover')) hidePopup(); }, 180);
+        });
+        c.addEventListener('click', function (ev) { ev.stopPropagation(); showPopup(a, x, y); });
         stopsG.appendChild(c);
         var t = document.createElementNS(NS, 'text');
         t.setAttribute('x', x); t.setAttribute('y', y + 13);

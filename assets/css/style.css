@@ -742,26 +742,27 @@ main { position: relative; z-index: 1; }
 .trade-control--check input { width: 20px; height: 20px; accent-color: var(--gold); }
 .trade-control--check span { font-size: 1.0625rem; color: var(--ink); }
 .trade-note { color: var(--muted); font-size: 1rem; line-height: 1.55; }
-.route-heading { font-size: clamp(1.75rem, 3vw, 2.5rem); margin-top: clamp(40px, 5vw, 64px); }
-.route-list { list-style: none; padding: 0; margin: 28px 0 0; }
-/* stops styled after the Trade Fever chart: parchment port name, gold goods below it */
-.stop { display: grid; grid-template-columns: 2.2em 1fr; column-gap: 12px; margin-bottom: 30px; }
-.stop-no { grid-column: 1; grid-row: 1; color: var(--gold); font-size: 1.4rem; font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1.15; }
-.stop-name { grid-column: 2; margin: 0; font-size: 1.5rem; font-weight: 500; color: var(--ink); line-height: 1.15; }
-.stop-goods { grid-column: 2; list-style: none; margin: 8px 0 0; padding: 0; }
-.stop-goods li { display: flex; align-items: baseline; gap: 12px; padding: 4px 0; }
-.stop-rank { color: var(--muted); font-size: 0.9375rem; min-width: 1.3em; font-variant-numeric: tabular-nums; }
-.stop-good { color: #e5cf82; font-size: 1.125rem; }
-/* sell stops: green marker (map dot and list number), explained once in the caption */
-.stop--sell .stop-no { color: #3f8f5f; }
-.stop-empty { grid-column: 2; margin: 6px 0 0; color: var(--muted); font-style: italic; }
-.map-route-frame img { margin: 0; }
-.route-list, .route-heading { max-width: 62ch; }
-@media (max-width: 760px) {
-  .stop { grid-template-columns: 1.8em 1fr; column-gap: 8px; margin-bottom: 24px; }
-  .stop-name { font-size: 1.3rem; }
-  .stop-goods li { gap: 8px; }
+/* port hover popup: the old stops list became a window on the map */
+.map-route-frame .plan-dot { pointer-events: auto; cursor: pointer; }
+.plan-popup {
+  position: absolute;
+  z-index: 5;
+  min-width: 150px;
+  max-width: 240px;
+  max-height: 46vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--surface-2);
+  padding: 12px 14px;
+  pointer-events: auto;
 }
+.pp-title { margin: 0; font-size: 1.25rem; font-weight: 500; color: var(--ink); }
+.pp-selldot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #3f8f5f; margin-right: 8px; }
+.pp-goods { list-style: none; margin: 8px 0 0; padding: 0; color: #e5cf82; font-size: 1rem; }
+.pp-goods li { display: flex; align-items: baseline; gap: 10px; padding: 2px 0; }
+.pp-rank { color: var(--muted); font-size: 0.875rem; min-width: 1.2em; font-variant-numeric: tabular-nums; }
+.pp-note { margin: 8px 0 0; color: var(--muted); font-style: italic; }
+.map-route-frame img { margin: 0; }
 
 /* event log styling (bot-written markdown) */
 .event-log > p:first-child { font-size: 1.75rem; }
