@@ -344,7 +344,7 @@ main { position: relative; z-index: 1; }
 /* facts miniband: a deeper strip along the panel's foot */
 .doctrine-facts {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: clamp(16px, 2vw, 32px);
   margin: clamp(28px, 3vw, 44px) 0 0;
   padding: clamp(18px, 2vw, 26px) clamp(20px, 2.5vw, 32px);
