@@ -31,7 +31,7 @@
   --step-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
   --step-head: clamp(2rem, 1.3rem + 3.2vw, 4rem);
   --step-slogan: clamp(3rem, 8vw, 7.5rem);
-  --hero-size: clamp(3.25rem, 6.5vw, 6.75rem);
+  --hero-size: clamp(2.6rem, 4.8vw, 4.25rem);
 
   --margin: clamp(16px, 2.5vw, 32px);
   --section-gap: clamp(44px, 4.5vw, 68px);
@@ -192,7 +192,10 @@ h1, h2, h3, h4 {
   grid-template-columns: repeat(12, 1fr);
   column-gap: clamp(16px, 2vw, 32px);
   align-items: center;
-  padding: clamp(16px, 2vw, 32px) var(--margin) clamp(48px, 6vw, 88px);
+  /* equal air around the painting: top and left match the space between
+     the painting's bottom edge and the statement band, which is exactly
+     one section-gap (the band's own margin-top supplies it) */
+  padding: var(--section-gap) var(--section-gap) 0;
 }
 .masthead-hero { grid-column: 1 / 9; }
 .masthead-hero img {
@@ -291,6 +294,27 @@ main { position: relative; z-index: 1; }
 .section-heading {
   font-size: var(--step-head);
   grid-column: 5 / 13;
+}
+
+/* page and section titles carry the footer wordmark's identity:
+   caps and the metallic gold ramp (2026-11-08, Thimon) */
+.hero-title,
+.page-title,
+.section-heading,
+.faq-heading {
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.page-title,
+.section-heading,
+.faq-heading {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--gold);
+  background: var(--gold-text);
+  -webkit-background-clip: text;
+  background-clip: text; /* taste-skill-ignore: metallic gold is the brand request */
+  -webkit-text-fill-color: transparent;
 }
 
 /* ---------- intro: statement band ---------- */
@@ -698,10 +722,10 @@ main { position: relative; z-index: 1; }
 
   /* masthead stacks: painting first at a modest height so the title
      and the join button stay on the first screen */
-  .masthead-open { display: block; padding: 8px 8px 48px; }
+  .masthead-open { display: block; padding: var(--section-gap) var(--section-gap) 0; }
   .masthead-hero img { max-height: 46svh; }
   .masthead-under { padding: 24px var(--margin) 0; }
-  .hero-title { font-size: 15vw; }
+  .hero-title { font-size: 11vw; }
 
   .statement-band { flex-direction: column; align-items: flex-start; gap: 12px; }
   .statement-band .slogan { font-size: 11vw; }
