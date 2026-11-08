@@ -198,11 +198,14 @@ h1, h2, h3, h4 {
 }
 .hero-title {
   font-size: var(--hero-size);
-  font-style: italic;
   font-weight: 500;
-  line-height: 1.02;
-  letter-spacing: -0.01em;
-  color: var(--ink);
+  line-height: 1.0;
+  letter-spacing: 0.01em;
+  color: var(--gold);
+  background: var(--gold-text);
+  -webkit-background-clip: text;
+  background-clip: text; /* taste-skill-ignore: metallic gold is the brand request */
+  -webkit-text-fill-color: transparent;
 }
 .hero-line { display: block; }
 .hero-button {
@@ -581,21 +584,10 @@ main { position: relative; z-index: 1; }
   position: relative;
   background: var(--ground-2);
   color: var(--ink);
-  padding: 64px var(--margin) 24px;
+  padding: 40px var(--margin) 24px;
 }
-.footer-columns {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(24px, 3vw, 48px);
-}
-.footer-col { display: flex; flex-direction: column; gap: 6px; font-size: 1rem; line-height: 1.45; }
-.footer-col p { margin: 0 0 10px; }
-.footer-col a { color: var(--muted); text-decoration: none; }
-.footer-col a:hover { color: var(--gold-ink); background: var(--gold); }
-.col-head { color: var(--ink); font-weight: 500; margin: 0 0 10px; }
-.footer-col--credits p { color: var(--muted); overflow-wrap: anywhere; }
 .footer-wordmark {
-  margin-top: clamp(64px, 12vh, 160px);
+  margin-top: 8px;
   font-size: min(10.4vw, 10.5rem);
   line-height: 0.95;
   letter-spacing: 0.01em;
@@ -761,8 +753,7 @@ main { position: relative; z-index: 1; }
    .cta-row { display: block; }
   .cta-button { display: flex; width: 100%; margin-top: 24px; }
 
-  .footer-columns { grid-template-columns: repeat(2, 1fr); row-gap: 32px; }
-  .footer-wordmark { font-size: 13.5vw; }
+  .footer-wordmark { font-size: 10.4vw; }
 
   .port-name { font-size: 82px; }
   .port-goods { display: none; }
