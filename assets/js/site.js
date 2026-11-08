@@ -47,6 +47,26 @@
     });
   }
 
+  /* voyage plan modals: Read the plan opens a dialog with the full plan */
+  function modals() {
+    d.querySelectorAll('.card-link[data-voyage]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var dlg = d.getElementById('voyage-' + btn.getAttribute('data-voyage'));
+        if (!dlg) return;
+        if (dlg.showModal) dlg.showModal();
+        else dlg.setAttribute('open', '');
+      });
+    });
+    d.querySelectorAll('.voyage-modal').forEach(function (dlg) {
+      dlg.querySelectorAll('.voyage-modal-close').forEach(function (b) {
+        b.addEventListener('click', function () { dlg.close(); });
+      });
+      dlg.addEventListener('click', function (ev) {
+        if (ev.target === dlg) dlg.close(); /* click on the backdrop */
+      });
+    });
+  }
+
   /* parallax chart: the fixed chart layer drifts UP by a fraction of the
      scroll (Thimon: opposite direction reads better), so the sea slides
      towards the top of the screen as the fleet sails down the page. The
@@ -82,8 +102,8 @@
   }
 
   if (d.readyState === 'loading') {
-    d.addEventListener('DOMContentLoaded', function () { hero(); entrances(); parallax(); });
+    d.addEventListener('DOMContentLoaded', function () { hero(); entrances(); parallax(); modals(); });
   } else {
-    hero(); entrances(); parallax();
+    hero(); entrances(); parallax(); modals();
   }
 })();
