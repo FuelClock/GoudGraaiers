@@ -507,6 +507,25 @@ main { position: relative; z-index: 1; }
 .faq-answer a { color: var(--gold); }
 .faq-answer a:hover { background: var(--gold); color: var(--gold-ink); text-decoration: none; }
 
+/* on wide screens the painting fills the space beside the accordion;
+   below 1100px the accordion is full width and the painting steps out */
+.faq-figure { display: none; }
+@media (min-width: 1100px) {
+  .faq-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 960px) minmax(280px, 1fr);
+    column-gap: clamp(32px, 4vw, 64px);
+    align-items: start;
+  }
+  .faq-figure { display: block; margin: 0; }
+  .faq-figure img { width: 100%; height: auto; }
+  .faq-figure figcaption {
+    font-size: 0.9375rem;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+}
+
 /* ---------- cta: the gold close ---------- */
 
 .cta {
