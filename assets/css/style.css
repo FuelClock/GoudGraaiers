@@ -632,8 +632,23 @@ section.statement { padding: var(--margin); }
 
 @media (max-width: 900px) {
   .cta { min-height: 60svh; }
-  .header-nav a { padding: 0 10px; font-size: 1rem; }
   .header-action .ts-domain { display: none; }
+  .site-header { flex-wrap: wrap; }
+  .header-nav {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    flex-wrap: wrap;
+    background: var(--surface);
+  }
+  .header-nav a {
+    flex: 1 1 auto;
+    justify-content: center;
+    min-height: 48px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    white-space: normal;
+  }
   .deck { grid-template-columns: 1fr 1fr; }
   .deck-card.tone-3 { grid-column: 1 / 3; margin-top: 0; }
   .deck-card.tone-2 { margin-top: 32px; }
@@ -648,22 +663,6 @@ section.statement { padding: var(--margin); }
   .brand { padding: 12px var(--margin); min-height: 56px; }
   .brand-name { font-size: 1.0625rem; }
   .header-action { padding: 0 20px; min-height: 56px; }
-  .header-nav {
-    order: 3;
-    width: 100%;
-    margin-left: 0;
-    border-top: none;
-    flex-wrap: wrap;
-    background: var(--surface);
-  }
-  .header-nav a {
-    flex: 1 1 auto;
-    justify-content: center;
-    min-height: 48px;
-    padding: 12px 14px;
-    font-size: 1rem;
-    white-space: normal;
-  }
 
   /* masthead stacks: painting first at a modest height so the title
      and the join button stay on the first screen */
