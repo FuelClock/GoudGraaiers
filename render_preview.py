@@ -131,17 +131,35 @@ def render(tpl, ctx):
     tpl = re.sub(r"{{\s*(.+?)\s*}}", val, tpl)
     return tpl
 
-layout = open(os.path.join(ROOT, "_layouts/default.html")).read()
-
-PAGES = ["index.html", "events.html", "crew.html", "join.html", "teamspeak.html", "guides.html"]
+PAGES = ["index.md", "events.md", "crew.md", "join.md", "teamspeak.md", "guides.md"]
 os.makedirs(OUT, exist_ok=True)
 
 for name in PAGES:
-    page, body = fm_split(open(os.path.join(ROOT, name)).read())
+    raw = open(os.path.join(ROOT, name)).read()
+    try:
+        page, body = fm_split(raw)
+    except yaml.YAMLError as e:
+        print(f"{name}: frontmatter unparsable ({str(e).splitlines()[0]}), skipping")
+        continue
     ctx = {"site": site, "page": page}
     if name.endswith(".md"):
         body = md(body)
-    html = render(layout.replace("{{ content }}", body), ctx)
+    layout_name = page.get("layout", "default") if isinstance(page, dict) else "default"
+    # resolve nested layout chains (article -> frame)
+    content = body
+    seen = set()
+    while True:
+        layout_path = os.path.join(ROOT, "_layouts", layout_name + ".html")
+        if not os.path.exists(layout_path) or layout_name in seen:
+            layout_path = os.path.join(ROOT, "_layouts/default.html")
+        seen.add(layout_name)
+        lfm, lbody = fm_split(open(layout_path).read())
+        html = render(lbody.replace("{{ content }}", content), dict(ctx, page=dict(page, **(lfm or {}))))
+        parent = (lfm or {}).get("layout")
+        if not parent:
+            break
+        layout_name = parent
+        content = html
     # unrendered leftovers = bug
     left = re.findall(r"{{|{%", html)
     dest = os.path.join(OUT, name.replace(".md", ".html"))

@@ -44,7 +44,7 @@
         }
         if ((a.buys || []).length) {
           var bl = a.buys.map(function (t) {
-            return '<span class="goods">' + t.g + ' ' + t.qty + 't &rarr; ' + t.sellTo + '</span>';
+            return '<span class="goods">' + t.g + ' ' + t.qty + 't</span>';
           }).join(' &nbsp; ');
           parts.push('<b class="act-buy">BUY, best first:</b> ' + bl);
         }

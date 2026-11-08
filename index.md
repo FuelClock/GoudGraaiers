@@ -6,8 +6,13 @@ title_line1: De Goud
 title_line2: Graaiers
 ---
 {% include home-statement.html %}
+
 {% include home-doctrine.html %}
+
 {% include home-voyages-gallery.html %}
+
 {% include home-joining.html %}
+
 {% include home-faq.html %}
+
 {% include home-cta.html %}
