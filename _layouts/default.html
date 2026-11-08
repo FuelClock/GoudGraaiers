@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if page.title %}{{ page.title }} — {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <title>{% if page.title %}{{ page.title }} · {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
   <meta name="description" content="{{ site.description }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,13 +15,8 @@
 
   <section class="masthead" aria-label="Paintings of the Dutch fleet">
     {% if page.masthead == 'slim' %}
-    <div class="masthead-mosaic masthead-mosaic--slim">
-      <figure class="mosaic-cell cell-photo cell-a"><img src="{{ '/img/paintings/the-battle-of-the-texel-11-21.jpg' | relative_url }}" alt="The Battle of the Texel, 1673 — the Dutch fleet in action, painting by Willem van de Velde the Younger" width="1920" height="1198"></figure>
-      <figure class="mosaic-cell cell-photo cell-b"><img src="{{ '/img/paintings/the-battle-of-the-sound-8-november.jpg' | relative_url }}" alt="The Battle of the Sound, 1658 — Dutch warships breaking through, painting by Willem van de Velde the Elder" width="1920" height="1300"></figure>
-      <figure class="mosaic-cell cell-photo cell-c"><img src="{{ '/img/paintings/willem-van-de-velde-the-gunshot-illustrated.jpg' | relative_url }}" alt="The Gunshot — two ships trading a broadside, painting by Willem van de Velde" width="1920" height="1490"></figure>
-      <figure class="mosaic-cell cell-photo cell-d"><img src="{{ '/img/paintings/dutch-ships-becalmed-rmg-pw6953.jpg' | relative_url }}" alt="Dutch ships becalmed on still water, circa 1685" width="1920" height="1210"></figure>
-      <div class="mosaic-cell cell-tile tile-navy" aria-hidden="true"></div>
-      <div class="mosaic-cell cell-flag" aria-hidden="true">{% include flag.html %}</div>
+    <div class="masthead-hero masthead-hero--slim">
+      <img src="{{ '/img/paintings/dutch-ships-becalmed-rmg-pw6953.jpg' | relative_url }}" alt="Dutch ships becalmed on still water, circa 1685, painting by Willem van de Velde the Younger" width="1920" height="1210">
     </div>
     <div class="page-title-band">
       <h1 class="page-title">{{ page.title }}</h1>
@@ -31,15 +26,12 @@
       </div>
     </div>
     {% else %}
-    <div class="masthead-mosaic">
-      <figure class="mosaic-cell cell-photo cell-a"><img src="{{ '/img/paintings/the-battle-of-the-texel-11-21.jpg' | relative_url }}" alt="The Battle of the Texel, 1673 — the Dutch fleet in action, painting by Willem van de Velde the Younger" width="1920" height="1198"></figure>
-      <figure class="mosaic-cell cell-photo cell-b"><img src="{{ '/img/paintings/the-battle-of-the-sound-8-november.jpg' | relative_url }}" alt="The Battle of the Sound, 1658 — Dutch warships breaking through, painting by Willem van de Velde the Elder" width="1920" height="1300"></figure>
-      <figure class="mosaic-cell cell-photo cell-c"><img src="{{ '/img/paintings/willem-van-de-velde-the-gunshot-illustrated.jpg' | relative_url }}" alt="The Gunshot — two ships trading a broadside, painting by Willem van de Velde" width="1920" height="1490"></figure>
-      <figure class="mosaic-cell cell-photo cell-d"><img src="{{ '/img/paintings/dutch-ships-becalmed-rmg-pw6953.jpg' | relative_url }}" alt="Dutch ships becalmed on still water, circa 1685" width="1920" height="1210"></figure>
-      <div class="mosaic-cell cell-tile tile-navy" aria-hidden="true"></div>
-      <div class="mosaic-cell cell-tile tile-gold" aria-hidden="true"></div>
-      <div class="mosaic-cell cell-tile tile-paper" aria-hidden="true"></div>
-      <div class="mosaic-cell cell-flag" aria-hidden="true">{% include flag.html %}</div>
+    <div class="masthead-hero">
+      <img src="{{ '/img/paintings/the-battle-of-the-texel-11-21.jpg' | relative_url }}" alt="The Battle of the Texel, 1673: the Dutch fleet in action, painting by Willem van de Velde the Younger" width="1920" height="1198">
+    </div>
+    <div class="masthead-strip">
+      <figure><img src="{{ '/img/paintings/the-battle-of-the-sound-8-november.jpg' | relative_url }}" alt="The Battle of the Sound, 1658: Dutch warships breaking through, painting by Willem van de Velde the Elder" width="1920" height="1300"></figure>
+      <figure><img src="{{ '/img/paintings/willem-van-de-velde-the-gunshot-illustrated.jpg' | relative_url }}" alt="The Gunshot: two ships trading a broadside, painting by Willem van de Velde" width="1920" height="1490"></figure>
     </div>
     <div class="masthead-under">
       <p class="standfirst">{{ page.standfirst | default: site.description }}</p>
