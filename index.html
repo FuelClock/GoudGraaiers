@@ -25,23 +25,20 @@ standfirst: A proud Dutch and English flotilla in World of Sea Battle, and we fl
 </section>
 
 <section class="voyages" aria-label="Voyages">
-  <div class="voyages-stage">
-    <h2 class="voyages-heading">Recent voyages</h2>
-    <div class="deck">
-      {% for v in site.data.voyages %}
-      <article class="deck-card tone-{{ forloop.index }}" data-index="{{ forloop.index0 }}">
-        <h3 class="card-title">{{ v.title }}</h3>
-        <p class="card-excerpt">{{ v.excerpt }}</p>
-        <div class="card-foot">
-          <span class="card-date">{{ v.date_label }}</span>
-          <a class="card-link" href="{{ v.url }}">Read the plan</a>
-        </div>
-      </article>
-      {% endfor %}
-    </div>
-    <p class="deck-more">The voyage log is kept from TeamSpeak. <a href="/events.html">See all voyages</a></p>
+  <h2 class="voyages-heading">Recent voyages</h2>
+  <div class="deck">
+    {% for v in site.data.voyages %}
+    <article class="deck-card tone-{{ forloop.index }}" data-index="{{ forloop.index0 }}">
+      <h3 class="card-title">{{ v.title }}</h3>
+      <p class="card-excerpt">{{ v.excerpt }}</p>
+      <div class="card-foot">
+        <span class="card-date">{{ v.date_label }}</span>
+        <a class="card-link" href="{{ v.url }}">Read the plan</a>
+      </div>
+    </article>
+    {% endfor %}
   </div>
-  <div class="voyages-spacer" aria-hidden="true"></div>
+  <p class="deck-more">The voyage log is kept from TeamSpeak. <a href="{{ '/events.html' | relative_url }}">See all voyages</a></p>
 </section>
 
 <section class="section joining" aria-label="Finding the fleet">
@@ -64,7 +61,7 @@ standfirst: A proud Dutch and English flotilla in World of Sea Battle, and we fl
     <div class="faq-row"><h3 class="faq-q">Do I need TeamSpeak?</h3><p class="faq-a">It is not enforced, but it is how organized squads coordinate: <a href="ts3server://donkey.beauty">donkey.beauty</a>. Squad leaders give calls by voice; listening in is already a big help.</p></div>
     <div class="faq-row"><h3 class="faq-q">Is the guild in a faction?</h3><p class="faq-a">No. We sail as a neutral flotilla with allied standing across the factions, which keeps hostile encounters rare. We stay friendly with the Dutch guilds. If the game adds a Dutch line, or the majority of the fleet wants a pledge, we may pledge together.</p></div>
     <div class="faq-row"><h3 class="faq-q">What will we actually do?</h3><p class="faq-a">Everything the sea offers: war hunts, boarding raids, trade loops, expeditions and quiet cruises, in organized squads or chill squads.</p></div>
-    <div class="faq-row"><h3 class="faq-q">How do ranks work?</h3><p class="faq-a">Cabin Boy is where you start. Sail with us on TeamSpeak weekly and Midshipman shows you every member on the map. Admirals host the voyages and run the fleet. <a href="/crew.html">The full ladder is on The Crew</a>.</p></div>
+    <div class="faq-row"><h3 class="faq-q">How do ranks work?</h3><p class="faq-a">Cabin Boy is where you start. Sail with us on TeamSpeak weekly and Midshipman shows you every member on the map. Admirals host the voyages and run the fleet. <a href="{{ '/crew.html' | relative_url }}">The full ladder is on The Crew</a>.</p></div>
     <div class="faq-row"><h3 class="faq-q">What if I sail casually?</h3><p class="faq-a">Fine by us. Freedom to engage is the rule: no reputation requirements, no forced voice. Read Gerrit&rsquo;s vision above and see whether it fits you.</p></div>
   </div>
 </section>

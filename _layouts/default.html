@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v=7">
 </head>
 <body {% if page.body_class %}class="{{ page.body_class }}"{% endif %}>
   {% include header.html %}
@@ -26,17 +26,15 @@
       </div>
     </div>
     {% else %}
-    <div class="masthead-hero">
-      <img src="{{ '/img/paintings/the-battle-of-the-texel-11-21.jpg' | relative_url }}" alt="The Battle of the Texel, 1673: the Dutch fleet in action, painting by Willem van de Velde the Younger" width="1920" height="1198">
-    </div>
-    <div class="masthead-strip">
-      <figure><img src="{{ '/img/paintings/bakhuizen-ships-in-a-storm.jpg' | relative_url }}" alt="Ships battling mountainous waves under a dark storm sky, oil painting by Ludolf Bakhuizen" width="1920" height="1577"></figure>
-      <figure><img src="{{ '/img/paintings/bakhuizen-storm-norwegian-coast.jpg' | relative_url }}" alt="Ships fleeing a storm along a Norwegian coast under a Dutch flag, oil painting by Ludolf Bakhuizen" width="1401" height="690"></figure>
-    </div>
-    <div class="masthead-under">
-      <p class="standfirst">{{ page.standfirst | default: site.description }}</p>
-      <h1 class="hero-title"><span class="hero-line">{{ page.title_line1 | default: 'De Goud' }}</span><span class="hero-line">{{ page.title_line2 | default: 'Graaiers' }}</span></h1>
-      <a class="hero-button" href="{{ '/join.html' | relative_url }}">Join the flotilla</a>
+    <div class="masthead-open">
+      <figure class="masthead-hero">
+        <img src="{{ '/img/paintings/the-battle-of-the-texel-11-21.jpg' | relative_url }}" alt="The Battle of the Texel, 1673: the Dutch fleet in action, painting by Willem van de Velde the Younger" width="1920" height="1198">
+      </figure>
+      <div class="masthead-under">
+        <p class="standfirst">{{ page.standfirst | default: site.description }}</p>
+        <h1 class="hero-title"><span class="hero-line">{{ page.title_line1 | default: 'De Goud' }}</span><span class="hero-line">{{ page.title_line2 | default: 'Graaiers' }}</span></h1>
+        <a class="hero-button" href="{{ '/join.html' | relative_url }}">Join the flotilla</a>
+      </div>
     </div>
     {% endif %}
   </section>
@@ -46,6 +44,6 @@
   </main>
 
   {% include footer.html %}
-  <script src="{{ '/assets/js/site.js' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/site.js' | relative_url }}?v=7" defer></script>
 </body>
 </html>
