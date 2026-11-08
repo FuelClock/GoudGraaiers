@@ -350,16 +350,33 @@ main { position: relative; z-index: 1; }
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
-  padding: clamp(24px, 3vw, 48px) clamp(20px, 3vw, 48px);
+  padding: clamp(20px, 2.5vw, 40px) clamp(20px, 3vw, 48px);
+  position: relative;
+  overflow: hidden;
+}
+/* gold shine: a sheen sweeps across the band so the flat gold reads as
+   polished metal instead of a flashbang block (Thimon, 2026-11-08) */
+.statement-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255, 252, 235, 0.55) 50%, transparent 60%);
+  transform: translateX(-120%);
+  animation: gold-shine 8s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes gold-shine {
+  0%, 50% { transform: translateX(-120%); }
+  90%, 100% { transform: translateX(120%); }
 }
 .statement-band .slogan {
-  font-size: clamp(2.75rem, 6vw, 5.5rem);
+  font-size: clamp(2.5rem, 5.2vw, 4.75rem);
   line-height: 0.95;
   text-transform: uppercase;
   margin: 0;
 }
 .statement-lang {
-  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  font-size: clamp(1.375rem, 2.2vw, 2rem);
   margin: 0;
 }
 .statement-body {
@@ -797,7 +814,7 @@ main { position: relative; z-index: 1; }
   .title-plate { display: none; }
 
   .statement-band { flex-direction: column; align-items: flex-start; gap: 12px; }
-  .statement-band .slogan { font-size: 11vw; }
+  .statement-band .slogan { font-size: 9.5vw; }
   .statement-lang { font-size: 1.5rem; }
   .statement-body { grid-template-columns: 1fr; gap: 32px; }
   .statement-text { font-size: 1.125rem; }
@@ -823,4 +840,5 @@ main { position: relative; z-index: 1; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .deck-card { transition: none !important; }
+  .statement-band::after { animation: none; opacity: 0.25; }
 }
