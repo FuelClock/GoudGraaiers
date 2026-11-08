@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Sailing with us
+title: Join the fleet
 lead: "Two ways aboard: apply in-game, or step onto our TeamSpeak first and meet the fleet."
 ts_action: true
 ---
