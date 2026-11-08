@@ -47,11 +47,12 @@
     });
   }
 
-  /* parallax chart: the fixed chart layer drifts down by a fraction of the
-     scroll, so the sea moves slower than the fleet. The layer is oversized
-     (top -45%, height 190%): the factor is derived from the page's real
-     scroll range so the drift uses that headroom exactly and never shows an
-     edge. Reduced motion: the layer stays put. */
+  /* parallax chart: the fixed chart layer drifts UP by a fraction of the
+     scroll (Thimon: opposite direction reads better), so the sea slides
+     towards the top of the screen as the fleet sails down the page. The
+     layer is oversized (top -45%, height 190%): the factor is derived from
+     the page's real scroll range so the drift uses that headroom exactly and
+     never shows an edge. Reduced motion: the layer stays put. */
   function parallax() {
     var layer = d.getElementById('chart-layer');
     if (!layer || reduce) return;
@@ -67,7 +68,7 @@
       ticking = false;
       /* images resize the page after load; re-derive the factor when it moves */
       if (d.documentElement.scrollHeight !== lastH) { lastH = d.documentElement.scrollHeight; measure(); }
-      layer.style.transform = 'translate3d(0,' + (window.scrollY * f).toFixed(1) + 'px,0)';
+      layer.style.transform = 'translate3d(0,' + (-window.scrollY * f).toFixed(1) + 'px,0)';
     }
     var lastH = 0;
     function onScroll() {
