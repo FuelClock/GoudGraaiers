@@ -3,12 +3,12 @@ layout: article
 title: Guides & Trade Tool
 lead: "The flotilla's shared knowledge: plan your optimal trade loop, sail the guild route, and find the tools we use."
 scripts:
-  - /assets/js/trade-data.js?v=9
-  - /assets/js/trade-planner.js?v=1
+  - /assets/js/trade-data.js?v=10
+  - /assets/js/trade-planner.js?v=2
 ---
 ## Plan your trade loop
 
-The planner computes the single best counterclockwise trade loop for your ship: it uses the per-port market prices from the flotilla trading spreadsheet, keeps you out of the PvP circle and pirate ports unless you ask for them, and fills your hold with the goods that earn the most gold per ton of hold space. When you reach the first port that pays a good's top price, you sell the whole stock there and refill with the local cheap goods.
+The planner computes the single best counterclockwise trade loop for your ship: it uses the per-port market prices from the flotilla trading spreadsheet, keeps you out of the PvP circle and pirate ports unless you ask for them, and fills your hold with the goods that earn the most gold per ton of hold space. When you reach the first port that pays a good's top price, you sell the whole stock there and refill with the local cheap goods. A few ports have no market at all: St Jean, Freedom Bay, Gelbion, Surako and Naabad Stronghold never appear as trade stops. St Jean is still where the fleet gathers to start the loop; the other four you simply never visit.
 
 <div class="trade-controls">
   <label class="trade-control">

@@ -32,7 +32,7 @@
       var active = plan.active.slice();
       var stIdx = active.findIndex(function (a) { return a.name === 'St. Jean'; });
       if (stIdx > 0) active = active.slice(stIdx).concat(active.slice(0, stIdx));
-      summary.textContent = 'Loop: ' + active.length + ' trading stops, ' + plan.skipped.length +
+      summary.textContent = 'Loop: ' + active.length + ' stops from the St Jean gathering point (no market there: gather, then sail), ' + plan.skipped.length +
         ' sailed past without a profitable trade. Amounts assume a full 100 ton hold per cargo and scale with your real capacity.';
       skippedEl.textContent = plan.skipped.length ? 'Sail past without trading: ' + plan.skipped.join(', ') + '.' : '';
 
