@@ -59,16 +59,16 @@ lead: Pick your ship's rate and whether you sail the PvP circle, and get the opt
       <ol id="route-list" class="route-list"></ol>
 
       <h2>How the route is chosen</h2>
-      <p>Trading in World of Sea Battle works like this: you fill your hold with whatever is cheap at your current port, sail on, and sell the whole stock the moment you reach the first port that pays a good's maximum price, freeing the hold for the next region's cheap goods. The planner computes that exactly: it is a capacity-planning problem, solved so that no ton of hold space ever sits idle when a profitable good could be carried.</p>
+      <p>Trading in World of Sea Battle works like this: you fill your hold with whatever is cheap at your current port, sail on, and sell the whole stock the moment you reach the first port that pays a good's maximum price, freeing the hold for the next region's cheap goods. The planner applies exactly that rule at every port on your loop: each stop lists the best cargo to load there, sized to one full 100 ton hold, and names the port where it sells at top price. Hold space is deliberately not part of the planning, so no port gets skipped to make room for a bigger haul elsewhere: sail the loop, trade at every stop, and sell whatever your hold carries the moment it reaches a top price.</p>
       <p>Docking is modeled per port from tiers verified in game: a port in a shallow zone of tier N can only be docked by ships of rate N and smaller, while ports in open water or on the endless sea take any ship. A rate 2 port like Everston, for example, turns away only 1st rates, while a rate 6 port like Fiji takes 6th rates and smaller only. So a rate 1 trader cannot dock at Everston (tier 2) but can dock at Gray Island (open water), exactly as in the game.</p>
-      <p>Amounts are shown per 100 tons of hold space and scale linearly with your real capacity: a ship with a 300 ton hold can triple every number.</p>
+      <p>Amounts are shown per full 100 ton hold of each good and scale linearly with your real capacity: a ship with a 300 ton hold can triple every number. When several ports ship the same good to one market, the sale is shown as full holds, for example Rugs x8: that is eight separate loads arriving over the loop, not one cargo.</p>
 
       <h2>Stock: every market is a little different each cycle</h2>
       <p>Port markets restock on a server cycle (roughly every 24 to 48 hours, depending on your server), and which goods a port stocks after a cycle is partly random: one visit a port may only have Wine, the next the whole range. Guild production and how much players buy shift the amounts further, so treat the plan as the route and the market as the weather. When a planned good is sold out at a port, skip that purchase and carry on: the loop stays valid, one leg simply earns a little less. Provisions (Beer, Nuts, Dates) are almost always in stock but pay little per ton, so they are hold filler, not the main cargo.</p>
     </div>
   </div>
 </div>
-<script src="{{ '/assets/js/trade-data.js?v=4' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/trade-data.js?v=5' | relative_url }}" defer></script>
 <script defer>
 (function () {
   'use strict';
@@ -101,21 +101,29 @@ lead: Pick your ship's rate and whether you sail the PvP circle, and get the opt
       var active = plan.active.slice();
       var stIdx = active.findIndex(function (a) { return a.name === 'St. Jean'; });
       if (stIdx > 0) active = active.slice(stIdx).concat(active.slice(0, stIdx));
-      summary.textContent = 'Optimal loop: ' + active.length + ' trading stops, ' + plan.skipped.length +
-        ' ports sailed past without trading. Expected profit: ' + plan.totalProfit +
-        ' gold per loop with a 100 ton hold (scales with your cargo capacity).';
+      summary.textContent = 'Loop: ' + active.length + ' trading stops, ' + plan.skipped.length +
+        ' sailed past without a profitable trade. Combined trade profit: ' + plan.totalProfit +
+        ' gold, one full 100 ton hold per trade (scales with your cargo capacity).';
       skippedEl.textContent = plan.skipped.length ? 'Sail past without trading: ' + plan.skipped.join(', ') + '.' : '';
 
       active.forEach(function (a, i) {
         var li = document.createElement('li');
         var parts = [];
         if (Object.keys(a.sell).length) {
-          var s = Object.keys(a.sell).map(function (g) { return g + ' ' + a.sell[g] + 't (' + (a.sell[g] * (TRADE_DATA.ports.find(function (x) { return x.name === a.name; }).prices[g] || 0)).toFixed(0) + 'g)'; }).join(', ');
-          parts.push('<b class="act-sell">SELL</b> <span class="goods">' + s + '</span>');
+          var s = Object.keys(a.sell).map(function (g) {
+            var w = TRADE_DATA.goods[g].weight;
+            var holds = a.sell[g] * w / 100;
+            var label = holds > 1.5 ? g + ' x' + holds.toFixed(0) + ' full holds' : g + ' ' + a.sell[g] + 't';
+            return '<b class="act-sell">SELL</b> <span class="goods">' + label + ' (' + (a.sell[g] * (TRADE_DATA.ports.find(function (x) { return x.name === a.name; }).prices[g] || 0)).toFixed(0) + 'g)</span>';
+          }).join(' &nbsp; ');
+          parts.push(s);
         }
         if (Object.keys(a.buy).length) {
-          var b = Object.keys(a.buy).map(function (g) { return g + ' ' + a.buy[g] + 't'; }).join(', ');
-          parts.push('<b class="act-buy">BUY</b> <span class="goods">' + b + '</span>');
+          var b = Object.keys(a.buy).map(function (g) {
+            var dest = a.sellTo && a.sellTo[g] ? ' (sells at ' + a.sellTo[g] + ')' : '';
+            return '<b class="act-buy">BUY</b> <span class="goods">' + g + ' ' + a.buy[g] + 't' + dest + '</span>';
+          }).join(' &nbsp; ');
+          parts.push(b);
         }
         li.innerHTML = '<b>' + a.name + '</b>' +
           (parts.length ? ': ' + parts.join(' &nbsp; ') : ': sail on, no trade here') +
