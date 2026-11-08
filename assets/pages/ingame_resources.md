@@ -8,3 +8,11 @@ This following websites/tools are useful tools for ingame use.
 [Visual Map of Trade Route](https://docs.google.com/spreadsheets/d/167fXMSUOoureMP7blZZXRSqQPoXIJK3MenyGpGulP_E/edit?gid=1827480102#gid=1827480102)
 [Where to buy what](https://docs.google.com/spreadsheets/d/167fXMSUOoureMP7blZZXRSqQPoXIJK3MenyGpGulP_E/edit?gid=0#gid=0)
 
+## The World Map
+
+The world as it sails in the current game build.
+
+[![The world map of World of Sea Battle](/img/map-web.jpg)](/img/map-full.jpg)
+
+*Click the map for the full size chart.*
+
