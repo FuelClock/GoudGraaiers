@@ -458,37 +458,54 @@ main { position: relative; z-index: 1; }
 }
 .joining-steps p { font-size: 1rem; line-height: 1.5; margin: 6px 0 0; color: var(--muted); max-width: 46ch; }
 
-/* ---------- faq ---------- */
+/* ---------- faq: accordion cards on a calm band ---------- */
 
 .faq {
   background: var(--ground-2);
   padding: clamp(56px, 7vw, 96px) var(--margin);
   margin-top: var(--section-gap);
 }
-.faq-rows { display: block; }
-.faq-row {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  column-gap: clamp(16px, 2vw, 32px);
-  align-items: baseline;
-  margin-top: clamp(40px, 5vw, 64px);
+.faq-heading {
+  font-size: var(--step-head);
+  margin: 0 0 clamp(32px, 4vw, 56px);
 }
-.faq-row:first-child { margin-top: 0; }
-.faq-q {
-  grid-column: 1 / 7;
-  font-size: clamp(1.375rem, 1.9vw, 1.75rem);
-  line-height: 1.1;
+.faq-list { max-width: 960px; }
+.faq-item {
+  background: var(--surface);
+  padding: 0 clamp(18px, 2vw, 28px);
+}
+.faq-item + .faq-item { margin-top: 10px; }
+.faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: clamp(16px, 2vw, 22px) 0;
+  font-size: clamp(1.25rem, 1.8vw, 1.625rem);
+  line-height: 1.2;
   font-weight: 500;
-}
-.faq-row--head .faq-q { color: var(--ink); }
-.faq-a {
-  grid-column: 8 / 13;
-  font-size: 1.0625rem;
-  line-height: 1.55;
-  margin: 0;
   color: var(--ink);
 }
-.faq-a a { color: var(--ink); }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "\203A";
+  font-size: 1.5em;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+.faq-item[open] summary::after { transform: rotate(90deg); }
+.faq-item summary:hover { color: var(--gold-hi); }
+.faq-item[open] summary { color: var(--gold-hi); }
+.faq-answer {
+  padding: 0 0 clamp(16px, 2vw, 22px);
+  color: var(--ink);
+  line-height: 1.55;
+}
+.faq-answer p { margin: 0; max-width: 75ch; }
+.faq-answer a { color: var(--gold); }
+.faq-answer a:hover { background: var(--gold); color: var(--gold-ink); text-decoration: none; }
 
 /* ---------- cta: the gold close ---------- */
 
@@ -719,13 +736,9 @@ main { position: relative; z-index: 1; }
   .card-title { font-size: 1.75rem; }
 
   .joining-side, .joining-steps { grid-column: 1 / 13; }
-  .joining-steps { margin-top: 40px; }
+   .joining-steps { margin-top: 40px; }
 
-  .faq-row { display: block; margin-top: 48px; }
-  .faq-q { font-size: 1.5rem; }
-  .faq-a { margin-top: 12px; }
-
-  .cta-row { display: block; }
+   .cta-row { display: block; }
   .cta-button { display: flex; width: 100%; margin-top: 24px; }
 
   .footer-columns { grid-template-columns: repeat(2, 1fr); row-gap: 32px; }
