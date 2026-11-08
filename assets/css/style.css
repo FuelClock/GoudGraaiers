@@ -37,12 +37,19 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  background: var(--ground);
+  background-color: var(--ground);
+  background-image: url("/img/chart-bg.jpg");
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
   color: var(--ink);
   font-family: "EB Garamond", Georgia, serif;
   font-size: var(--step-body);
   line-height: 1.5;
   font-weight: 400;
+}
+@media (max-width: 760px) {
+  body { background-attachment: scroll; }
 }
 
 img { display: block; max-width: 100%; }
@@ -124,7 +131,7 @@ h1, h2, h3, h4 {
 
 /* ---------- masthead ---------- */
 
-.masthead { position: relative; background: var(--ground); }
+.masthead { position: relative; }
 
 /* Paintings are shown WHOLE: native proportions, no cover-cropping.
    Where a box ratio differs from the painting, contain letterboxes
@@ -134,29 +141,25 @@ h1, h2, h3, h4 {
   height: auto;
   max-height: 86svh;
   object-fit: contain;
-  background: var(--ground);
 }
-.masthead-hero--slim img { height: clamp(220px, 34svh, 420px); object-fit: contain; background: var(--ground); }
+.masthead-hero--slim img { height: clamp(220px, 34svh, 420px); object-fit: contain; }
 
 .masthead-strip {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
   padding: 8px;
-  background: var(--ground);
 }
-.masthead-strip figure { overflow: hidden; background: var(--ground); aspect-ratio: 16 / 10; }
+.masthead-strip figure { overflow: hidden; aspect-ratio: 16 / 10; }
 .masthead-strip img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  background: var(--ground);
 }
 
 /* title under the paintings */
 
 .masthead-under {
-  background: var(--ground);
   padding: clamp(40px, 5vw, 72px) var(--margin) clamp(48px, 7vw, 96px);
 }
 .standfirst {
@@ -193,7 +196,6 @@ h1, h2, h3, h4 {
 .hero-button:hover { transform: translateY(-2px); }
 
 .page-title-band {
-  background: var(--ground);
   padding: clamp(32px, 5vw, 64px) var(--margin) clamp(24px, 3vw, 40px);
 }
 .page-title { font-size: clamp(2.5rem, 5.5vw, 5rem); font-style: italic; }
@@ -224,7 +226,7 @@ h1, h2, h3, h4 {
 
 /* ---------- generic section frame ---------- */
 
-main { position: relative; z-index: 1; background: var(--ground); }
+main { position: relative; z-index: 1; }
 section.statement { padding: var(--margin); }
 
 .section {
@@ -307,7 +309,6 @@ section.statement { padding: var(--margin); }
 
 .doctrine {
   padding: clamp(64px, 8vw, 120px) var(--margin);
-  background: var(--ground);
 }
 .doctrine .grid12 { align-items: start; }
 .doctrine-facts {
@@ -353,7 +354,7 @@ section.statement { padding: var(--margin); }
   left: var(--margin);
   font-size: clamp(3rem, 4.2vw, 4rem);
   z-index: 3;
-  background: var(--ground);
+  background: rgba(19, 32, 41, 0.82);
   color: var(--ink);
   padding-right: 16px;
 }
@@ -409,7 +410,7 @@ section.statement { padding: var(--margin); }
   left: var(--margin);
   font-size: 1rem;
   z-index: 3;
-  background: var(--ground);
+  background: rgba(19, 32, 41, 0.82);
 }
 .voyages-spacer { height: 120svh; }
 
@@ -625,6 +626,8 @@ section.statement { padding: var(--margin); }
   }
 
   .masthead-strip { grid-template-columns: 1fr; }
+
+  .masthead-strip { display: none; }
 
   .masthead-under { padding-bottom: 48px; }
   .hero-title { font-size: 15vw; }
