@@ -586,6 +586,38 @@ section.statement { padding: var(--margin); }
 .port-name { font-size: 44px; }
 .port-goods { font-size: 30px; }
 
+/* ---------- trade planner ---------- */
+
+.trade-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: end;
+  margin: 24px 0;
+}
+.trade-control { display: flex; flex-direction: column; gap: 6px; }
+.trade-control span { font-size: 0.9375rem; color: var(--muted); }
+.trade-control select {
+  font-family: inherit;
+  font-size: 1.0625rem;
+  padding: 10px 14px;
+  min-width: 260px;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--surface-2);
+}
+.trade-control--check { flex-direction: row; align-items: center; gap: 10px; padding-bottom: 10px; }
+.trade-control--check input { width: 20px; height: 20px; accent-color: var(--gold); }
+.trade-control--check span { font-size: 1.0625rem; color: var(--ink); }
+.trade-note { color: var(--muted); font-size: 1rem; line-height: 1.55; }
+.route-heading { font-size: clamp(1.75rem, 3vw, 2.5rem); margin-top: clamp(40px, 5vw, 64px); }
+.route-list { padding-left: 1.2em; line-height: 1.6; }
+.route-list li { margin-bottom: 14px; }
+.route-list em { color: var(--gold); font-style: italic; }
+.route-margin { color: var(--muted); font-size: 0.9375rem; }
+.map-route-frame img { margin: 0; }
+.route-list, .route-heading { max-width: 62ch; }
+
 /* event log styling (bot-written markdown) */
 .event-log > p:first-child { font-size: 1.75rem; }
 .event-log strong { font-size: 1.25rem; }

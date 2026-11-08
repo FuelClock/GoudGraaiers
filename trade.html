@@ -1,0 +1,186 @@
+---
+title: Trade Route Planner
+masthead: slim
+lead: Pick your ship's rate and whether you sail the PvP circle, and get the most profitable counterclockwise trade loop.
+---
+<div class="article">
+  <div class="grid12">
+    <nav class="side-nav" aria-label="Pages">
+      <p>On this site</p>
+      <a href="/">Home</a>
+      <a href="/events.html">Voyages</a>
+      <a href="/crew.html">The Crew</a>
+      <a href="/guides.html">Cargo &amp; Guides</a>
+    </nav>
+    <div class="article-body">
+      <h2>Plan your trade loop</h2>
+      <p>The planner uses the per-port market prices from the flotilla trading spreadsheet, combined with the game's own port data: every port's shallow-water tier (a ship of rate 3, for example, cannot dock at a tier 5 port) and whether it sits inside the PvP circle. It chains the best counterclockwise legs into one loop: buy where a good is cheap, sell one leg further on.</p>
+
+      <div class="trade-controls">
+        <label class="trade-control">
+          <span>Your ship's rate</span>
+          <select id="rate-select">
+            <option value="1">1st rate (Victory class, deep water only)</option>
+            <option value="2">2nd rate</option>
+            <option value="3" selected>3rd rate</option>
+            <option value="4">4th rate</option>
+            <option value="5">5th rate</option>
+            <option value="6">6th rate</option>
+            <option value="7">7th rate (small, docks anywhere)</option>
+          </select>
+        </label>
+        <label class="trade-control trade-control--check">
+          <input type="checkbox" id="pvp-toggle">
+          <span>I will sail into the PvP circle (and pirate ports)</span>
+        </label>
+      </div>
+      <p class="trade-note" id="trade-summary"></p>
+
+      <figure class="map-route">
+        <div class="map-route-frame">
+          <img src="{{ '/img/map-web.jpg' | relative_url }}" alt="The world chart with your optimal trade loop drawn on it" width="2400" height="1987">
+          <svg viewBox="0 0 2400 1987" xmlns="http://www.w3.org/2000/svg" aria-label="Your optimal trade loop drawn on the world chart.">
+            <defs>
+              <marker id="plan-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#c9a227"/>
+              </marker>
+            </defs>
+            <g id="plan-route" fill="none" stroke="#c9a227" stroke-width="6" stroke-dasharray="20 14" opacity="0.95"></g>
+            <g id="plan-stops" font-family="EB Garamond, Georgia, serif"></g>
+          </svg>
+        </div>
+        <figcaption id="plan-caption">Your loop is drawn in gold. Ports are at their real positions; the number on each stop matches the list below.</figcaption>
+      </figure>
+
+      <h3 id="route-heading" class="route-heading">Your loop</h3>
+      <ol id="route-list" class="route-list"></ol>
+
+      <h2>How the route is chosen</h2>
+      <p>Every leg in the loop buys the single most profitable good at its start port and sells it at a port further along the counterclockwise direction, ranked by profit per unit of cargo weight. The next leg then starts where the last one ended, until the loop closes. Ports you cannot dock at are left out before any of that happens, so the loop always respects your ship and your tolerance for PvP.</p>
+      <p>Data sources: market prices from the flotilla trading spreadsheet, shallow-water tiers and port types straight from the game's own world files, and the PvP circle as marked on community charts. If a port's shallow tier changes with a game patch, the data table is one file and easy to update.</p>
+    </div>
+  </div>
+</div>
+<script src="{{ '/assets/js/trade-data.js' | relative_url }}" defer></script>
+<script defer>
+(function () {
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function init() {
+    if (!window.TRADE_DATA) { setTimeout(init, 120); return; }
+    var rateSel = document.getElementById('rate-select');
+    var pvpToggle = document.getElementById('pvp-toggle');
+    var summary = document.getElementById('trade-summary');
+    var routePath = document.getElementById('plan-route');
+    var stopsG = document.getElementById('plan-stops');
+    var list = document.getElementById('route-list');
+    var NS = 'http://www.w3.org/2000/svg';
+
+    function allowedPorts(rate, allowPvp) {
+      return TRADE_DATA.ports.filter(function (p) {
+        var hasPrices = p.prices && Object.keys(p.prices).length > 0;
+        var fits = p.shallow <= rate;
+        var safe = allowPvp || (!p.pvp && !p.pirate);
+        return hasPrices && fits && safe;
+      });
+    }
+
+    function computeLoop(ports) {
+      var n = ports.length;
+      if (n < 3) return null;
+      var clat = 0, clng = 0;
+      ports.forEach(function (p) { clat += p.lat; clng += p.lng; });
+      clat /= n; clng /= n;
+      var ordered = ports.slice().sort(function (a, b) {
+        return Math.atan2(a.lat - clat, a.lng - clng) - Math.atan2(b.lat - clat, b.lng - clng);
+      });
+      var goods = TRADE_DATA.goods;
+      var legs = [];
+      for (var i = 0; i < n; i++) {
+        var pi = ordered[i];
+        var best = null;
+        for (var step = 1; step < n; step++) {
+          if (step > n / 2) break;
+          var pj = ordered[(i + step) % n];
+          for (var g in goods) {
+            var buy = pi.prices[g], sell = pj.prices[g];
+            if (buy == null || sell == null) continue;
+            var margin = sell - buy;
+            if (margin <= 0) continue;
+            var ppw = margin / goods[g].weight;
+            if (!best || ppw > best.ppw) best = { from: pi, to: pj, good: g, buy: buy, sell: sell, margin: margin, ppw: ppw };
+          }
+        }
+        if (best) legs.push(best);
+      }
+      if (!legs.length) return null;
+      legs.sort(function (a, b) { return b.ppw - a.ppw; });
+      var byFrom = {};
+      legs.forEach(function (l) { byFrom[l.from.name] = l; });
+      var start = legs[0].from;
+      var loop = [];
+      var cur = start.name;
+      for (var k = 0; k < n + 1; k++) {
+        var leg = byFrom[cur];
+        if (!leg) break;
+        loop.push(leg);
+        cur = leg.to.name;
+        if (cur === start.name) break;
+      }
+      return loop;
+    }
+
+    function render() {
+      var rate = parseInt(rateSel.value, 10);
+      var allowPvp = pvpToggle.checked;
+      var loop = computeLoop(allowedPorts(rate, allowPvp));
+      routePath.innerHTML = '';
+      stopsG.innerHTML = '';
+      list.innerHTML = '';
+      if (!loop) {
+        summary.textContent = 'No profitable loop for this ship: try a higher rate or allow the PvP circle.';
+        document.getElementById('route-heading').style.display = 'none';
+        return;
+      }
+      document.getElementById('route-heading').style.display = '';
+      var totalPpw = 0, margin = 0;
+      var pts = [];
+      loop.forEach(function (leg, i) {
+        var p = leg.from;
+        pts.push([p.lng / 120.0516 * 2400, (1 - p.lat / 100) * 1987]);
+        totalPpw += leg.ppw;
+        var li = document.createElement('li');
+        li.innerHTML = '<b>' + (i + 1) + '. ' + p.name + '</b>: buy <em>' + leg.good + '</em> at ' +
+          leg.buy + ' gold, sell at ' + leg.to.name + ' for ' + leg.sell +
+          ' gold <span class="route-margin">+' + leg.margin + ' gold per piece, +' + leg.ppw.toFixed(1) + ' per weight</span>';
+        list.appendChild(li);
+      });
+      pts.push(pts[0].slice());
+      var d = 'M ' + pts.map(function (pt) { return pt[0].toFixed(0) + ' ' + pt[1].toFixed(0); }).join(' L ');
+      routePath.setAttribute('d', d);
+      pts.forEach(function (pt, i) {
+        var c = document.createElementNS(NS, 'circle');
+        c.setAttribute('cx', pt[0]); c.setAttribute('cy', pt[1]); c.setAttribute('r', 18);
+        c.setAttribute('fill', '#c9a227'); c.setAttribute('stroke', '#14212c'); c.setAttribute('stroke-width', 5);
+        stopsG.appendChild(c);
+        var t = document.createElementNS(NS, 'text');
+        t.setAttribute('x', pt[0]); t.setAttribute('y', pt[1] + 13);
+        t.setAttribute('text-anchor', 'middle');
+        t.setAttribute('font-size', 34); t.setAttribute('font-weight', 500);
+        t.setAttribute('fill', '#14212c');
+        t.textContent = String(i + 1);
+        stopsG.appendChild(t);
+      });
+      var names = loop.map(function (l) { return l.from.name; });
+      summary.textContent = 'Loop of ' + loop.length + ' ports: ' + names.join(' → ') +
+        '. Total value: +' + totalPpw.toFixed(1) + ' gold per unit of cargo weight (buy the shown good at each stop, sell it at the next).';
+    }
+
+    rateSel.addEventListener('change', render);
+    pvpToggle.addEventListener('change', render);
+    render();
+  }
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+</script>

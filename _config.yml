@@ -13,6 +13,8 @@ nav:
     url: /join.html
   - label: Cargo & Guides
     url: /guides.html
+  - label: Trade Tool
+    url: /trade.html
 
 teamspeak: donkey.beauty
 guild_search: NL.
