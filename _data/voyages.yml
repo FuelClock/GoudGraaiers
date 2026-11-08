@@ -1,24 +1,28 @@
 # Recent voyages queue: max 3, newest first.
 # Maintained by sync_events_to_website.py; feeds the home deck cards.
-# Seeded by hand 2026-11-08 with the September voyages.
-- title: "Trade Fever"
-  slug: "trade-fever"
-  date_label: "13 September 2026"
-  excerpt: "The classic counterclockwise loop from St Jean: beer, wine and grog in the north, silk and saffron from Arabia, coffee and tobacco from the south."
-  url: "/events.html#trade-fever"
-  plan: |
-    The classic counterclockwise loop from St Jean: beer, wine and grog in the north, silk and saffron from Arabia, coffee and tobacco from the south.
+# Entries taken verbatim from the bot's event templates
+# (slavecapture, endlessescudo). Thimon 2026-11-08: invented voyages removed.
 - title: "Slave Capturing"
   slug: "slave-capturing"
-  date_label: "6 September 2026"
-  excerpt: "Boarding raid on the trade routes off Everston: scout and recruiter crew, blockade the iron-mine routes, share the loot at the end."
+  date_label: ""
+  excerpt: "Gather at Al-Khalif port before the scheduled time: we'll sail northeast and blockade the 2 trade routes to capture all the ships we can, sharing the loot at the end."
   url: "/events.html#slave-capturing"
   plan: |
-    Boarding raid on the trade routes off Everston: scout and recruiter crew, blockade the iron-mine routes, share the loot at the end.
-- title: "Thursday Thunder"
-  slug: "thursday-thunder"
-  date_label: "3 September 2026"
-  excerpt: "War hunt: bring thunder to the Lightning and any Imperial ship in our waters. Gather at Devios Bay, class 4 and up, plenty of ammo and repairs."
-  url: "/events.html#thursday-thunder"
+    **What will we be doing?**
+    Be sure to gather at Al-Khalif port before the scheduled time as this is the time we will leave the port together.
+    We'll sail to the northeast of the port and we'll be blockading the 2 trade routes to capture all the ships we can and have their crew "voluntarily change employer".
+    Depending on how many people show up we might need dedicated hauling as the ammount of merchants is considerable.
+    We'll work together to capture as many slaves as possible so be sure to bring a boarding loadout. If you don't want to or dont have a boarding loadout to bring, you're more then welcome to help us get the health of the enemy ships down so your fellow squad mates can do the boarding instead as we will be sharing the loot in the end anyway.
+- title: "Escudo Hunt on the Endless Sea"
+  slug: "escudo-hunt-on-the-endless-sea"
+  date_label: ""
+  excerpt: "Group up at Freedom Bay, sail east into the Endless Sea and hunt around the Altar: the goal is efficiency and fun. Endless Sea is a PVP zone, consider that when picking your crew and ship."
+  url: "/events.html#escudo-hunt-on-the-endless-sea"
   plan: |
-    War hunt: bring thunder to the Lightning and any Imperial ship in our waters. Gather at Devios Bay, class 4 and up, plenty of ammo and repairs.
+    **What will we be doing?**
+    We will be grouping up at Freedom Bay, at the scheduled time we will have a short briefing after which we'll sail east into the Endless Sea.
+    On the Endless Sea we'll travel down to the Altar to hunt around that area.
+    The goal is efficiency and fun!
+    **Useful Info**
+    We'll spend quite some time on the endless sea, be sure to bring alot of cannonballs/wood/food etc.
+    Endless Sea is a PVP zone, you might want to consider this when deciding which crew/ship to bring.
