@@ -1,0 +1,15 @@
+<section class="voyages" aria-label="Voyages">
+  <h2 class="voyages-heading">Recent voyages</h2>
+  <div class="deck">
+    {% for v in site.data.voyages %}
+    <article class="deck-card tone-{{ forloop.index }}" data-index="{{ forloop.index0 }}">
+      <h3 class="card-title">{{ v.title }}</h3>
+      <p class="card-excerpt">{{ v.excerpt }}</p>
+      <div class="card-foot">
+        <span class="card-date">{{ v.date_label }}</span>
+        <a class="card-link" href="{{ v.url | relative_url }}">Read the plan</a>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
