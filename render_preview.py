@@ -151,7 +151,7 @@ for name in PAGES:
     while True:
         layout_path = os.path.join(ROOT, "_layouts", layout_name + ".html")
         if not os.path.exists(layout_path) or layout_name in seen:
-            layout_path = os.path.join(ROOT, "_layouts/default.html")
+            layout_path = os.path.join(ROOT, "_layouts/frame.html")
         seen.add(layout_name)
         lfm, lbody = fm_split(open(layout_path).read())
         html = render(lbody.replace("{{ content }}", content), dict(ctx, page=dict(page, **(lfm or {}))))

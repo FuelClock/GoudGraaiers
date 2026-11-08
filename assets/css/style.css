@@ -580,10 +580,12 @@ main { position: relative; z-index: 1; }
   text-align: center;
 }
 
-/* ---------- article pages ---------- */
+/* ---------- article pages: framed field ---------- */
 
 .article {
-  padding: clamp(24px, 4vw, 56px) var(--margin) clamp(96px, 12vw, 160px);
+  margin: var(--section-gap) var(--margin);
+  padding: clamp(32px, 4vw, 64px) clamp(24px, 3vw, 48px);
+  background: var(--surface);
 }
 .article-body { max-width: 1200px; }
 
@@ -625,7 +627,7 @@ main { position: relative; z-index: 1; }
   font-size: 1.0625rem;
   padding: 10px 14px;
   min-width: 260px;
-  background: var(--surface);
+  background: var(--ground);
   color: var(--ink);
   border: 1px solid var(--surface-2);
 }

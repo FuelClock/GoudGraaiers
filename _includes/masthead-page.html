@@ -5,6 +5,6 @@
   <h1 class="page-title">{{ page.title }}</h1>
   <div class="page-side">
     {% if page.lead %}<p class="page-lead">{{ page.lead }}</p>{% endif %}
-    <a class="page-action" href="ts3server://{{ site.teamspeak }}">Connect to TeamSpeak</a>
+    {% if page.ts_action %}<a class="page-action" href="ts3server://{{ site.teamspeak }}">Connect to TeamSpeak</a>{% endif %}
   </div>
 </div>
