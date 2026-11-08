@@ -1,9 +1,9 @@
 ---
 layout: article
-title: Cargo & Guides
+title: Guides & Trade Tool
 lead: "The flotilla's shared knowledge: plan your optimal trade loop, sail the guild route, and find the tools we use."
 scripts:
-  - /assets/js/trade-data.js?v=7
+  - /assets/js/trade-data.js?v=9
   - /assets/js/trade-planner.js?v=1
 ---
 ## Plan your trade loop
@@ -55,9 +55,9 @@ The planner computes the single best counterclockwise trade loop for your ship: 
 
 <details class="planner-notes">
 <summary>How the route is chosen</summary>
-<p>Trading in World of Sea Battle works like this: you fill your hold with whatever is cheap at your current port, sail on, and sell the whole stock the moment you reach the first port that pays a good's maximum price, freeing the hold for the next region's cheap goods. The planner applies exactly that rule at every port on your loop: each stop lists every cargo worth loading there, ranked by gold earned per hold of cargo space, and names the port where each cargo sells at top price. Hold space is deliberately not part of the planning, so no port gets skipped to make room for a bigger haul elsewhere: sail the loop, trade at every stop, and sell whatever your hold carries the moment it reaches a top price.</p>
+<p>Trading in World of Sea Battle works like this: you fill your hold with whatever is cheap at your current port, sail on, and sell the whole stock the moment you reach the first port that pays a good's maximum price, freeing the hold for the next region's cheap goods. The planner applies exactly that rule at every port on your loop: each stop lists every cargo worth loading there, ranked by money earned per hold of cargo space. Hold space is deliberately not part of the planning, so no port gets skipped to make room for a bigger haul elsewhere. Everything bought in one region sells at a single port in the next region: the SELL stops mark exactly where to dump your hold.</p>
 <p>Docking is modeled per port from tiers verified in game: a port in a shallow zone of tier N can only be docked by ships of rate N and smaller, while ports in open water or on the endless sea take any ship. A rate 2 port like Everston, for example, turns away only 1st rates, while a rate 6 port like Fiji takes 6th rates and smaller only. So a rate 1 trader cannot dock at Everston (tier 2) but can dock at Gray Island (open water), exactly as in the game.</p>
-<p>Amounts are shown per full 100 ton hold of each good and scale linearly with your real capacity: a ship with a 300 ton hold can triple every number. The buy list at each stop is ranked by money per cargo space, best first, so work down it until your hold is full. No gold figures are shown because market stock is partly random anyway: the ranking comes from the price spread, your actual earnings come from the market. When several ports ship the same good to one market, the sale is shown as full holds, for example Rugs x8: that is eight separate loads arriving over the loop, not one cargo.</p>
+<p>Amounts are shown per full 100 ton hold of each good and scale linearly with your real capacity: a ship with a 300 ton hold can triple every number. The buy list at each stop is ranked by money per cargo space, best first, so work down it until your hold is full. No gold figures are shown because market stock is partly random anyway: the ranking comes from the price spread, your actual earnings come from the market.</p>
 </details>
 
 <details class="planner-notes">
