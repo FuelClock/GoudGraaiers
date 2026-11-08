@@ -1,7 +1,7 @@
 ---
 title: Trade Route Planner
 masthead: slim
-lead: Pick your ship's rate and whether you sail the PvP circle, and get the most profitable counterclockwise trade loop.
+lead: Pick your ship's rate and whether you sail the PvP circle, and get the optimal counterclockwise trade loop with exact buy and sell points.
 ---
 <div class="article">
   <div class="grid12">
@@ -14,13 +14,13 @@ lead: Pick your ship's rate and whether you sail the PvP circle, and get the mos
     </nav>
     <div class="article-body">
       <h2>Plan your trade loop</h2>
-      <p>The planner uses the per-port market prices from the flotilla trading spreadsheet, combined with the game's own port data: every port's shallow-water tier (a ship of rate 3, for example, cannot dock at a tier 5 port) and whether it sits inside the PvP circle. It chains the best counterclockwise legs into one loop: buy where a good is cheap, sell one leg further on.</p>
+      <p>The planner computes the single best counterclockwise trade loop for your ship: it uses the per-port market prices from the flotilla trading spreadsheet, respects every port's shallow-water tier from the game's own files (a rate 3 ship cannot dock at a tier 5 port, and so on), keeps you out of the PvP circle and pirate ports unless you ask for them, and fills your hold with the goods that earn the most gold per ton of hold space. When you reach the first port that pays a good's top price, you sell the whole stock there and refill with the local cheap goods.</p>
 
       <div class="trade-controls">
         <label class="trade-control">
           <span>Your ship's rate</span>
           <select id="rate-select">
-            <option value="1">1st rate (Victory class, deep water only)</option>
+            <option value="1">1st rate (Victory class)</option>
             <option value="2">2nd rate</option>
             <option value="3" selected>3rd rate</option>
             <option value="4">4th rate</option>
@@ -31,10 +31,11 @@ lead: Pick your ship's rate and whether you sail the PvP circle, and get the mos
         </label>
         <label class="trade-control trade-control--check">
           <input type="checkbox" id="pvp-toggle">
-          <span>I will sail into the PvP circle (and pirate ports)</span>
+          <span>I will sail into the PvP circle and pirate ports</span>
         </label>
       </div>
       <p class="trade-note" id="trade-summary"></p>
+      <p class="trade-note" id="trade-skipped"></p>
 
       <figure class="map-route">
         <div class="map-route-frame">
@@ -51,17 +52,18 @@ lead: Pick your ship's rate and whether you sail the PvP circle, and get the mos
             <g id="plan-stops" font-family="EB Garamond, Georgia, serif"></g>
           </svg>
         </div>
-        <figcaption id="plan-caption">Your loop is drawn in gold. Ports are at their real positions; the number on each stop matches the list below.</figcaption>
+        <figcaption id="plan-caption">Your loop is drawn in gold; stop numbers match the list below. Amounts assume a 100 ton hold and scale with your real cargo capacity.</figcaption>
       </figure>
 
-      <h3 id="route-heading" class="route-heading">Your loop</h3>
+      <h3 class="route-heading">Your trading stops</h3>
       <ol id="route-list" class="route-list"></ol>
 
-      <h2>Stock: every market is a little different each cycle</h2>
-      <p>Port markets restock on a server cycle (roughly every 24 to 48 hours, depending on your server), and which goods a port stocks after a cycle is partly random: one visit a port may only have Wine, the next the whole range. Guild production and how much players buy shift the amounts further, so treat the route as the plan and the market as the weather. Two practical consequences are built into the planner: every leg lists backup goods in case the main pick is sold out, and remember that provision goods (Beer, Nuts, Dates) are almost always in stock but pay little per cargo weight, so they are hold filler, not the main cargo.</p>
       <h2>How the route is chosen</h2>
-      <p>Every leg in the loop buys the single most profitable good at its start port and sells it at a port further along the counterclockwise direction, ranked by profit per unit of cargo weight. The next leg then starts where the last one ended, until the loop closes. Ports you cannot dock at are left out before any of that happens, so the loop always respects your ship and your tolerance for PvP.</p>
-      <p>Data sources: market prices from the flotilla trading spreadsheet, shallow-water tiers and port types straight from the game's own world files, and the PvP circle as marked on community charts. If a port's shallow tier changes with a game patch, the data table is one file and easy to update.</p>
+      <p>Trading in World of Sea Battle works like this: you fill your hold with whatever is cheap at your current port, sail on, and sell the whole stock the moment you reach the first port that pays a good's maximum price, freeing the hold for the next region's cheap goods. The planner computes that exactly: it is a capacity-planning problem, solved so that no ton of hold space ever sits idle when a profitable good could be carried. Every port you cannot dock at is excluded before the computation, so the loop always fits your ship.</p>
+      <p>Amounts are shown per 100 tons of hold space and scale linearly with your real capacity: a ship with a 300 ton hold can triple every number.</p>
+
+      <h2>Stock: every market is a little different each cycle</h2>
+      <p>Port markets restock on a server cycle (roughly every 24 to 48 hours, depending on your server), and which goods a port stocks after a cycle is partly random: one visit a port may only have Wine, the next the whole range. Guild production and how much players buy shift the amounts further, so treat the plan as the route and the market as the weather. When a planned good is sold out at a port, skip that purchase and carry on: the loop stays valid, one leg simply earns a little less. Provisions (Beer, Nuts, Dates) are almost always in stock but pay little per ton, so they are hold filler, not the main cargo.</p>
     </div>
   </div>
 </div>
@@ -69,158 +71,78 @@ lead: Pick your ship's rate and whether you sail the PvP circle, and get the mos
 <script defer>
 (function () {
   'use strict';
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function init() {
-    if (!window.TRADE_DATA) { setTimeout(init, 120); return; }
+    if (!window.TRADE_DATA || !window.TRADE_PLANS) { setTimeout(init, 120); return; }
     var rateSel = document.getElementById('rate-select');
     var pvpToggle = document.getElementById('pvp-toggle');
     var summary = document.getElementById('trade-summary');
-    var routePath = document.getElementById('plan-route');
-    var stopsG = document.getElementById('plan-stops');
+    var skippedEl = document.getElementById('trade-skipped');
     var list = document.getElementById('route-list');
-    var NS = 'http://www.w3.org/2000/svg';
-
-    function allowedPorts(rate, allowPvp) {
-      return TRADE_DATA.ports.filter(function (p) {
-        var hasPrices = p.prices && Object.keys(p.prices).length > 0;
-        var fits = p.shallow <= rate;
-        var safe = allowPvp || (!p.pvp && !p.pirate);
-        return hasPrices && fits && safe;
-      });
-    }
-
-    function computeLoop(ports) {
-      var n = ports.length;
-      if (n < 3) return null;
-      var clat = 0, clng = 0;
-      ports.forEach(function (p) { clat += p.lat; clng += p.lng; });
-      clat /= n; clng /= n;
-      var ordered = ports.slice().sort(function (a, b) {
-        return Math.atan2(a.lat - clat, a.lng - clng) - Math.atan2(b.lat - clat, b.lng - clng);
-      });
-      var goods = TRADE_DATA.goods;
-      // legPpw[i][j] = best profit-per-weight good to buy at i and sell at j (j ccw ahead of i)
-      var legPpw = [], legGood = [], legBuy = [], legSell = [], legMargin = [];
-      for (var i = 0; i < n; i++) {
-        legPpw.push([]); legGood.push([]); legBuy.push([]); legSell.push([]); legMargin.push([]);
-        for (var j = 0; j < n; j++) { legPpw[i].push(null); }
-        var pi = ordered[i];
-        for (var step = 1; step < n; step++) {
-          var j = (i + step) % n;
-          var pj = ordered[j];
-          var bb = null;
-          for (var g in goods) {
-            var buy = pi.prices[g], sell = pj.prices[g];
-            if (buy == null || sell == null) continue;
-            var margin = sell - buy;
-            if (margin <= 0) continue;
-            var ppw = margin / goods[g].weight;
-            if (!bb || ppw > bb.ppw) bb = { good: g, buy: buy, sell: sell, margin: margin, ppw: ppw };
-          }
-          if (bb) { legPpw[i][j] = bb.ppw; legGood[i][j] = bb.good; legBuy[i][j] = bb.buy; legSell[i][j] = bb.sell; legMargin[i][j] = bb.margin; }
-        }
-      }
-      // DP: best closed loop of L stops (3..min(12,n)), over all starts
-      var maxL = Math.min(12, n);
-      var best = null;
-      for (var s = 0; s < n; s++) {
-        for (var L = 3; L <= maxL; L++) {
-          // dp[pos][k] = best total ppw after k legs, currently at linear position pos
-          var NEG = -1e9;
-          var dp = [], parent = [];
-          for (var p = 0; p <= n; p++) { dp.push(new Array(L + 1).fill(NEG)); parent.push(new Array(L + 1).fill(-1)); }
-          dp[0][0] = 0;
-          for (var k = 0; k < L; k++) {
-            for (var pos = k; pos < n; pos++) {
-              if (dp[pos][k] === NEG) continue;
-              for (var np = pos + 1; np <= n - (L - k - 1); np++) {
-                var li = (s + pos) % n, lj = (s + np) % n;
-                var v = legPpw[li][lj];
-                if (v == null) continue;
-                var val = dp[pos][k] + v;
-                if (val > dp[np][k + 1]) { dp[np][k + 1] = val; parent[np][k + 1] = pos; }
-              }
-            }
-          }
-          var endPos = n; // full circle back to start
-          if (dp[endPos][L] === NEG) continue;
-          if (!best || dp[endPos][L] > best.total) {
-            // reconstruct
-            var seq = [];
-            var p2 = endPos, k2 = L;
-            while (k2 > 0) { seq.push(p2); p2 = parent[p2][k2]; k2--; }
-            seq.reverse();
-            var loopLegs = [];
-            var prev = 0;
-            for (var q = 0; q < seq.length; q++) {
-              var li2 = (s + prev) % n, lj2 = (s + seq[q]) % n;
-              loopLegs.push({ from: ordered[li2], to: ordered[lj2], good: legGood[li2][lj2], buy: legBuy[li2][lj2], sell: legSell[li2][lj2], margin: legMargin[li2][lj2], ppw: legPpw[li2][lj2] });
-              prev = seq[q];
-            }
-            best = { total: dp[endPos][L], legs: loopLegs };
-          }
-        }
-      }
-      return best ? best.legs : null;
-    }
 
     function render() {
-      var rate = parseInt(rateSel.value, 10);
+      var rate = rateSel.value;
       var allowPvp = pvpToggle.checked;
-      var loop = computeLoop(allowedPorts(rate, allowPvp));
-      routePath.innerHTML = '';
-      stopsG.innerHTML = '';
+      var key = rate + (allowPvp ? 'p' : '');
+      var plan = TRADE_PLANS[key];
+      var pts = [];
       list.innerHTML = '';
-      if (!loop) {
-        summary.textContent = 'No profitable loop for this ship: try a higher rate or allow the PvP circle.';
-        document.getElementById('route-heading').style.display = 'none';
+      document.getElementById('plan-route').setAttribute('d', '');
+      var stopsG = document.getElementById('plan-stops');
+      stopsG.innerHTML = '';
+      var NS = 'http://www.w3.org/2000/svg';
+
+      if (!plan || plan.error) {
+        var msg = 'No counterclockwise loop exists for this ship: every tier 1 port on the map sits inside the PvP circle or is a pirate port, so a 1st rate trader has nowhere peaceful to dock. Tick the PvP box, or sail a smaller ship.';
+        summary.textContent = allowPvp ? 'Not enough ports for a loop.' : msg;
+        skippedEl.textContent = '';
         return;
       }
-      document.getElementById('route-heading').style.display = '';
-      var totalPpw = 0;
-      var pts = [];
-      loop.forEach(function (leg, i) {
-        var p = leg.from;
-        pts.push([p.lng / 120.0516 * 2400, (1 - p.lat / 100) * 1987]);
-        totalPpw += leg.ppw;
-        var alts = [];
-        for (var g in TRADE_DATA.goods) {
-          var buy = leg.from.prices[g], sell = leg.to.prices[g];
-          if (buy == null || sell == null) continue;
-          var m = sell - buy;
-          if (m <= 0 || g === leg.good) continue;
-          alts.push({ t: g + ' (+' + m + 'g)', ppw: m / TRADE_DATA.goods[g].weight });
-        }
-        alts.sort(function (a, b) { return b.ppw - a.ppw; });
+      var active = plan.active.slice();
+      var stIdx = active.findIndex(function (a) { return a.name === 'St. Jean'; });
+      if (stIdx > 0) active = active.slice(stIdx).concat(active.slice(0, stIdx));
+      summary.textContent = 'Optimal loop: ' + active.length + ' trading stops, ' + plan.skipped.length +
+        ' ports sailed past without trading. Expected profit: ' + plan.totalProfit +
+        ' gold per loop with a 100 ton hold (scales with your cargo capacity).';
+      skippedEl.textContent = plan.skipped.length ? 'Sail past without trading: ' + plan.skipped.join(', ') + '.' : '';
+
+      active.forEach(function (a, i) {
         var li = document.createElement('li');
-        var html = '<b>' + p.name + '</b>: buy <em>' + leg.good + '</em> at ' +
-          leg.buy + ' gold, sell at ' + leg.to.name + ' for ' + leg.sell +
-          ' gold <span class="route-margin">+' + leg.margin + ' gold per piece, +' + leg.ppw.toFixed(1) + ' per weight</span>';
-        if (alts.length) {
-          html += '<br><span class="route-alts">sold out? backups: ' + alts.slice(0, 2).map(function (a) { return a.t; }).join(', ') + '</span>';
+        var parts = [];
+        if (Object.keys(a.sell).length) {
+          var s = Object.keys(a.sell).map(function (g) { return g + ' ' + a.sell[g] + 't (' + (a.sell[g] * (TRADE_DATA.ports.find(function (x) { return x.name === a.name; }).prices[g] || 0)).toFixed(0) + 'g)'; }).join(', ');
+          parts.push('<b class="act-sell">SELL</b> <span class="goods">' + s + '</span>');
         }
-        li.innerHTML = html;
+        if (Object.keys(a.buy).length) {
+          var b = Object.keys(a.buy).map(function (g) { return g + ' ' + a.buy[g] + 't'; }).join(', ');
+          parts.push('<b class="act-buy">BUY</b> <span class="goods">' + b + '</span>');
+        }
+        li.innerHTML = '<b>' + (i + 1) + '. ' + a.name + '</b>' +
+          (parts.length ? ': ' + parts.join(' &nbsp; ') : ': sail on, no trade here') +
+          (a.goldIn ? ' <span class="route-margin">+' + a.goldIn + ' gold from sales</span>' : '');
         list.appendChild(li);
       });
-      pts.push(pts[0].slice());
-      var d = 'M ' + pts.map(function (pt) { return pt[0].toFixed(0) + ' ' + pt[1].toFixed(0); }).join(' L ');
-      document.getElementById('plan-route').setAttribute('d', d);
-      pts.forEach(function (pt, i) {
+
+      var MUW = 120.0516;
+      active.forEach(function (a, i) {
+        var x = a.lng / MUW * 2400, y = (1 - a.lat / 100) * 1987;
+        pts.push([x, y]);
         var c = document.createElementNS(NS, 'circle');
-        c.setAttribute('cx', pt[0]); c.setAttribute('cy', pt[1]); c.setAttribute('r', 18);
+        c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', 18);
         c.setAttribute('fill', '#c9a227'); c.setAttribute('stroke', '#14212c'); c.setAttribute('stroke-width', 5);
         stopsG.appendChild(c);
         var t = document.createElementNS(NS, 'text');
-        t.setAttribute('x', pt[0]); t.setAttribute('y', pt[1] + 13);
+        t.setAttribute('x', x); t.setAttribute('y', y + 13);
         t.setAttribute('text-anchor', 'middle');
         t.setAttribute('font-size', 34); t.setAttribute('font-weight', 500);
         t.setAttribute('fill', '#14212c');
         t.textContent = String(i + 1);
         stopsG.appendChild(t);
       });
-      var names = loop.map(function (l) { return l.from.name; });
-      summary.textContent = 'Loop of ' + loop.length + ' ports: ' + names.join(' → ') +
-        '. Total value: +' + totalPpw.toFixed(1) + ' gold per unit of cargo weight (buy the shown good at each stop, sell it at the next).';
+      if (pts.length > 1) {
+        pts.push(pts[0].slice());
+        var d = 'M ' + pts.map(function (pt) { return pt[0].toFixed(0) + ' ' + pt[1].toFixed(0); }).join(' L ');
+        document.getElementById('plan-route').setAttribute('d', d);
+      }
     }
 
     rateSel.addEventListener('change', render);
