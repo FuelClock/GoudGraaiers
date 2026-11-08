@@ -116,7 +116,7 @@ lead: Pick your ship's rate and whether you sail the PvP circle, and get the opt
           var b = Object.keys(a.buy).map(function (g) { return g + ' ' + a.buy[g] + 't'; }).join(', ');
           parts.push('<b class="act-buy">BUY</b> <span class="goods">' + b + '</span>');
         }
-        li.innerHTML = '<b>' + (i + 1) + '. ' + a.name + '</b>' +
+        li.innerHTML = '<b>' + a.name + '</b>' +
           (parts.length ? ': ' + parts.join(' &nbsp; ') : ': sail on, no trade here') +
           (a.goldIn ? ' <span class="route-margin">+' + a.goldIn + ' gold from sales</span>' : '');
         list.appendChild(li);
