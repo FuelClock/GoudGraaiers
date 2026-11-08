@@ -3,7 +3,7 @@ layout: article
 title: Trade Route Planner
 lead: Pick your ship's rate and whether you sail the PvP circle, and get the optimal counterclockwise trade loop with exact buy and sell points.
 scripts:
-  - /assets/js/trade-data.js?v=6
+  - /assets/js/trade-data.js?v=7
   - /assets/js/trade-planner.js?v=1
 ---
 ## Plan your trade loop
@@ -59,7 +59,7 @@ Trading in World of Sea Battle works like this: you fill your hold with whatever
 
 Docking is modeled per port from tiers verified in game: a port in a shallow zone of tier N can only be docked by ships of rate N and smaller, while ports in open water or on the endless sea take any ship. A rate 2 port like Everston, for example, turns away only 1st rates, while a rate 6 port like Fiji takes 6th rates and smaller only. So a rate 1 trader cannot dock at Everston (tier 2) but can dock at Gray Island (open water), exactly as in the game.
 
-Amounts are shown per full 100 ton hold of each good and scale linearly with your real capacity: a ship with a 300 ton hold can triple every number. Each buy entry shows the gold a full hold of that cargo earns, so the list is ranked by money per cargo space: work down it until your hold is full. When several ports ship the same good to one market, the sale is shown as full holds, for example Rugs x8: that is eight separate loads arriving over the loop, not one cargo.
+Amounts are shown per full 100 ton hold of each good and scale linearly with your real capacity: a ship with a 300 ton hold can triple every number. The buy list at each stop is ranked by money per cargo space, best first, so work down it until your hold is full. No gold figures are shown because market stock is partly random anyway: the ranking comes from the price spread, your actual earnings come from the market. When several ports ship the same good to one market, the sale is shown as full holds, for example Rugs x8: that is eight separate loads arriving over the loop, not one cargo.
 
 ## Stock: every market is a little different each cycle
 
