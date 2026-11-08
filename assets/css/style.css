@@ -34,7 +34,7 @@
   --hero-size: clamp(3.25rem, 6.5vw, 6.75rem);
 
   --margin: clamp(16px, 2.5vw, 32px);
-  --section-gap: clamp(88px, 9vw, 136px);
+  --section-gap: clamp(44px, 4.5vw, 68px);
 }
 
 * { box-sizing: border-box; }
