@@ -7,9 +7,21 @@
       <p class="card-excerpt">{{ v.excerpt }}</p>
       <div class="card-foot">
         <span class="card-date">{{ v.date_label }}</span>
-        <a class="card-link" href="{{ v.url | relative_url }}">Read the plan</a>
+        {% if v.plan %}<button class="card-link" type="button" data-voyage="{{ v.slug }}">Read the plan</button>{% endif %}
       </div>
     </article>
+    {% if v.plan %}
+    <dialog class="voyage-modal" id="voyage-{{ v.slug }}" aria-labelledby="voyage-{{ v.slug }}-title">
+      <div class="voyage-modal-head">
+        <h3 class="voyage-modal-title" id="voyage-{{ v.slug }}-title">{{ v.title }}</h3>
+        <button class="voyage-modal-close" type="button" aria-label="Close">&#10005;</button>
+      </div>
+      <div class="voyage-modal-body">
+        {% if v.date_label %}<p class="voyage-modal-date">{{ v.date_label }}</p>{% endif %}
+        {{ v.plan | markdownify }}
+      </div>
+    </dialog>
+    {% endif %}
     {% endfor %}
   </div>
 </section>
