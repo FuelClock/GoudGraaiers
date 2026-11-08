@@ -517,7 +517,8 @@ main { position: relative; z-index: 1; }
     column-gap: clamp(32px, 4vw, 64px);
     align-items: start;
   }
-  .faq-figure { display: block; margin: 0; }
+  .faq-heading { grid-column: 1 / -1; }
+  .faq-figure { display: block; margin: 0; align-self: center; }
   .faq-figure img { width: 100%; height: auto; }
   .faq-figure figcaption {
     font-size: 0.9375rem;
