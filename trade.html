@@ -193,7 +193,7 @@ lead: Pick your ship's rate and whether you sail the PvP circle, and get the mos
         }
         alts.sort(function (a, b) { return b.ppw - a.ppw; });
         var li = document.createElement('li');
-        var html = '<b>' + (i + 1) + '. ' + p.name + '</b>: buy <em>' + leg.good + '</em> at ' +
+        var html = '<b>' + p.name + '</b>: buy <em>' + leg.good + '</em> at ' +
           leg.buy + ' gold, sell at ' + leg.to.name + ' for ' + leg.sell +
           ' gold <span class="route-margin">+' + leg.margin + ' gold per piece, +' + leg.ppw.toFixed(1) + ' per weight</span>';
         if (alts.length) {
