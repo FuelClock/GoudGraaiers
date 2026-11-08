@@ -45,7 +45,9 @@ lead: Pick your ship's rate and whether you sail the PvP circle, and get the mos
                 <path d="M 0 0 L 10 5 L 0 10 z" fill="#c9a227"/>
               </marker>
             </defs>
-            <g id="plan-route" fill="none" stroke="#c9a227" stroke-width="6" stroke-dasharray="20 14" opacity="0.95"></g>
+            <g fill="none" stroke="#c9a227" stroke-width="6" stroke-dasharray="20 14" opacity="0.95">
+              <path id="plan-route" d="" marker-end="url(#plan-arrow)"/>
+            </g>
             <g id="plan-stops" font-family="EB Garamond, Georgia, serif"></g>
           </svg>
         </div>
@@ -97,43 +99,69 @@ lead: Pick your ship's rate and whether you sail the PvP circle, and get the mos
         return Math.atan2(a.lat - clat, a.lng - clng) - Math.atan2(b.lat - clat, b.lng - clng);
       });
       var goods = TRADE_DATA.goods;
-      var legs = [];
+      // legPpw[i][j] = best profit-per-weight good to buy at i and sell at j (j ccw ahead of i)
+      var legPpw = [], legGood = [], legBuy = [], legSell = [], legMargin = [];
       for (var i = 0; i < n; i++) {
+        legPpw.push([]); legGood.push([]); legBuy.push([]); legSell.push([]); legMargin.push([]);
+        for (var j = 0; j < n; j++) { legPpw[i].push(null); }
         var pi = ordered[i];
-        var cands = [];
         for (var step = 1; step < n; step++) {
-          if (step > n / 2) break;
-          var pj = ordered[(i + step) % n];
+          var j = (i + step) % n;
+          var pj = ordered[j];
+          var bb = null;
           for (var g in goods) {
             var buy = pi.prices[g], sell = pj.prices[g];
             if (buy == null || sell == null) continue;
             var margin = sell - buy;
             if (margin <= 0) continue;
             var ppw = margin / goods[g].weight;
-            cands.push({ from: pi, to: pj, good: g, buy: buy, sell: sell, margin: margin, ppw: ppw });
+            if (!bb || ppw > bb.ppw) bb = { good: g, buy: buy, sell: sell, margin: margin, ppw: ppw };
+          }
+          if (bb) { legPpw[i][j] = bb.ppw; legGood[i][j] = bb.good; legBuy[i][j] = bb.buy; legSell[i][j] = bb.sell; legMargin[i][j] = bb.margin; }
+        }
+      }
+      // DP: best closed loop of L stops (3..min(12,n)), over all starts
+      var maxL = Math.min(12, n);
+      var best = null;
+      for (var s = 0; s < n; s++) {
+        for (var L = 3; L <= maxL; L++) {
+          // dp[pos][k] = best total ppw after k legs, currently at linear position pos
+          var NEG = -1e9;
+          var dp = [], parent = [];
+          for (var p = 0; p <= n; p++) { dp.push(new Array(L + 1).fill(NEG)); parent.push(new Array(L + 1).fill(-1)); }
+          dp[0][0] = 0;
+          for (var k = 0; k < L; k++) {
+            for (var pos = k; pos < n; pos++) {
+              if (dp[pos][k] === NEG) continue;
+              for (var np = pos + 1; np <= n - (L - k - 1); np++) {
+                var li = (s + pos) % n, lj = (s + np) % n;
+                var v = legPpw[li][lj];
+                if (v == null) continue;
+                var val = dp[pos][k] + v;
+                if (val > dp[np][k + 1]) { dp[np][k + 1] = val; parent[np][k + 1] = pos; }
+              }
+            }
+          }
+          var endPos = n; // full circle back to start
+          if (dp[endPos][L] === NEG) continue;
+          if (!best || dp[endPos][L] > best.total) {
+            // reconstruct
+            var seq = [];
+            var p2 = endPos, k2 = L;
+            while (k2 > 0) { seq.push(p2); p2 = parent[p2][k2]; k2--; }
+            seq.reverse();
+            var loopLegs = [];
+            var prev = 0;
+            for (var q = 0; q < seq.length; q++) {
+              var li2 = (s + prev) % n, lj2 = (s + seq[q]) % n;
+              loopLegs.push({ from: ordered[li2], to: ordered[lj2], good: legGood[li2][lj2], buy: legBuy[li2][lj2], sell: legSell[li2][lj2], margin: legMargin[li2][lj2], ppw: legPpw[li2][lj2] });
+              prev = seq[q];
+            }
+            best = { total: dp[endPos][L], legs: loopLegs };
           }
         }
-        if (!cands.length) continue;
-        cands.sort(function (a, b) { return b.ppw - a.ppw; });
-        var best = cands[0];
-        best.alts = cands.slice(1, 3).map(function (c) { return c.good + ' (+' + c.margin + 'g)'; });
-        legs.push(best);
       }
-      if (!legs.length) return null;
-      legs.sort(function (a, b) { return b.ppw - a.ppw; });
-      var byFrom = {};
-      legs.forEach(function (l) { byFrom[l.from.name] = l; });
-      var start = legs[0].from;
-      var loop = [];
-      var cur = start.name;
-      for (var k = 0; k < n + 1; k++) {
-        var leg = byFrom[cur];
-        if (!leg) break;
-        loop.push(leg);
-        cur = leg.to.name;
-        if (cur === start.name) break;
-      }
-      return loop;
+      return best ? best.legs : null;
     }
 
     function render() {
@@ -149,25 +177,34 @@ lead: Pick your ship's rate and whether you sail the PvP circle, and get the mos
         return;
       }
       document.getElementById('route-heading').style.display = '';
-      var totalPpw = 0, margin = 0;
+      var totalPpw = 0;
       var pts = [];
       loop.forEach(function (leg, i) {
         var p = leg.from;
         pts.push([p.lng / 120.0516 * 2400, (1 - p.lat / 100) * 1987]);
         totalPpw += leg.ppw;
+        var alts = [];
+        for (var g in TRADE_DATA.goods) {
+          var buy = leg.from.prices[g], sell = leg.to.prices[g];
+          if (buy == null || sell == null) continue;
+          var m = sell - buy;
+          if (m <= 0 || g === leg.good) continue;
+          alts.push({ t: g + ' (+' + m + 'g)', ppw: m / TRADE_DATA.goods[g].weight });
+        }
+        alts.sort(function (a, b) { return b.ppw - a.ppw; });
         var li = document.createElement('li');
         var html = '<b>' + (i + 1) + '. ' + p.name + '</b>: buy <em>' + leg.good + '</em> at ' +
           leg.buy + ' gold, sell at ' + leg.to.name + ' for ' + leg.sell +
           ' gold <span class="route-margin">+' + leg.margin + ' gold per piece, +' + leg.ppw.toFixed(1) + ' per weight</span>';
-        if (leg.alts && leg.alts.length) {
-          html += '<br><span class="route-alts">sold out? backups: ' + leg.alts.join(', ') + '</span>';
+        if (alts.length) {
+          html += '<br><span class="route-alts">sold out? backups: ' + alts.slice(0, 2).map(function (a) { return a.t; }).join(', ') + '</span>';
         }
         li.innerHTML = html;
         list.appendChild(li);
       });
       pts.push(pts[0].slice());
       var d = 'M ' + pts.map(function (pt) { return pt[0].toFixed(0) + ' ' + pt[1].toFixed(0); }).join(' L ');
-      routePath.setAttribute('d', d);
+      document.getElementById('plan-route').setAttribute('d', d);
       pts.forEach(function (pt, i) {
         var c = document.createElementNS(NS, 'circle');
         c.setAttribute('cx', pt[0]); c.setAttribute('cy', pt[1]); c.setAttribute('r', 18);
