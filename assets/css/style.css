@@ -585,16 +585,15 @@ main { position: relative; z-index: 1; }
 }
 .footer-wordmark {
   margin-top: 8px;
-  font-size: min(10.4vw, 10.5rem);
-  line-height: 0.95;
+  /* quiet close: the page and section titles now carry the loud gold caps,
+     so the footer wordmark steps back to a small flat gold mark (Thimon,
+     2026-11-08: it screamed for attention over the FAQ) */
+  font-size: clamp(1.75rem, 4.2vw, 2.5rem);
+  line-height: 1;
   letter-spacing: 0.01em;
   font-weight: 500;
   white-space: nowrap;
   color: var(--gold);
-  background: var(--gold-text);
-  -webkit-background-clip: text;
-  background-clip: text; /* taste-skill-ignore: metallic gold is the brand request */
-  -webkit-text-fill-color: transparent;
   text-align: center;
 }
 .footer-legal {
@@ -746,8 +745,6 @@ main { position: relative; z-index: 1; }
 
   .joining-side, .joining-steps { grid-column: 1 / 13; }
    .joining-steps { margin-top: 40px; }
-
-  .footer-wordmark { font-size: 10.4vw; }
 
   .port-name { font-size: 82px; }
   .port-goods { display: none; }
