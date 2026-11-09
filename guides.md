@@ -4,7 +4,7 @@ title: Guides & Trade Tool
 lead: "The flotilla's shared knowledge: sail the guild's Trade Fever route, plan your own optimal trade loop, and find the tools we use."
 scripts:
   - /assets/js/trade-data.js?v=10
-  - /assets/js/trade-planner.js?v=7
+  - /assets/js/trade-planner.js?v=8
 plate: /img/paintings/porcellis-ships-in-distress-stormy-sea.jpg
 plate_alt: Ships in distress on a stormy sea, oil painting by Jan Porcellis
 ---
@@ -38,83 +38,83 @@ From our Trade Fever voyages: gather at St Jean and sail the loop counterclockwi
         <path d="M 1409 1766 L 1754 1329" marker-end="url(#route-arrow)"/>
       </g>
       <g font-family="EB Garamond, Georgia, serif">
-        <circle cx="1777" cy="1301" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5"/>
+        <circle cx="1777" cy="1301" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5" class="plan-dot" data-port="St. Jean"/>
         <text x="1777" y="1314" text-anchor="middle" font-size="34" font-weight="500" fill="#14212c">1</text>
         <text x="1777" y="1359" text-anchor="middle" class="plan-name" font-size="46" font-weight="500" fill="#e8e2d2" stroke="#14212c" stroke-width="10" paint-order="stroke" stroke-linejoin="round">St. Jean</text>
         <text x="1777" y="1397" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">gather here, start the loop</text>
-        <circle cx="1732" cy="523" r="18" fill="#3f8f5f" stroke="#14212c" stroke-width="5"/>
+        <circle cx="1732" cy="523" r="18" fill="#3f8f5f" stroke="#14212c" stroke-width="5" class="plan-dot" data-port="Gray Island"/>
         <text x="1732" y="536" text-anchor="middle" font-size="34" font-weight="500" fill="#14212c">2</text>
         <text x="1732" y="581" text-anchor="middle" class="plan-name" font-size="46" font-weight="500" fill="#e8e2d2" stroke="#14212c" stroke-width="10" paint-order="stroke" stroke-linejoin="round">Gray Island</text>
         <text x="1732" y="619" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Wine</text>
         <text x="1732" y="653" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Beer</text>
         <text x="1732" y="687" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Grog</text>
-        <circle cx="1123" cy="292" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5"/>
+        <circle cx="1123" cy="292" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5" class="plan-dot" data-port="Everston"/>
         <text x="1123" y="305" text-anchor="middle" font-size="34" font-weight="500" fill="#14212c">3</text>
         <text x="1123" y="350" text-anchor="middle" class="plan-name" font-size="46" font-weight="500" fill="#e8e2d2" stroke="#14212c" stroke-width="10" paint-order="stroke" stroke-linejoin="round">Everston</text>
         <text x="1123" y="388" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Wine</text>
         <text x="1123" y="422" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Rugs</text>
         <text x="1123" y="456" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Beer</text>
-        <circle cx="434" cy="162" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5"/>
+        <circle cx="434" cy="162" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5" class="plan-dot" data-port="Oneg"/>
         <text x="434" y="175" text-anchor="middle" font-size="34" font-weight="500" fill="#14212c">4</text>
         <text x="434" y="220" text-anchor="middle" class="plan-name" font-size="46" font-weight="500" fill="#e8e2d2" stroke="#14212c" stroke-width="10" paint-order="stroke" stroke-linejoin="round">Oneg</text>
         <text x="434" y="258" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Wine</text>
         <text x="434" y="292" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Rugs</text>
         <text x="434" y="326" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Cinnamon</text>
-        <circle cx="282" cy="386" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5"/>
+        <circle cx="282" cy="386" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5" class="plan-dot" data-port="Nordberg"/>
         <text x="282" y="399" text-anchor="middle" font-size="34" font-weight="500" fill="#14212c">5</text>
         <text x="308" y="444" text-anchor="start" class="plan-name" font-size="46" font-weight="500" fill="#e8e2d2" stroke="#14212c" stroke-width="10" paint-order="stroke" stroke-linejoin="round">Nordberg</text>
         <text x="308" y="482" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Rugs</text>
         <text x="308" y="516" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Cinnamon</text>
         <text x="308" y="550" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Wine</text>
-        <circle cx="215" cy="556" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5"/>
+        <circle cx="215" cy="556" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5" class="plan-dot" data-port="Nisogora"/>
         <text x="215" y="569" text-anchor="middle" font-size="34" font-weight="500" fill="#14212c">6</text>
         <text x="241" y="614" text-anchor="start" class="plan-name" font-size="46" font-weight="500" fill="#e8e2d2" stroke="#14212c" stroke-width="10" paint-order="stroke" stroke-linejoin="round">Nisogora</text>
         <text x="241" y="652" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Rugs</text>
         <text x="241" y="686" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Cinnamon</text>
         <text x="241" y="720" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Wine</text>
-        <circle cx="127" cy="812" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5"/>
+        <circle cx="127" cy="812" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5" class="plan-dot" data-port="Cursed City"/>
         <text x="127" y="825" text-anchor="middle" font-size="34" font-weight="500" fill="#14212c">7</text>
         <text x="153" y="870" text-anchor="start" class="plan-name" font-size="46" font-weight="500" fill="#e8e2d2" stroke="#14212c" stroke-width="10" paint-order="stroke" stroke-linejoin="round">Cursed City</text>
         <text x="153" y="908" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Rugs</text>
         <text x="153" y="942" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Cinnamon</text>
         <text x="153" y="976" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Paprika</text>
-        <circle cx="277" cy="1052" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5"/>
+        <circle cx="277" cy="1052" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5" class="plan-dot" data-port="West bastion"/>
         <text x="277" y="1065" text-anchor="middle" font-size="34" font-weight="500" fill="#14212c">8</text>
         <text x="303" y="1110" text-anchor="start" class="plan-name" font-size="46" font-weight="500" fill="#e8e2d2" stroke="#14212c" stroke-width="10" paint-order="stroke" stroke-linejoin="round">West bastion</text>
         <text x="303" y="1148" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Rugs</text>
         <text x="303" y="1182" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Cinnamon</text>
         <text x="303" y="1216" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Paprika</text>
-        <circle cx="375" cy="1426" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5"/>
+        <circle cx="375" cy="1426" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5" class="plan-dot" data-port="Sharhat"/>
         <text x="375" y="1439" text-anchor="middle" font-size="34" font-weight="500" fill="#14212c">9</text>
         <text x="375" y="1484" text-anchor="middle" class="plan-name" font-size="46" font-weight="500" fill="#e8e2d2" stroke="#14212c" stroke-width="10" paint-order="stroke" stroke-linejoin="round">Sharhat</text>
         <text x="375" y="1522" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Rugs</text>
         <text x="375" y="1556" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Cinnamon</text>
         <text x="375" y="1590" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Pepper</text>
-        <circle cx="125" cy="1548" r="18" fill="#3f8f5f" stroke="#14212c" stroke-width="5"/>
+        <circle cx="125" cy="1548" r="18" fill="#3f8f5f" stroke="#14212c" stroke-width="5" class="plan-dot" data-port="Assab"/>
         <text x="125" y="1561" text-anchor="middle" font-size="34" font-weight="500" fill="#14212c">10</text>
         <text x="151" y="1606" text-anchor="start" class="plan-name" font-size="46" font-weight="500" fill="#e8e2d2" stroke="#14212c" stroke-width="10" paint-order="stroke" stroke-linejoin="round">Assab</text>
         <text x="151" y="1644" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Rugs</text>
         <text x="151" y="1678" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Cinnamon</text>
         <text x="151" y="1712" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Tobacco</text>
-        <circle cx="145" cy="1797" r="18" fill="#3f8f5f" stroke="#14212c" stroke-width="5"/>
+        <circle cx="145" cy="1797" r="18" fill="#3f8f5f" stroke="#14212c" stroke-width="5" class="plan-dot" data-port="Al-Khalif"/>
         <text x="145" y="1810" text-anchor="middle" font-size="34" font-weight="500" fill="#14212c">11</text>
         <text x="171" y="1855" text-anchor="start" class="plan-name" font-size="46" font-weight="500" fill="#e8e2d2" stroke="#14212c" stroke-width="10" paint-order="stroke" stroke-linejoin="round">Al-Khalif</text>
         <text x="171" y="1893" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Rugs</text>
         <text x="171" y="1927" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Cinnamon</text>
         <text x="171" y="1961" text-anchor="start" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Paprika</text>
-        <circle cx="708" cy="1763" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5"/>
+        <circle cx="708" cy="1763" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5" class="plan-dot" data-port="El Tigre"/>
         <text x="708" y="1776" text-anchor="middle" font-size="34" font-weight="500" fill="#14212c">12</text>
         <text x="708" y="1821" text-anchor="middle" class="plan-name" font-size="46" font-weight="500" fill="#e8e2d2" stroke="#14212c" stroke-width="10" paint-order="stroke" stroke-linejoin="round">El Tigre</text>
         <text x="708" y="1859" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Rugs</text>
         <text x="708" y="1893" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Oil</text>
         <text x="708" y="1927" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Pepper</text>
-        <circle cx="692" cy="1509" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5"/>
+        <circle cx="692" cy="1509" r="18" fill="#d4af37" stroke="#14212c" stroke-width="5" class="plan-dot" data-port="Devios"/>
         <text x="692" y="1522" text-anchor="middle" font-size="34" font-weight="500" fill="#14212c">13</text>
         <text x="692" y="1567" text-anchor="middle" class="plan-name" font-size="46" font-weight="500" fill="#e8e2d2" stroke="#14212c" stroke-width="10" paint-order="stroke" stroke-linejoin="round">Devios</text>
         <text x="692" y="1605" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Rugs</text>
         <text x="692" y="1639" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Oil</text>
         <text x="692" y="1673" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Pepper</text>
-        <circle cx="1409" cy="1766" r="18" fill="#3f8f5f" stroke="#14212c" stroke-width="5"/>
+        <circle cx="1409" cy="1766" r="18" fill="#3f8f5f" stroke="#14212c" stroke-width="5" class="plan-dot" data-port="San Martinas"/>
         <text x="1409" y="1779" text-anchor="middle" font-size="34" font-weight="500" fill="#14212c">14</text>
         <text x="1409" y="1824" text-anchor="middle" class="plan-name" font-size="46" font-weight="500" fill="#e8e2d2" stroke="#14212c" stroke-width="10" paint-order="stroke" stroke-linejoin="round">San Martinas</text>
         <text x="1409" y="1862" text-anchor="middle" class="plan-goods" font-size="28" font-weight="500" fill="#e5cf82" stroke="#14212c" stroke-width="8" paint-order="stroke" stroke-linejoin="round">Oil</text>
