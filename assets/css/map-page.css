@@ -1,0 +1,237 @@
+/* The Map page: interactive world chart. Scoped under .imap-page (body_class
+   frontmatter) and the .imap component root. Visual language matches the
+   trade planner: parchment EB Garamond names, navy outline, flat gold. */
+
+.article-body.imap-page .imap-note {
+  margin: 16px 0 0;
+  color: var(--ink);
+  line-height: 1.55;
+  max-width: 70ch;
+}
+.article-body.imap-page .imap-note a { color: var(--gold-hi); }
+
+/* toolbar */
+.imap { margin: clamp(24px, 3vw, 40px) 0 0; }
+.imap-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  flex-wrap: wrap;
+  margin: 0 0 12px;
+}
+.imap-search { position: relative; flex: 1 1 240px; max-width: 340px; }
+.imap-search input {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: 0 14px;
+  background: var(--surface);
+  border: 1px solid var(--surface-2);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+}
+.imap-search input::placeholder { color: var(--muted); }
+.imap-search input:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.imap-results {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--ground-2);
+  border: 1px solid var(--surface-2);
+  max-height: 280px;
+  overflow-y: auto;
+}
+.imap-results button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 14px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--surface-2);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+.imap-results button:last-child { border-bottom: none; }
+.imap-results button:hover, .imap-results button:focus-visible { background: var(--surface-2); color: var(--gold-hi); }
+.imap-results .imap-result-type { color: var(--muted); font-size: 0.8125rem; margin-left: 8px; }
+
+.imap-zoom { display: flex; gap: 8px; }
+.imap-zoom button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--surface-2);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: filter .15s ease;
+}
+.imap-zoom button:hover { filter: brightness(1.15); color: var(--gold-hi); }
+.imap-zoom button:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+
+/* the chart itself */
+.imap-viewport {
+  position: relative;
+  overflow: hidden;
+  height: clamp(380px, 62vh, 760px);
+  background: #0d171f;
+  border: 1px solid var(--surface-2);
+  cursor: grab;
+  touch-action: none;
+}
+.imap-viewport.is-dragging { cursor: grabbing; }
+.imap-stage { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; }
+.imap-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.imap-overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.imap-pvp {
+  fill: rgba(63, 143, 95, 0.10);
+  stroke: rgba(63, 143, 95, 0.55);
+  stroke-width: 4;
+  stroke-dasharray: 18 12;
+}
+
+/* markers: counter-scaled so they keep a constant screen size */
+.imap-markers { position: absolute; inset: 0; }
+.imap-marker {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 2px solid #132029;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  padding: 0;
+  transform: translate(-50%, -50%);
+}
+.imap-marker:hover, .imap-marker:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
+.imap-marker.is-gather {
+  background: #3f8f5f;
+  box-shadow: 0 0 0 2px rgba(63, 143, 95, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.55);
+}
+.imap-marker.is-pirate { background: #b0483c; }
+.imap-marker.is-active { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
+.imap-marker .imap-marker-label {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 4px);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: "EB Garamond", serif;
+  font-size: 12px;
+  letter-spacing: 0.01em;
+  color: #e8e2d2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9), 0 0 4px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+  display: none;
+}
+.imap-marker.is-labeled .imap-marker-label { display: block; }
+
+/* popup, fixed to the viewport so it never scales with the chart */
+.imap-popup {
+  position: absolute;
+  z-index: 20;
+  width: min(320px, calc(100vw - 40px));
+  background: var(--ground-2);
+  border: 1px solid var(--surface-2);
+  box-shadow: 0 16px 48px rgba(4, 10, 14, 0.65);
+}
+.imap-popup-close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.125rem;
+  line-height: 1;
+  padding: 6px;
+  cursor: pointer;
+}
+.imap-popup-close:hover { color: var(--gold); }
+.imap-popup-body { padding: 16px 18px 16px; }
+.imap-popup-name {
+  margin: 0 24px 2px 0;
+  font-family: "EB Garamond", serif;
+  font-size: 1.375rem;
+  color: var(--gold);
+  line-height: 1.15;
+}
+.imap-popup-game { margin: 0 0 10px; font-size: 0.8125rem; color: var(--muted); }
+.imap-popup-badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 10px; }
+.imap-badge {
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid var(--surface-2);
+  color: var(--muted);
+}
+.imap-badge.is-warn { color: #d88a7f; border-color: rgba(176, 72, 60, 0.6); }
+.imap-badge.is-good { color: #7fc29a; border-color: rgba(63, 143, 95, 0.6); }
+.imap-badge.is-info { color: var(--gold); border-color: rgba(212, 175, 55, 0.5); }
+.imap-popup-dock { margin: 0 0 10px; font-size: 0.9375rem; line-height: 1.45; color: var(--ink); }
+.imap-popup-goods-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+.imap-popup-goods { display: flex; flex-wrap: wrap; gap: 4px; margin: 0; }
+.imap-popup-goods span {
+  font-size: 0.8125rem;
+  padding: 2px 7px;
+  background: var(--surface);
+  color: #e5cf82;
+}
+.imap-popup-gather { margin: 10px 0 0; font-size: 0.875rem; color: #7fc29a; }
+
+/* legend */
+.imap-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin: 12px 0 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+.imap-legend-item { display: inline-flex; align-items: center; gap: 8px; }
+.imap-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 2px solid #132029;
+  display: inline-block;
+}
+.imap-legend-dot.imap-dot-gather { background: #3f8f5f; }
+.imap-legend-ring {
+  width: 18px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px dashed rgba(63, 143, 95, 0.75);
+  display: inline-block;
+}
+
+.imap-nojs { color: var(--ink); }
+.imap-nojs a { color: var(--gold-hi); }
+
+@media (prefers-reduced-motion: reduce) {
+  .imap-marker, .imap-zoom button, .imap-results button { transition: none; }
+}

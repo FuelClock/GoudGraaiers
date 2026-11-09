@@ -186,3 +186,5 @@ From our Trade Fever voyages: gather at St Jean and sail the loop counterclockwi
 ## Useful instruments
 
 **WosbCraft**: calculate crafting costs easily: [wosbcraft.com](https://www.wosbcraft.com/)
+
+**The world chart**: every port, its docking rules and market goods, on the interactive [world map](map.html).
