@@ -28,9 +28,9 @@ scripts:
   </div>
 
   <div class="jc-stage" id="jc-stage-search">
-    <label class="jc-label" for="jc-search">Search guilds</label>
+    <label class="jc-label" for="jc-search">Search</label>
     <div class="jc-searchrow">
-      <input id="jc-search" type="text" placeholder="Type a guild name or tag..." autocomplete="off" spellcheck="false">
+      <input id="jc-search" type="text" placeholder="Search..." autocomplete="off" spellcheck="false">
       <button type="button" class="jc-chip" id="jc-chip" aria-label="Fill in the tag NL.">NL.</button>
     </div>
     <div class="jc-results" id="jc-results" hidden>
@@ -78,11 +78,11 @@ scripts:
   <summary>Prefer the plain steps?</summary>
   <ol class="jc-steps">
     <li><strong>Open the Guild Ranking panel.</strong> The icon sits in the top right corner of your screen. It opens the ranking only while you are not in a guild yet: once you are a member, the same spot opens your own guild window.</li>
-    <li><strong>Stay on the Guild Ranking tab.</strong> The window opens on it, above a list you can sort with the tabs By rating, By ports and New.</li>
+    <li><strong>Stay on the Guild Ranking tab.</strong> The window opens on it, above a list you can sort with the tabs By rating, By ports and New (a Flotilla tab appears there too while you are not in one yet).</li>
     <li><strong>Type NL. in the search box</strong> (it holds up to 12 characters) <strong>and click on Goud Graaiers</strong> in the list. The game filters by tag first. If nothing matches, a search button appears that asks the server; it needs at least 3 characters.</li>
     <li><strong>Submit an application.</strong> A box opens for a message to the guild&rsquo;s leaders, up to 250 characters. Send it and the button reads Application sent. One of our admirals will accept you as soon as possible.</li>
   </ol>
-  <p>One gate to know: you can join a guild from rank 10, so make sure your captain is rank 10 or higher before you apply. Before you sign, it also helps to read <a href="{{ '/' | relative_url }}#doctrine">how the flotilla sails</a>: organized and chill squads, neutrality, and what the ranks mean. Most of all: be a shipmate. That is the whole test.</p>
+  <p>Good news on ranks: Goud Graaiers is a flotilla, so you can apply at any captain rank. Only faction-pledged guilds ask for rank 10; a flotilla, at any rank. Before you sign, it helps to read <a href="{{ '/' | relative_url }}#doctrine">how the flotilla sails</a>: organized and chill squads, neutrality, and what the ranks mean. Most of all: be a shipmate. That is the whole test.</p>
 </details>
 
 <noscript>
