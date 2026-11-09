@@ -663,6 +663,45 @@ details.trade-tool .planner-notes { margin-top: 24px; }
 }
 .planner-notes p + p { margin-top: 12px; }
 
+/* ---------- home: Gerrit's vision (collapsed, planner-notes language) ---------- */
+
+.doctrine .doctrine-vision {
+  margin: clamp(28px, 3vw, 44px) 0 0;
+  max-width: 62ch;
+}
+.doctrine .doctrine-vision summary {
+  cursor: pointer;
+  color: var(--gold);
+  font-size: clamp(1.375rem, 2vw, 1.75rem);
+  line-height: 1.2;
+  font-weight: 500;
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+.doctrine .doctrine-vision summary::-webkit-details-marker { display: none; }
+.doctrine .doctrine-vision summary::before {
+  content: "\203A";
+  font-size: 1.4em;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+.doctrine .doctrine-vision[open] summary::before { transform: rotate(90deg); }
+.doctrine .doctrine-vision summary:hover { color: var(--gold-hi); }
+.doctrine .doctrine-vision-body p {
+  margin: 18px 0 0;
+  line-height: 1.55;
+}
+.doctrine .doctrine-vision-body p + p,
+.doctrine .doctrine-vision-body ul { margin-top: 12px; }
+.doctrine .doctrine-vision-body ul {
+  padding-left: 22px;
+  line-height: 1.55;
+}
+.doctrine .doctrine-vision-body li + li { margin-top: 8px; }
+.doctrine .doctrine-vision-body strong { color: var(--gold); font-weight: 500; }
+
 /* ---------- joining: many into one ---------- */
 
 .joining {
