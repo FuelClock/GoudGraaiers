@@ -10,7 +10,7 @@ plate_alt: Ships in distress on a stormy sea, oil painting by Jan Porcellis
 ---
 ## The Trade Fever loop
 
-From our Trade Fever voyages: gather at St Jean and sail the loop counterclockwise. Buy in the north, Arabia and the south; every load sells one leg further on. Twenty to thirty seconds in port is enough: warehouse, market, buy, out at the lighthouse. This is the route we sail at the events; sailing something else tonight? Open the planner below and it plans your own loop.
+From our Trade Fever voyages: gather at St Jean and sail the loop counterclockwise. Buy in the north, Arabia and the south, the sell ports are marked in green. There in port you move all the trade goods into the port storage, and in the trading tab you press the button "At the best price"; every load sells one leg further on. Twenty to thirty seconds in port is enough: warehouse, market, buy, out at the lighthouse. This is the route we sail at the events; sailing something else tonight? Open the planner below and it plans your own loop.
 
 <figure class="map-route">
   <div class="map-route-frame">
