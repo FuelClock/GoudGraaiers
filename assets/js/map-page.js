@@ -179,14 +179,17 @@
     var box = d.getElementById('imap-lvl-' + name);
     if (!box) return;
     box.checked = layerState[name] !== undefined ? !!layerState[name] : box.checked;
-    function sync() {
+    function sync(userAction) {
       layerState[name] = box.checked;
       markersEl.classList.toggle('hide-' + name, !box.checked);
       if (name === 'routes') routesSvg.classList.toggle('hide-routes-off', !box.checked);
+      /* layer markers are zoom-gated (k >= 1.5): switching a layer on while
+         zoomed out must give immediate feedback, so zoom to the gate */
+      if (userAction && box.checked && k < 1.5) zoomAt(vw / 2, vh / 2, 1.5 / k);
       try { localStorage.setItem('imap-layers', JSON.stringify(layerState)); } catch (e) {}
     }
-    box.addEventListener('change', sync);
-    sync();
+    box.addEventListener('change', function () { sync(true); });
+    sync(false);
   });
 
   /* hi-res swap: the 5100px chart fades in once the zoom needs it */
