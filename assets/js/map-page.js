@@ -198,7 +198,7 @@
     var res = RES_NAME[p.res] || p.res;
     secondaryMarker(p, 'is-lvl-personal', res,
       '<h3 class="imap-popup-name">' + res + '</h3>' +
-      '<div class="imap-popup-badges">' + badge('Personal island', 'is-info') + '</div>' +
+      '<div class="imap-popup-badges">' + badge('Mines', 'is-info') + '</div>' +
       '<p class="imap-popup-dock">A mine or factory isle: claim it with a personal island to produce ' + res.toLowerCase() + ' for the guild.</p>');
   });
   (DATA.layers ? DATA.layers.forts || [] : []).forEach(function (p) {
