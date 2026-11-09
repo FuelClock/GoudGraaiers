@@ -31,6 +31,12 @@
   user-select: none;
 }
 .imap-chip input { accent-color: var(--gold); margin: 0; }
+.imap-chip-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
 .imap-chip:hover { filter: brightness(1.15); }
 .imap-toolbar {
   display: flex;
@@ -111,7 +117,10 @@
 .imap-viewport.is-dragging { cursor: grabbing; }
 .imap-stage { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; }
 /* must beat the generic `.article-body img` rule (margin + max-width 720):
-   the chart always fills the viewport width or every marker skews */
+   the chart always fills the viewport width or every marker skews.
+   The hi-res img needs the same beating: at equal specificity the generic
+   max-width 720px shrunk it into a small second map stacked over the
+   low-res one, and how far off it sat depended on the browser size */
 .article-body .imap-img {
   display: block;
   width: 100%;
@@ -121,12 +130,26 @@
   user-select: none;
   -webkit-user-drag: none;
 }
+.article-body .imap-img-hi {
+  max-width: none;
+  margin: 0;
+}
 .imap-pvp-ring {
   position: absolute;
-  border: 2px dashed rgba(196, 90, 76, 0.85);
   border-radius: 50%;
-  background: rgba(176, 72, 60, 0.10);
+  background: rgba(176, 72, 60, 0.07);
   pointer-events: none;
+}
+/* the game draws the PvP circle edge as a line of bones (hazardZoneEdgeIcon
+   sprites, rotated to angle + PI with jitter); positions are set in JS */
+.imap-bone {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: url("/img/map-icons/bone.png") center / contain no-repeat;
+  opacity: 0.78;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.55));
 }
 
 /* markers: counter-scaled so they keep a constant screen size */
@@ -150,22 +173,34 @@
 }
 .imap-marker.is-pirate { background: #b0483c; }
 .imap-marker.is-active { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
-/* secondary layers: smaller, colour-coded, hidden until zoomed in,
-   and fully hidden when their layer toggle is off */
+/* secondary layers: render as the game's own map-legend icons, hidden until
+   zoomed in, and fully hidden when their layer toggle is off */
 .imap-marker.is-secondary {
-  width: 12px;
-  height: 12px;
-  border-width: 1px;
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
   display: none;
 }
-.imap-marker.is-lvl-pharos { background: #7fb4d9; }
-.imap-marker.is-lvl-finds { background: #b48fd9; }
-.imap-marker.is-lvl-production { background: #d9a441; }
-.imap-marker.is-lvl-forts { background: #c97b5d; }
+.imap-marker.is-lvl-pharos { background-image: url("/img/map-icons/pharos.png"); }
+.imap-marker.is-lvl-traders { background-image: url("/img/map-icons/trader.png"); }
+.imap-marker.is-lvl-personal { background-image: url("/img/map-icons/mine.png"); }
+.imap-marker.is-lvl-resource { background-image: url("/img/map-icons/resource.png"); }
+.imap-marker.is-lvl-regions { background-image: url("/img/map-icons/poi-region.png"); }
+.imap-marker.is-lvl-collections { background-image: url("/img/map-icons/poi-collection.png"); }
+.imap-marker.is-lvl-forts { background-image: url("/img/map-icons/forts.png"); }
 .imap-markers.is-close .imap-marker.is-secondary { display: block; }
 .imap-markers.hide-pharos .imap-marker.is-lvl-pharos,
-.imap-markers.hide-finds .imap-marker.is-lvl-finds,
-.imap-markers.hide-production .imap-marker.is-lvl-production,
+.imap-markers.hide-traders .imap-marker.is-lvl-traders,
+.imap-markers.hide-personal .imap-marker.is-lvl-personal,
+.imap-markers.hide-resource .imap-marker.is-lvl-resource,
+.imap-markers.hide-regions .imap-marker.is-lvl-regions,
+.imap-markers.hide-collections .imap-marker.is-lvl-collections,
 .imap-markers.hide-forts .imap-marker.is-lvl-forts { display: none; }
 .imap-routes { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
 .imap-routes polyline {
@@ -280,11 +315,10 @@
   display: inline-block;
 }
 .imap-legend-dot.imap-dot-gather { background: #3f8f5f; }
-.imap-legend-ring {
-  width: 18px;
-  height: 12px;
-  border-radius: 50%;
-  border: 2px dashed rgba(196, 90, 76, 0.8);
+.imap-legend-icon {
+  width: 20px;
+  height: 16px;
+  object-fit: contain;
   display: inline-block;
 }
 
@@ -293,4 +327,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .imap-marker, .imap-zoom button, .imap-results button { transition: none; }
+}
+/* phones: compact chips so two fit a row instead of a tall chip column */
+@media (max-width: 600px) {
+  .imap-chip { padding: 5px 9px; gap: 5px; font-size: 0.8125rem; }
+  .imap-chip-icon { width: 15px; height: 15px; }
+  .imap-layers { gap: 6px; }
 }
