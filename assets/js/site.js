@@ -101,9 +101,56 @@
     update();
   }
 
+  /* statement band gold sheen: no autonomous animation any more (Thimon,
+     2026-11-09). The sheen position is a CSS custom property set here:
+     scrolling the page glides it across the whole band, and the mouse's
+     horizontal position adds a slower swing on top. Both contributions are
+     eased per frame and the whole loop only runs while the band is on
+     screen. Reduced motion: CSS hides the sheen entirely. */
+  function shine() {
+    var band = d.querySelector('.statement-band');
+    if (!band || reduce) return;
+    var target = -120, current = -120, mouseT = 0, mouse = 0, raf = null, visible = false;
+    function frame() {
+      current += (target - current) * 0.08;
+      mouse += (mouseT - mouse) * 0.06;
+      band.style.setProperty('--sheen-x', (current + mouse).toFixed(2) + '%');
+      if (Math.abs(target - current) > 0.5 || Math.abs(mouseT - mouse) > 0.5) {
+        raf = requestAnimationFrame(frame);
+      } else {
+        raf = null;
+      }
+    }
+    function kick() { if (!raf) raf = requestAnimationFrame(frame); }
+    function retarget() {
+      var range = d.documentElement.scrollHeight - window.innerHeight;
+      var p = range > 0 ? window.scrollY / range : 0;
+      target = -120 + p * 240;
+      kick();
+    }
+    window.addEventListener('scroll', function () { if (visible) retarget(); }, { passive: true });
+    window.addEventListener('mousemove', function (ev) {
+      if (!visible) return;
+      mouseT = (ev.clientX / window.innerWidth - 0.5) * 60;
+      kick();
+    }, { passive: true });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          visible = e.isIntersecting;
+          if (visible) retarget();
+        });
+      }).observe(band);
+    } else {
+      visible = true;
+      retarget();
+    }
+    retarget();
+  }
+
   if (d.readyState === 'loading') {
-    d.addEventListener('DOMContentLoaded', function () { hero(); entrances(); parallax(); modals(); });
+    d.addEventListener('DOMContentLoaded', function () { hero(); entrances(); parallax(); modals(); shine(); });
   } else {
-    hero(); entrances(); parallax(); modals();
+    hero(); entrances(); parallax(); modals(); shine();
   }
 })();

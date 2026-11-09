@@ -79,7 +79,7 @@ From our Trade Fever voyages: gather at St Jean and sail the loop counterclockwi
       </defs>
       <g fill="none" stroke="#d4af37" stroke-width="6" stroke-dasharray="20 14" opacity="0.95">
         <path d="M 1777 1301 L 1734 559" marker-end="url(#route-arrow)"/>
-        <path d="M 1732 523 Q 1460 324 1159 296" marker-end="url(#route-arrow)"/>
+        <path d="M 1732 523 Q 1463 315 1159 295" marker-end="url(#route-arrow)"/>
         <path d="M 1123 292 L 470 168" marker-end="url(#route-arrow)"/>
         <path d="M 434 162 L 303 357" marker-end="url(#route-arrow)"/>
         <path d="M 282 386 L 228 523" marker-end="url(#route-arrow)"/>
