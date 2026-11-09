@@ -4,13 +4,7 @@
    hand-edit; regenerate from ports_game_final.json + trade-data.js. */
 window.MAP_DATA = {
  "generated": "from game client files (_lzcommon.wosb World_j/WorldPorts_j + en-US.lang) per skill references/wosb-game-data.md; marker u = trade-data lat/lng (calibrated to the parchment chart); world coords kept via the fitted affine; phase-2 layers from World_j isle Paths, InterestPoints_j and TradingRoutesInfo.xnb via the fitted affine",
- "pvpCircle": {
-  "u": [
-   0.521,
-   0.4606
-  ],
-  "rOfW": 0.21417
- },
+ "pvpCircle": {"u": [0.5172, 0.47067], "rOfW": 0.17436},  // Gameplay.WorldHazardZones (Gameplay.cs:539): world center (501.7, 392.5), radius 3939.3,
  "ports": [
   {
    "name": "Al-Khalif",

@@ -6,8 +6,8 @@ body_class: imap-page
 styles:
   - /assets/css/map-page.css?v=5
 scripts:
-  - /assets/js/map-data.js?v=3
-  - /assets/js/map-page.js?v=4
+  - /assets/js/map-data.js?v=4
+  - /assets/js/map-page.js?v=5
 ---
 
 <h2>World chart</h2>

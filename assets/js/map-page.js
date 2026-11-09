@@ -210,10 +210,11 @@
       m.classList.toggle('is-labeled', k >= 2.2);
     });
     if (pvpRing) {
+      var rOfH = pvpR * IMG_W / IMG_H; /* the circle is round on screen: radius in height fractions is larger */
       pvpRing.style.left = ((pc.u[0] - pvpR) * 100) + '%';
-      pvpRing.style.top = (((pc.u[1] * IMG_W) - pvpR * IMG_W) / IMG_H * 100) + '%';
+      pvpRing.style.top = ((pc.u[1] - rOfH) * 100) + '%';
       pvpRing.style.width = (pvpR * 2 * 100) + '%';
-      pvpRing.style.height = ((pvpR * 2 * IMG_W) / IMG_H * 100) + '%';
+      pvpRing.style.height = (rOfH * 2 * 100) + '%';
       pvpRing.style.borderWidth = (2 * k) + 'px';
     }
     if (routesSvg) routesSvg.style.strokeWidth = (3 / k) + 'px';
