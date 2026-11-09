@@ -192,16 +192,16 @@
     sync(false);
   });
 
-  /* hi-res swap: the 5100px chart fades in once the zoom needs it */
+  /* hi-res chart: loaded with the page (src in the markup) and shown on top
+     as soon as it has decoded, so zooming never swaps images mid-gesture */
   var hiImg = d.getElementById('imap-img-hi');
-  var hiLoaded = false, hiWanted = false;
+  var hiLoaded = false;
   if (hiImg) {
-    hiImg.addEventListener('load', function () { hiLoaded = true; syncHi(); });
+    if (hiImg.complete && hiImg.naturalWidth) hiLoaded = true;
+    else hiImg.addEventListener('load', function () { hiLoaded = true; syncHi(); });
   }
   function syncHi() {
-    hiWanted = k >= 1.5;
-    if (hiWanted && !hiLoaded && hiImg && !hiImg.getAttribute('src')) hiImg.src = '/img/map-full.jpg';
-    if (hiImg) hiImg.style.opacity = (hiLoaded && hiWanted) ? '1' : '0';
+    if (hiImg) hiImg.style.opacity = hiLoaded ? '1' : '0';
   }
 
   /* pan + zoom */

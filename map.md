@@ -6,8 +6,8 @@ body_class: imap-page
 styles:
   - /assets/css/map-page.css?v=5
 scripts:
-  - /assets/js/map-data.js?v=5
-  - /assets/js/map-page.js?v=6
+  - /assets/js/map-data.js?v=6
+  - /assets/js/map-page.js?v=7
 ---
 
 <h2>World chart</h2>
@@ -36,7 +36,7 @@ scripts:
   <div class="imap-viewport" id="imap-viewport">
     <div class="imap-stage" id="imap-stage">
       <img class="imap-img" src="/img/map-web.jpg" alt="The World of Sea Battle world chart" draggable="false">
-      <img class="imap-img-hi" id="imap-img-hi" alt="" draggable="false">
+      <img class="imap-img-hi" id="imap-img-hi" src="/img/map-hires.jpg" alt="" draggable="false">
       <svg class="imap-routes" id="imap-routes" viewBox="0 0 2400 1987" preserveAspectRatio="none" aria-hidden="true"></svg>
       <div class="imap-pvp-ring" id="imap-pvp-ring" aria-hidden="true"></div>
       <div class="imap-markers" id="imap-markers"></div>
