@@ -231,13 +231,20 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
   display: none;
   white-space: nowrap;
   font-family: "EB Garamond", serif;
-  /* PORT names: matches the trade chart's port names (46 SVG units on the
-     2400px chart render 23px on screen at the desktop frame width, scale
-     .5); font family, colour and text-shadow stay the imap's own */
+  /* PORT names: trade chart's plan-name style AND size - 46 SVG units on
+     the 2400px chart render 23px on screen at the desktop frame width
+     (scale .5); weight 500 + dark navy #14212c outline like the SVG's
+     stroke (paint-order stroke, ~5 scaled units = 2.5px visible rim,
+     emulated with layered text-shadows since HTML text has no
+     paint-order stroke) */
   font-size: 23px;
+  font-weight: 500;
   letter-spacing: 0.01em;
   color: #e8e2d2;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9), 0 0 4px rgba(0, 0, 0, 0.7);
+  text-shadow:
+    2px 0 0 #14212c, -2px 0 0 #14212c, 0 2px 0 #14212c, 0 -2px 0 #14212c,
+    1.5px 1.5px 0 #14212c, -1.5px 1.5px 0 #14212c, 1.5px -1.5px 0 #14212c, -1.5px -1.5px 0 #14212c,
+    0 1px 3px rgba(0, 0, 0, 0.6);
   pointer-events: none;
 }
 /* every OTHER marker label: back to the old size, but dressed like the
