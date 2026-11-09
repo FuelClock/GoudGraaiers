@@ -16,24 +16,30 @@
   var state = document.getElementById('jc-state');
   var copyBtn = document.getElementById('jc-copy');
   var domain = document.getElementById('jc-domain');
+  var hint = document.getElementById('jc-hud-hint');
 
   if (!sim || !input) return;
 
   var stageEls = {
+    icons: document.getElementById('jc-stage-icons'),
     search: document.getElementById('jc-stage-search'),
     guild: document.getElementById('jc-stage-guild'),
     message: document.getElementById('jc-stage-message'),
     sent: document.getElementById('jc-stage-sent')
   };
   var dots = sim.querySelectorAll('.jc-dot');
-  var stageLabels = { search: 'Find the fleet', guild: 'The fleet', message: 'Your message', sent: 'Application sent' };
-  var order = ['search', 'guild', 'message', 'sent'];
+  var stageLabels = { icons: 'Find the icon', search: 'Find the fleet', guild: 'The fleet', message: 'Your message', sent: 'Application sent' };
+  var order = ['icons', 'search', 'guild', 'message', 'sent'];
 
   function show(name) {
     order.forEach(function (k) { stageEls[k].hidden = k !== name; });
     var idx = order.indexOf(name);
     dots.forEach(function (d, i) { d.classList.toggle('is-on', i <= idx); });
     if (state) state.textContent = stageLabels[name];
+    if (name === 'icons') {
+      stageEls.icons.querySelectorAll('.jc-hud-icon').forEach(function (b) { b.classList.remove('is-wrong'); });
+      hint.hidden = true;
+    }
     if (name === 'search') input.focus();
   }
 
@@ -53,6 +59,23 @@
 
   input.addEventListener('input', query);
 
+  /* the HUD stage: wrong icon shakes and explains, the shield advances */
+  sim.querySelectorAll('.jc-hud-icon').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (btn.classList.contains('jc-hud-right')) {
+        show('search');
+        return;
+      }
+      btn.classList.remove('is-wrong');
+      void btn.offsetWidth; /* restart the shake animation */
+      btn.classList.add('is-wrong');
+      if (hint) {
+        hint.textContent = 'Not that one: that is ' + btn.getAttribute('data-icon') + '. The Guild Ranking icon is the shield.';
+        hint.hidden = false;
+      }
+    });
+  });
+
   chip.addEventListener('click', function () {
     input.value = 'NL.';
     query();
@@ -71,7 +94,7 @@
   restartBtn.addEventListener('click', function () {
     input.value = '';
     results.hidden = true;
-    show('search');
+    show('icons');
   });
 
   if (copyBtn && domain) {

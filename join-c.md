@@ -7,72 +7,15 @@ body_class: join-c
 plate: /img/paintings/bakhuizen-ships-in-distress-rocky-coast.jpg
 plate_alt: Ships in distress off a rocky coast, oil painting by Ludolf Bakhuizen
 styles:
-  - /assets/css/join-c.css?v=2
+  - /assets/css/join-c.css?v=3
 scripts:
-  - /assets/js/join-c.js?v=2
+  - /assets/js/join-c.js?v=3
 ---
 <h2>Try the boarding steps</h2>
 
 <p class="jc-intro">This is a practice copy of the in-game Guild Ranking panel. Find the fleet and send your application right here, exactly like you will in the game. Nothing leaves this page.</p>
 
-<div class="jc-sim" data-ui>
-  <div class="jc-sim-head">
-    <span class="jc-sim-name">Guild Ranking</span>
-    <span class="jc-sim-state" id="jc-state">Find the fleet</span>
-  </div>
-  <div class="jc-dots" aria-hidden="true">
-    <span class="jc-dot is-on"></span>
-    <span class="jc-dot"></span>
-    <span class="jc-dot"></span>
-    <span class="jc-dot"></span>
-  </div>
-
-  <div class="jc-stage" id="jc-stage-search">
-    <label class="jc-label" for="jc-search">Search</label>
-    <div class="jc-searchrow">
-      <input id="jc-search" type="text" placeholder="Search..." autocomplete="off" spellcheck="false">
-      <button type="button" class="jc-chip" id="jc-chip" aria-label="Fill in the tag NL.">NL.</button>
-    </div>
-    <div class="jc-results" id="jc-results" hidden>
-      <button type="button" class="jc-result" id="jc-result">
-        <span class="jc-result-name">Goud Graaiers</span>
-        <span class="jc-result-tag">[NL.]</span>
-      </button>
-    </div>
-    <p class="jc-note">In the game, the Guild Ranking icon sits in the top right corner of your screen. The real search box holds up to 12 characters and filters the list by tag first.</p>
-  </div>
-
-  <div class="jc-stage" id="jc-stage-guild" hidden>
-    <div class="jc-guild-head">
-      <span class="jc-guild-name">Goud Graaiers</span>
-      <span class="jc-guild-tag">[NL.]</span>
-    </div>
-    <p class="jc-guild-text">A combined Dutch and English flotilla under one flag: organized and chill squads, neutrality first.</p>
-    <div class="jc-actionsrow">
-      <button type="button" class="jc-button" id="jc-apply">Submit an application</button>
-      <button type="button" class="jc-back" id="jc-back">Back to search</button>
-    </div>
-  </div>
-
-  <div class="jc-stage" id="jc-stage-message" hidden>
-    <label class="jc-label" for="jc-message">Enter a message for the guild&rsquo;s leaders</label>
-    <textarea id="jc-message" class="jc-textarea" rows="3" maxlength="250" placeholder="Hi, I would like to join Goud Graaiers"></textarea>
-    <p class="jc-note">The game asks every applicant for a short message, up to 250 characters. It is optional here.</p>
-    <div class="jc-actionsrow">
-      <button type="button" class="jc-button" id="jc-send">Send application</button>
-      <button type="button" class="jc-back" id="jc-back2">Back</button>
-    </div>
-  </div>
-
-  <div class="jc-stage jc-stage-sent" id="jc-stage-sent" hidden>
-    <div class="jc-seal" aria-hidden="true">Application sent</div>
-    <p class="jc-sent-text">An admiral accepts applications as soon as possible, usually the same evening. While you wait, step onto our TeamSpeak and meet the fleet.</p>
-    <div class="jc-actionsrow">
-      <a class="jc-button" href="ts3server://donkey.beauty">Connect to TeamSpeak</a>
-      <button type="button" class="jc-back" id="jc-restart">Try again</button>
-    </div>
-  </div>
-</div>
+{% include_relative _includes/jc-sim.html %}
 
 <details class="jc-plain">
   <summary>Prefer the plain steps?</summary>

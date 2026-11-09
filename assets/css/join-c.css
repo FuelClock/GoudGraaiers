@@ -1,8 +1,9 @@
 /* Join the fleet, variant C: the interactive rebuild (A/B/C test).
-   Scoped under .article-body.join-c (body_class frontmatter). Loads AFTER
-   style.css via frame.html page.styles. The simulator root carries data-ui:
-   it is a replica of the game's interface fragment, so its own borders,
-   fields and small chrome are allowed inside it. */
+   The .jc-* rules are UNSCOPED (2026-11-09, Thimon): the sim lives in the shared
+   include _includes/jc-sim.html, rendered on join-c and inside the dialog on
+   join-b. Only the h2 rules below stay scoped to .article-body.join-c.
+   The simulator root carries data-ui: it is a replica of the game's interface
+   fragment, so its own borders, fields and small chrome are allowed inside it. */
 
 .article-body.join-c h2 {
   text-transform: uppercase;
@@ -16,16 +17,16 @@
 }
 .article-body.join-c h2:first-child { margin-top: clamp(8px, 1.5vw, 24px); }
 
-.article-body.join-c .jc-intro { color: var(--ink); max-width: 56ch; }
+.jc-intro { color: var(--ink); max-width: 56ch; }
 
 /* the simulator: a practice copy of the in-game Guild Ranking panel */
-.article-body.join-c .jc-sim {
+.jc-sim {
   margin: clamp(24px, 3vw, 40px) 0 0;
   max-width: 640px;
   background: var(--ground-2);
   border: 1px solid var(--surface-2);
 }
-.article-body.join-c .jc-sim-head {
+.jc-sim-head {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -34,41 +35,41 @@
   background: var(--surface);
   border-bottom: 1px solid var(--surface-2);
 }
-.article-body.join-c .jc-sim-name {
+.jc-sim-name {
   font-size: 1.125rem;
   font-weight: 500;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--ink);
 }
-.article-body.join-c .jc-sim-state { font-size: 0.9375rem; color: var(--gold); }
-.article-body.join-c .jc-dots {
+.jc-sim-state { font-size: 0.9375rem; color: var(--gold); }
+.jc-dots {
   display: flex;
   gap: 8px;
   padding: 12px 20px 0;
 }
-.article-body.join-c .jc-dot {
+.jc-dot {
   width: 28px;
   height: 4px;
   background: var(--surface-2);
   transition: background .2s ease;
 }
-.article-body.join-c .jc-dot.is-on { background: var(--gold); }
+.jc-dot.is-on { background: var(--gold); }
 
-.article-body.join-c .jc-stage { padding: 16px 20px 20px; }
+.jc-stage { padding: 16px 20px 20px; }
 
-.article-body.join-c .jc-label {
+.jc-label {
   display: block;
   font-size: 0.9375rem;
   color: var(--muted);
   margin: 0 0 8px;
 }
-.article-body.join-c .jc-searchrow {
+.jc-searchrow {
   display: flex;
   gap: 10px;
   align-items: stretch;
 }
-.article-body.join-c .jc-sim input {
+.jc-sim input {
   flex: 1;
   min-width: 0;
   min-height: 48px;
@@ -79,12 +80,12 @@
   font: inherit;
   font-size: 1.0625rem;
 }
-.article-body.join-c .jc-sim input::placeholder { color: var(--muted); }
-.article-body.join-c .jc-sim input:focus-visible {
+.jc-sim input::placeholder { color: var(--muted); }
+.jc-sim input:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 1px;
 }
-.article-body.join-c .jc-chip {
+.jc-chip {
   min-height: 48px;
   padding: 0 16px;
   background: var(--surface-2);
@@ -96,9 +97,9 @@
   cursor: pointer;
   transition: filter .15s ease;
 }
-.article-body.join-c .jc-chip:hover { filter: brightness(1.15); }
+.jc-chip:hover { filter: brightness(1.15); }
 
-.article-body.join-c .jc-sim textarea.jc-textarea {
+.jc-sim textarea.jc-textarea {
   width: 100%;
   box-sizing: border-box;
   padding: 12px 14px;
@@ -111,14 +112,14 @@
   resize: vertical;
   min-height: 84px;
 }
-.article-body.join-c .jc-sim textarea.jc-textarea::placeholder { color: var(--muted); }
-.article-body.join-c .jc-sim textarea.jc-textarea:focus-visible {
+.jc-sim textarea.jc-textarea::placeholder { color: var(--muted); }
+.jc-sim textarea.jc-textarea:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 1px;
 }
 
-.article-body.join-c .jc-results { margin-top: 10px; }
-.article-body.join-c .jc-result {
+.jc-results { margin-top: 10px; }
+.jc-result {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -135,37 +136,37 @@
   text-align: left;
   transition: filter .15s ease;
 }
-.article-body.join-c .jc-result:hover { filter: brightness(1.12); }
-.article-body.join-c .jc-result:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
-.article-body.join-c .jc-result-name { font-weight: 500; }
-.article-body.join-c .jc-result-tag { color: var(--muted); }
+.jc-result:hover { filter: brightness(1.12); }
+.jc-result:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.jc-result-name { font-weight: 500; }
+.jc-result-tag { color: var(--muted); }
 
-.article-body.join-c .jc-note {
+.jc-note {
   margin: 14px 0 0;
   font-size: 0.9375rem;
   line-height: 1.5;
   color: var(--muted);
 }
 
-.article-body.join-c .jc-guild-head {
+.jc-guild-head {
   display: flex;
   align-items: baseline;
   gap: 12px;
 }
-.article-body.join-c .jc-guild-name {
+.jc-guild-name {
   font-size: clamp(1.5rem, 2.4vw, 2rem);
   font-weight: 500;
 }
-.article-body.join-c .jc-guild-tag { color: var(--muted); }
-.article-body.join-c .jc-guild-text {
+.jc-guild-tag { color: var(--muted); }
+.jc-guild-text {
   margin: 10px 0 0;
   line-height: 1.55;
   color: var(--ink);
   max-width: 44ch;
 }
 
-.article-body.join-c .jc-stage-sent { text-align: center; }
-.article-body.join-c .jc-seal {
+.jc-stage-sent { text-align: center; }
+.jc-seal {
   display: inline-block;
   margin: 8px auto 4px;
   padding: 10px 22px;
@@ -182,7 +183,7 @@
   from { transform: rotate(-2deg) scale(1.6); opacity: 0; }
   to { transform: rotate(-2deg) scale(1); opacity: 1; }
 }
-.article-body.join-c .jc-sent-text {
+.jc-sent-text {
   margin: 16px auto 0;
   line-height: 1.55;
   color: var(--ink);
@@ -190,19 +191,19 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .article-body.join-c .jc-seal { animation: none; }
-  .article-body.join-c .jc-dot { transition: none; }
+  .jc-seal { animation: none; }
+  .jc-dot { transition: none; }
 }
 
 /* shared controls on C */
-.article-body.join-c .jc-actionsrow {
+.jc-actionsrow {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 12px 20px;
   margin: 18px 0 0;
 }
-.article-body.join-c .jc-button {
+.jc-button {
   display: inline-flex;
   align-items: center;
   min-height: 52px;
@@ -216,10 +217,10 @@
   cursor: pointer;
   transition: transform .15s ease, filter .15s ease;
 }
-.article-body.join-c .jc-button:hover { transform: translateY(-2px); filter: brightness(1.12); color: var(--gold-ink); }
-.article-body.join-c .jc-button:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
-.article-body.join-c .jc-back,
-.article-body.join-c .jc-copy {
+.jc-button:hover { transform: translateY(-2px); filter: brightness(1.12); color: var(--gold-ink); }
+.jc-button:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
+.jc-back,
+.jc-copy {
   display: inline-flex;
   align-items: center;
   min-height: 52px;
@@ -232,19 +233,19 @@
   cursor: pointer;
   transition: filter .15s ease;
 }
-.article-body.join-c .jc-back:hover,
-.article-body.join-c .jc-copy:hover { filter: brightness(1.15); }
-.article-body.join-c .jc-back:focus-visible,
-.article-body.join-c .jc-copy:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.jc-back:hover,
+.jc-copy:hover { filter: brightness(1.15); }
+.jc-back:focus-visible,
+.jc-copy:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
 /* the collapsed plain-steps fallback, same language as planner-notes */
-.article-body.join-c .jc-plain {
+.jc-plain {
   margin: clamp(32px, 4vw, 48px) 0 0;
   background: var(--ground-2);
   border: 1px solid var(--surface-2);
   padding: 0 clamp(18px, 2vw, 28px);
 }
-.article-body.join-c .jc-plain summary {
+.jc-plain summary {
   cursor: pointer;
   list-style: none;
   display: flex;
@@ -257,33 +258,33 @@
   font-weight: 500;
   color: var(--ink);
 }
-.article-body.join-c .jc-plain summary::-webkit-details-marker { display: none; }
-.article-body.join-c .jc-plain summary::after {
+.jc-plain summary::-webkit-details-marker { display: none; }
+.jc-plain summary::after {
   content: "\203A";
   font-size: 1.5em;
   line-height: 1;
   transition: transform 0.2s ease;
 }
-.article-body.join-c .jc-plain[open] summary::after { transform: rotate(90deg); }
-.article-body.join-c .jc-plain summary:hover { color: var(--gold-hi); }
-.article-body.join-c .jc-plain[open] summary { color: var(--gold-hi); }
-.article-body.join-c .jc-plain > *:not(summary) { margin: 0 0 16px; }
-.article-body.join-c .jc-plain p { color: var(--ink); line-height: 1.55; max-width: 70ch; }
-.article-body.join-c .jc-steps {
+.jc-plain[open] summary::after { transform: rotate(90deg); }
+.jc-plain summary:hover { color: var(--gold-hi); }
+.jc-plain[open] summary { color: var(--gold-hi); }
+.jc-plain > *:not(summary) { margin: 0 0 16px; }
+.jc-plain p { color: var(--ink); line-height: 1.55; max-width: 70ch; }
+.jc-steps {
   list-style: none;
   padding: 0;
   margin: 0 0 16px;
   counter-reset: jc;
   max-width: 62ch;
 }
-.article-body.join-c .jc-steps li {
+.jc-steps li {
   counter-increment: jc;
   position: relative;
   padding: 10px 0 10px 52px;
   line-height: 1.55;
   color: var(--ink);
 }
-.article-body.join-c .jc-steps li::before {
+.jc-steps li::before {
   content: counter(jc);
   position: absolute;
   left: 8px;
@@ -293,16 +294,61 @@
   font-weight: 500;
   color: var(--gold);
 }
-.article-body.join-c .jc-steps strong { font-weight: 500; }
+.jc-steps strong { font-weight: 500; }
 
-.article-body.join-c .jc-nojs {
+.jc-nojs {
   margin: 16px 0 0;
   padding: 14px 18px;
   background: var(--surface-2);
   color: var(--muted);
 }
 
-.article-body.join-c code.jc-domain {
+code.jc-domain {
   background: var(--surface-2);
   padding: 2px 8px;
 }
+
+/* the icon stage: a mock of the in-game HUD, top right corner */
+.jc-hud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--surface-2);
+}
+.jc-hud-icon {
+  width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ground-2);
+  border: 1px solid var(--surface-2);
+  color: var(--ink);
+  cursor: pointer;
+  transition: filter .15s ease, color .15s ease;
+}
+.jc-hud-icon svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.jc-hud-icon:hover { color: var(--gold); filter: brightness(1.15); }
+.jc-hud-icon:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.jc-hud-icon.is-wrong { animation: jc-shake 0.3s ease; color: var(--muted); }
+@keyframes jc-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* the dialog copy of the sim on join-b */
+.jc-modal .jc-sim { margin: 0; max-width: none; }
+.jc-modal .jc-hud { justify-content: flex-start; }
+.jc-modal-note { margin: 18px 0 0; font-size: 0.9375rem; color: var(--muted); }

@@ -8,14 +8,17 @@ plate: /img/paintings/bakhuizen-ships-in-distress-rocky-coast.jpg
 plate_alt: Ships in distress off a rocky coast, oil painting by Ludolf Bakhuizen
 styles:
   - /assets/css/join-b.css?v=1
+  - /assets/css/join-c.css?v=3
+scripts:
+  - /assets/js/join-c.js?v=3
 ---
 <h2>Two ways aboard</h2>
 
 <div class="jb-paths">
-  <a class="jb-path jb-path-primary" href="#apply-in-game">
+  <a class="jb-path jb-path-primary" href="#apply-in-game" data-modal="jc-sim-dialog">
     <span class="jb-path-title">Apply in-game</span>
-    <span class="jb-path-text">A few clicks in the Guild Ranking panel. An admiral accepts you, usually the same evening.</span>
-    <span class="jb-path-go">Open the steps</span>
+    <span class="jb-path-text">A few clicks in the Guild Ranking panel. Practice them right here: an admiral accepts you, usually the same evening.</span>
+    <span class="jb-path-go">Practice it now</span>
   </a>
   <a class="jb-path" href="#teamspeak">
     <span class="jb-path-title">Meet us on TeamSpeak first</span>
@@ -67,3 +70,14 @@ styles:
   <a class="jb-button" href="ts3server://donkey.beauty">Connect to TeamSpeak</a>
   <a class="jb-quiet" href="{{ '/teamspeak.html' | relative_url }}">How to install TeamSpeak, step by step</a>
 </div>
+
+<dialog class="voyage-modal jc-modal" id="jc-sim-dialog">
+  <div class="voyage-modal-head">
+    <h3 class="voyage-modal-title">Practice: the Guild Ranking panel</h3>
+    <button type="button" class="voyage-modal-close" aria-label="Close">✕</button>
+  </div>
+  <div class="voyage-modal-body">
+    {% include_relative _includes/jc-sim.html %}
+    <p class="jc-modal-note">Nothing leaves this page: it is a practice copy. The real steps are written out below the painting.</p>
+  </div>
+</dialog>
