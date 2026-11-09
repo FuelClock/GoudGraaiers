@@ -363,7 +363,8 @@
   viewport.addEventListener('pointercancel', function (e) { releasePointer(e); drag = null; viewport.classList.remove('is-dragging'); });
 
   viewport.addEventListener('wheel', function (e) {
-    e.preventDefault();
+    if (!e.ctrlKey) return; /* plain scroll scrolls the page; ctrl+scroll zooms the chart */
+    e.preventDefault(); /* also keeps the browser's own ctrl+wheel page zoom out of the way */
     var vr = viewport.getBoundingClientRect();
     zoomAt(e.clientX - vr.left, e.clientY - vr.top, e.deltaY < 0 ? 1.15 : 1 / 1.15);
   }, { passive: false });

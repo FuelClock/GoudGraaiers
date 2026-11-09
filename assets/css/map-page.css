@@ -5,7 +5,7 @@
 /* One knob for every map icon (markers AND toolbar chips): all non-port
    markers share it so the icons stay consistent across the chart
    (Thimon: change one, all change). */
-:root { --imap-icon: 18px; }
+:root { --imap-icon: 22.5px; }  /* 18px +25%: test size, Thimon wants to see how it looks */
 
 .article-body.imap-page .imap-note {
   margin: 16px 0 0;
@@ -240,7 +240,10 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
   transform: translateX(-50%);
   white-space: nowrap;
   font-family: "EB Garamond", serif;
-  font-size: 12px;
+  /* matches the trade chart's port names: 46 SVG units on the 2400px chart
+     render 23px on screen at the desktop frame width (1200px, scale .5);
+     font family, colour and text-shadow stay the imap's own */
+  font-size: 23px;
   letter-spacing: 0.01em;
   color: #e8e2d2;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9), 0 0 4px rgba(0, 0, 0, 0.7);
