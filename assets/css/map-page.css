@@ -2,6 +2,11 @@
    frontmatter) and the .imap component root. Visual language matches the
    trade planner: parchment EB Garamond names, navy outline, flat gold. */
 
+/* One knob for every map icon (markers AND toolbar chips): all non-port
+   markers share it so the icons stay consistent across the chart
+   (Thimon: change one, all change). */
+:root { --imap-icon: 18px; }
+
 .article-body.imap-page .imap-note {
   margin: 16px 0 0;
   color: var(--ink);
@@ -32,8 +37,8 @@
 }
 .imap-chip input { accent-color: var(--gold); margin: 0; }
 .imap-chip-icon {
-  width: 18px;
-  height: 18px;
+  width: var(--imap-icon);
+  height: var(--imap-icon);
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -184,8 +189,8 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
    = the hover box centre, and the round hover outline circles the icon like
    the port markers do. */
 .imap-marker.is-secondary {
-  width: 18px;
-  height: 18px;
+  width: var(--imap-icon);
+  height: var(--imap-icon);
   border: none;
   border-radius: 50%;
   background-color: transparent;
@@ -195,8 +200,8 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
   background-repeat: no-repeat;
 }
 .imap-marker.is-lvl-pharos { background-image: url("/img/map-icons/pharos.png"); }
-.imap-marker.is-lvl-traders { width: 36px; height: 36px; background-image: url("/img/map-icons/trader.png"); }
-.imap-marker.is-lvl-personal { width: 36px; height: 36px; background-image: url("/img/map-icons/mine.png"); }
+.imap-marker.is-lvl-traders { background-image: url("/img/map-icons/trader.png"); }
+.imap-marker.is-lvl-personal { background-image: url("/img/map-icons/mine.png"); }
 .imap-marker.is-lvl-regions { background-image: url("/img/map-icons/poi-region.png"); }
 .imap-marker.is-lvl-collections { background-image: url("/img/map-icons/poi-collection.png"); }
 .imap-marker.is-lvl-forts { background-image: url("/img/map-icons/forts.png"); }
