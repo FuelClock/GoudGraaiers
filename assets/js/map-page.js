@@ -221,6 +221,12 @@
       '<h3 class="imap-popup-name">' + p.kind + '</h3>' +
       '<div class="imap-popup-badges">' + badge('Defence', 'is-warn') + '</div>');
   });
+  (DATA.layers ? DATA.layers.empire || [] : []).forEach(function (p) {
+    secondaryMarker(p, 'is-lvl-empire', 'Imperial fort',
+      '<h3 class="imap-popup-name">Imperial fort</h3>' +
+      '<div class="imap-popup-badges">' + badge('Empire', 'is-warn') + '</div>' +
+      '<p class="imap-popup-dock">An abandoned fort where the Empire stores resources for its offensive. Bold captains can attack, smash, and plunder it: the reward grows over time.</p>');
+  });
 
   /* npc trade routes (built before the toggle chips that may show/hide them) */
   var routesSvg = d.getElementById('imap-routes');
@@ -244,7 +250,7 @@
     fsLegend.appendChild(clone);
   })();
 
-  var LAYERS = ['pharos', 'traders', 'personal', 'regions', 'collections', 'forts', 'routes'];
+  var LAYERS = ['pharos', 'traders', 'personal', 'regions', 'collections', 'forts', 'empire', 'routes'];
   var layerState = {};
   try { layerState = JSON.parse(localStorage.getItem('imap-layers') || '{}'); } catch (e) { layerState = {}; }
   LAYERS.forEach(function (name) {
@@ -288,8 +294,9 @@
     markersEl.querySelectorAll('.imap-marker').forEach(function (m) {
       m.style.transform = 'translate(-50%,-50%) scale(' + inv + ')';
       /* names live in the labels overlay, above every icon (Thimon);
-         lighthouses and trader villages need no name - the icons say it all */
-      var named = !(m.classList.contains('is-lvl-pharos') || m.classList.contains('is-lvl-traders'));
+         lighthouses, trader villages and imperial forts need no name -
+         the icons say it all */
+      var named = !(m.classList.contains('is-lvl-pharos') || m.classList.contains('is-lvl-traders') || m.classList.contains('is-lvl-empire'));
       if (m._label) {
         m._label.classList.toggle('is-on', named);
         m._label.style.transform = 'translate(-50%,-100%) translateY(calc(-1 * (var(--imap-icon) / 2 + 4px))) scale(' + inv + ')';
@@ -401,7 +408,10 @@
   viewport.addEventListener('pointercancel', function (e) { releasePointer(e); drag = null; viewport.classList.remove('is-dragging'); });
 
   viewport.addEventListener('wheel', function (e) {
-    if (!e.ctrlKey) return; /* plain scroll scrolls the page; ctrl+scroll zooms the chart */
+    /* plain scroll scrolls the page; ctrl+scroll zooms the chart. In
+       fullscreen there is no page to scroll, so plain wheel zooms too
+       (Thimon, 2026-11-09) */
+    if (!e.ctrlKey && !fsActive()) return;
     e.preventDefault(); /* also keeps the browser's own ctrl+wheel page zoom out of the way */
     var vr = viewport.getBoundingClientRect();
     zoomAt(e.clientX - vr.left, e.clientY - vr.top, e.deltaY < 0 ? 1.15 : 1 / 1.15);

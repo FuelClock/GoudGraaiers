@@ -206,6 +206,8 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
 .imap-marker.is-lvl-regions { background-image: url("/img/map-icons/poi-region.png"); }
 .imap-marker.is-lvl-collections { background-image: url("/img/map-icons/poi-collection.png"); }
 .imap-marker.is-lvl-forts { background-image: url("/img/map-icons/forts.png"); }
+/* imperial (world) forts: the game's own fortEmpire sprite */
+.imap-marker.is-lvl-empire { background-image: url("/img/map-icons/fort-empire.png"); }
 /* the ring hugs the icon like the ports' does (ports: ring ~1.25x the dot;
    with the default 2px offset the ring dwarfed the drawn icon) */
 .imap-marker.is-secondary:hover,
@@ -215,7 +217,8 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
 .imap-markers.hide-personal .imap-marker.is-lvl-personal,
 .imap-markers.hide-regions .imap-marker.is-lvl-regions,
 .imap-markers.hide-collections .imap-marker.is-lvl-collections,
-.imap-markers.hide-forts .imap-marker.is-lvl-forts { display: none; }
+.imap-markers.hide-forts .imap-marker.is-lvl-forts,
+.imap-markers.hide-empire .imap-marker.is-lvl-empire { display: none; }
 .imap-routes { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
 .imap-routes polyline {
   fill: none;
@@ -287,6 +290,7 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
 .imap-labels.hide-regions .imap-marker-label.is-lvl-regions,
 .imap-labels.hide-collections .imap-marker-label.is-lvl-collections,
 .imap-labels.hide-forts .imap-marker-label.is-lvl-forts,
+.imap-labels.hide-empire .imap-marker-label.is-lvl-empire,
 .imap-labels.hide-routes .imap-marker-label.is-lvl-routes { display: none; }
 
 /* popup, fixed to the viewport so it never scales with the chart */

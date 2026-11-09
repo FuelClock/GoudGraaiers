@@ -4,10 +4,10 @@ title: The Map
 lead: "The current game world, drawn by the game's own chart. Click a port for what it docks, trades and demands."
 body_class: imap-page
 styles:
-  - /assets/css/map-page.css?v=19
+  - /assets/css/map-page.css?v=20
 scripts:
-  - /assets/js/map-data.js?v=10
-  - /assets/js/map-page.js?v=14
+  - /assets/js/map-data.js?v=11
+  - /assets/js/map-page.js?v=15
 ---
 
 <h2>World chart</h2>
@@ -21,7 +21,8 @@ scripts:
     <button type="button" class="imap-legend-toggle" data-layer="personal" id="imap-lvl-personal" aria-pressed="true"><img class="imap-chip-icon" src="/img/map-icons/mine.png" alt=""> Mines</button>
     <button type="button" class="imap-legend-toggle" data-layer="regions" id="imap-lvl-regions" aria-pressed="true"><img class="imap-chip-icon" src="/img/map-icons/poi-region.png" alt=""> Points of interest: regions</button>
     <button type="button" class="imap-legend-toggle" data-layer="collections" id="imap-lvl-collections" aria-pressed="true"><img class="imap-chip-icon" src="/img/map-icons/poi-collection.png" alt=""> Points of interest: collections</button>
-    <button type="button" class="imap-legend-toggle" data-layer="forts" id="imap-lvl-forts" aria-pressed="false"><img class="imap-chip-icon" src="/img/map-icons/forts.png" alt=""> Forts &amp; towers</button>
+    <button type="button" class="imap-legend-toggle" data-layer="empire" id="imap-lvl-empire" aria-pressed="false"><img class="imap-chip-icon" src="/img/map-icons/fort-empire.png" alt=""> Imperial forts</button>
+    <button type="button" class="imap-legend-toggle" data-layer="forts" id="imap-lvl-forts" aria-pressed="false"><img class="imap-chip-icon" src="/img/map-icons/forts.png" alt=""> Port battle &amp; guild forts</button>
     <button type="button" class="imap-legend-toggle" data-layer="routes" id="imap-lvl-routes" aria-pressed="false"><img class="imap-chip-icon" src="/img/map-icons/routes.png" alt=""> Trade routes</button>
     <span class="imap-legend-keys">
       <span class="imap-legend-item"><span class="imap-legend-dot imap-dot-port"></span> port</span>
