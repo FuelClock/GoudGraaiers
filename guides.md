@@ -90,7 +90,7 @@ From our Trade Fever voyages: gather at St Jean and sail the loop counterclockwi
         <path d="M 125 1548 L 142 1761" marker-end="url(#route-arrow)"/>
         <path d="M 145 1797 L 672 1765" marker-end="url(#route-arrow)"/>
         <path d="M 708 1763 L 694 1545" marker-end="url(#route-arrow)"/>
-        <path d="M 692 1509 Q 1077 1562 1378 1748" marker-end="url(#route-arrow)"/>
+        <path d="M 692 1509 Q 1024 1373 1384 1741" marker-end="url(#route-arrow)"/>
         <path d="M 1409 1766 L 1754 1329" marker-end="url(#route-arrow)"/>
       </g>
       <g font-family="EB Garamond, Georgia, serif">
