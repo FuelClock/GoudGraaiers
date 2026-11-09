@@ -14,7 +14,6 @@
   var popupClose = d.getElementById('imap-popup-close');
   var searchInput = d.getElementById('imap-search');
   var results = d.getElementById('imap-results');
-  var pvpCircle = d.getElementById('imap-pvp-circle');
   var img = stage.querySelector('.imap-img');
 
   if (!viewport || !DATA) return;
@@ -112,11 +111,95 @@
     bySlug[slug(port.name)] = { port: port, el: el };
   });
 
-  /* pvp circle (uv fractions of the chart) */
+  /* pvp ring: a div in stage space; border stays a constant 2px on screen */
+  var pvpRing = d.getElementById('imap-pvp-ring');
   var pc = DATA.pvpCircle;
-  pvpCircle.setAttribute('cx', pc.u[0] * IMG_W);
-  pvpCircle.setAttribute('cy', pc.u[1] * IMG_H);
-  pvpCircle.setAttribute('r', pc.rOfW * IMG_W);
+  var pvpR = pc.rOfW; /* radius as a fraction of chart width */
+
+  /* phase-2 layers: fast travel, special finds, production, forts, routes */
+  var CAT_BADGE = { Regional: 'Regional landmark', Shipwrecks: 'Shipwreck', Figurines: 'Rank figurine', LonghornHistory: 'Longhorn history', Weapons: 'Lost weapon' };
+  var RES_NAME = { wood: 'Wood', iron: 'Iron', coal: 'Coal', ice: 'Ice', farm: 'Farm', rum: 'Rum', resin: 'Resin', copper: 'Copper', mhidden: 'Rare goods' };
+  function secondaryMarker(layer, cls, title, html) {
+    var el = d.createElement('button');
+    el.type = 'button';
+    el.className = 'imap-marker is-secondary ' + cls;
+    el.style.left = (layer.u[0] * 100) + '%';
+    el.style.top = (layer.u[1] * 100) + '%';
+    el.setAttribute('aria-label', title);
+    el.innerHTML = '<span class="imap-marker-label">' + title + '</span>';
+    el.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      popupBody.innerHTML = html;
+      popup.hidden = false;
+      if (activeMarker) activeMarker.classList.remove('is-active');
+      activeMarker = el;
+      el.classList.add('is-active');
+      positionPopup(el);
+    });
+    markersEl.appendChild(el);
+    return el;
+  }
+  (DATA.layers ? DATA.layers.pharos || [] : []).forEach(function (p) {
+    secondaryMarker(p, 'is-lvl-pharos', 'Fast travel',
+      '<h3 class="imap-popup-name">Fast travel point</h3>' +
+      '<p class="imap-popup-dock">A lighthouse of the fast travel network: sail here once and you can teleport between its kind.</p>');
+  });
+  (DATA.layers ? DATA.layers.finds || [] : []).forEach(function (p) {
+    secondaryMarker(p, 'is-lvl-finds', p.name,
+      '<h3 class="imap-popup-name">' + p.name + '</h3>' +
+      '<div class="imap-popup-badges">' + badge(CAT_BADGE[p.cat] || p.cat, 'is-info') + '</div>' +
+      (p.reward ? '<p class="imap-popup-dock">Research reward: ' + p.reward + '</p>' : ''));
+  });
+  (DATA.layers ? DATA.layers.production || [] : []).forEach(function (p) {
+    var res = RES_NAME[p.res] || p.res;
+    secondaryMarker(p, 'is-lvl-production', res + ' site',
+      '<h3 class="imap-popup-name">' + res + ' site</h3>' +
+      '<div class="imap-popup-badges">' + badge('Production', 'is-info') + '</div>' +
+      '<p class="imap-popup-dock">A ' + res.toLowerCase() + ' production site for guild factories.</p>');
+  });
+  (DATA.layers ? DATA.layers.forts || [] : []).forEach(function (p) {
+    secondaryMarker(p, 'is-lvl-forts', p.kind,
+      '<h3 class="imap-popup-name">' + p.kind + '</h3>' +
+      '<div class="imap-popup-badges">' + badge('Defence', 'is-warn') + '</div>');
+  });
+
+  /* npc trade routes (built before the toggle chips that may show/hide them) */
+  var routesSvg = d.getElementById('imap-routes');
+  if (routesSvg && DATA.routes) {
+    routesSvg.innerHTML = DATA.routes.map(function (poly) {
+      return '<polyline points="' + poly.map(function (pt) { return pt[0] + ',' + pt[1]; }).join(' ') + '"/>';
+    }).join('');
+  }
+
+  /* layer toggles */
+  var LAYERS = ['pharos', 'finds', 'production', 'forts', 'routes'];
+  var layerState = {};
+  try { layerState = JSON.parse(localStorage.getItem('imap-layers') || '{}'); } catch (e) { layerState = {}; }
+  LAYERS.forEach(function (name) {
+    var box = d.getElementById('imap-lvl-' + name);
+    if (!box) return;
+    box.checked = layerState[name] !== undefined ? !!layerState[name] : box.checked;
+    function sync() {
+      layerState[name] = box.checked;
+      markersEl.classList.toggle('hide-' + name, !box.checked);
+      if (name === 'routes') routesSvg.classList.toggle('hide-routes-off', !box.checked);
+      try { localStorage.setItem('imap-layers', JSON.stringify(layerState)); } catch (e) {}
+    }
+    box.addEventListener('change', sync);
+    sync();
+  });
+
+  /* hi-res swap: the 5100px chart fades in once the zoom needs it */
+  var hiImg = d.getElementById('imap-img-hi');
+  var hiLoaded = false, hiWanted = false;
+  if (hiImg) {
+    hiImg.addEventListener('load', function () { hiLoaded = true; syncHi(); });
+  }
+  function syncHi() {
+    hiWanted = k >= 1.5;
+    if (hiWanted && !hiLoaded && hiImg && !hiImg.getAttribute('src')) hiImg.src = '/img/map-full.jpg';
+    if (hiImg) hiImg.style.opacity = (hiLoaded && hiWanted) ? '1' : '0';
+  }
 
   /* pan + zoom */
   function apply() {
@@ -126,6 +209,16 @@
       m.style.transform = 'translate(-50%,-50%) scale(' + inv + ')';
       m.classList.toggle('is-labeled', k >= 2.2);
     });
+    if (pvpRing) {
+      pvpRing.style.left = ((pc.u[0] - pvpR) * 100) + '%';
+      pvpRing.style.top = (((pc.u[1] * IMG_W) - pvpR * IMG_W) / IMG_H * 100) + '%';
+      pvpRing.style.width = (pvpR * 2 * 100) + '%';
+      pvpRing.style.height = ((pvpR * 2 * IMG_W) / IMG_H * 100) + '%';
+      pvpRing.style.borderWidth = (2 * k) + 'px';
+    }
+    if (routesSvg) routesSvg.style.strokeWidth = (3 / k) + 'px';
+    syncHi();
+    markersEl.classList.toggle('is-close', k >= 1.5);
     if (!popup.hidden && activeMarker) positionPopup(activeMarker);
   }
 
