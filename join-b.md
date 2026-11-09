@@ -37,7 +37,7 @@ styles:
   <p>Before you sign, it helps to read <a href="{{ '/' | relative_url }}#doctrine">how the flotilla sails</a>: organized and chill squads, neutrality, and what the ranks mean. Most of all: be a shipmate. That is the whole test.</p>
 </div>
 
-<details class="doctrine-vision" id="vision">
+<details class="doctrine-vision" id="vision" open>
   <summary>Gerrit&rsquo;s vision</summary>
   <div class="doctrine-vision-body">
     <p><strong>Gerrit&rsquo;s vision for our guild:</strong> to foster a community where diverse playstyles and languages converge for seamless and enjoyable cooperation.</p>
