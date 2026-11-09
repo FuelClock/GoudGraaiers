@@ -375,6 +375,7 @@ main { position: relative; z-index: 1; }
   stroke-width: 2.5;
   stroke-dasharray: 22 78;
   animation: outline-run-tail 11s linear infinite;
+  animation-play-state: paused;
 }
 .statement-outline .so-head {
   stroke: #f2dc86;
@@ -382,7 +383,12 @@ main { position: relative; z-index: 1; }
   stroke-linecap: round;
   stroke-dasharray: 7 93;
   animation: outline-run 11s linear infinite;
+  animation-play-state: paused;
 }
+/* the comet only runs while the visitor hovers the composite (2026-11-09,
+   Thimon); otherwise the outline rests as a static hairline */
+.statement:hover .statement-outline .so-tail,
+.statement:hover .statement-outline .so-head { animation-play-state: running; }
 @keyframes outline-run {
   from { stroke-dashoffset: 100; }
   to { stroke-dashoffset: 0; }
@@ -588,6 +594,43 @@ main { position: relative; z-index: 1; }
 .voyage-modal-body strong { color: var(--gold); font-weight: 500; }
 
 /* ---------- collapsible planner notes ---------- */
+
+/* the planner lives in a collapsed disclosure so the guild's Trade Fever
+   route stays front and center; the tool opens on demand (2026-11-09,
+   Thimon) */
+details.trade-tool {
+  margin: clamp(32px, 4vw, 48px) 0 0;
+  border: 1px solid var(--surface-2);
+  background: var(--ground-2);
+  padding: clamp(20px, 2.5vw, 32px);
+}
+details.trade-tool summary {
+  cursor: pointer;
+  color: var(--gold);
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  line-height: 1.2;
+  font-weight: 500;
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+details.trade-tool summary::-webkit-details-marker { display: none; }
+details.trade-tool summary::before {
+  content: "\203A";
+  font-size: 1.4em;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+details.trade-tool[open] summary::before { transform: rotate(90deg); }
+details.trade-tool summary:hover { color: var(--gold-hi); }
+details.trade-tool > p {
+  margin: 20px 0 0;
+  line-height: 1.55;
+  max-width: 62ch;
+}
+details.trade-tool .trade-controls { margin: 24px 0 0; }
+details.trade-tool .planner-notes { margin-top: 24px; }
 
 .planner-notes {
   margin: clamp(40px, 5vw, 64px) 0 0;
