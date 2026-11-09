@@ -230,24 +230,41 @@
     }).join('');
   }
 
-  /* layer toggles: legend buttons, aria-pressed instead of a checkbox */
+  /* layer toggles: legend buttons, aria-pressed instead of a checkbox.
+     Fullscreen carries a CLONE of the legend (built below, before this
+     binding runs) so its buttons are picked up too: both copies stay in
+     sync because every toggle is found by data-layer, never by id. */
+  var fsLegend = d.getElementById('imap-fs-legend');
+  (function buildFsLegend() {
+    var src = d.getElementById('imap-legend');
+    if (!fsLegend || !src) return;
+    var clone = src.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
+    fsLegend.appendChild(clone);
+  })();
+
   var LAYERS = ['pharos', 'traders', 'personal', 'regions', 'collections', 'forts', 'routes'];
   var layerState = {};
   try { layerState = JSON.parse(localStorage.getItem('imap-layers') || '{}'); } catch (e) { layerState = {}; }
   LAYERS.forEach(function (name) {
-    var btn = d.getElementById('imap-lvl-' + name);
-    if (!btn) return;
-    layerState[name] = layerState[name] !== undefined ? !!layerState[name] : btn.getAttribute('aria-pressed') === 'true';
+    var btns = Array.prototype.slice.call(d.querySelectorAll('.imap-legend-toggle[data-layer="' + name + '"]'));
+    if (!btns.length) return;
+    layerState[name] = layerState[name] !== undefined ? !!layerState[name] : btns[0].getAttribute('aria-pressed') === 'true';
     function sync() {
-      btn.setAttribute('aria-pressed', layerState[name] ? 'true' : 'false');
+      btns.forEach(function (btn) {
+        btn.setAttribute('aria-pressed', layerState[name] ? 'true' : 'false');
+      });
       markersEl.classList.toggle('hide-' + name, !layerState[name]);
       labelsEl.classList.toggle('hide-' + name, !layerState[name]);
       if (name === 'routes') routesSvg.classList.toggle('hide-routes-off', !layerState[name]);
       try { localStorage.setItem('imap-layers', JSON.stringify(layerState)); } catch (e) {}
     }
-    btn.addEventListener('click', function () {
-      layerState[name] = !layerState[name];
-      sync();
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        layerState[name] = !layerState[name];
+        sync();
+      });
     });
     sync();
   });
@@ -334,9 +351,11 @@
 
   var drag = null;
   viewport.addEventListener('pointerdown', function (e) {
-    /* markers and the popup handle their own clicks; capturing the pointer
-       here would retarget the close button's click to the viewport */
-    if (e.target.closest('.imap-marker') || e.target.closest('.imap-popup')) return;
+    /* markers, the popup and the fullscreen controls handle their own
+       clicks; capturing the pointer here would retarget those clicks to
+       the viewport (the close button never received its click once) */
+    if (e.target.closest('.imap-marker') || e.target.closest('.imap-popup') ||
+        e.target.closest('.imap-fs-btn') || e.target.closest('.imap-fs-legend')) return;
     drag = { x: e.clientX, y: e.clientY, tx: tx, ty: ty, id: e.pointerId };
     viewport.setPointerCapture(e.pointerId);
     viewport.classList.add('is-dragging');
@@ -398,6 +417,53 @@
     k = 1; tx = 0; ty = 0;
     clampPan();
     apply();
+  });
+
+  /* fullscreen: the expand button sits on the chart's top-right corner; in
+     fullscreen the same corner carries the X, and the fs legend overlay
+     shows the toggles. Fullscreen on the VIEWPORT element only, so the
+     page legend, toolbar and article chrome stay out of the way. */
+  var fsExpand = d.getElementById('imap-fs-expand');
+  var fsClose = d.getElementById('imap-fs-close');
+  function fsActive() {
+    return d.fullscreenElement === viewport || d.webkitFullscreenElement === viewport ||
+      viewport.classList.contains('imap-fs-fallback');
+  }
+  function setFsUi(on) {
+    viewport.classList.toggle('imap-is-fs', on);
+    fsExpand.hidden = on;
+    fsClose.hidden = !on;
+    fsLegend.hidden = !on;
+    measure();
+  }
+  function enterFsFallback() {
+    viewport.classList.add('imap-fs-fallback');
+    d.body.classList.add('imap-fs-page'); /* lift MAIN's stacking context over the sticky header */
+    setFsUi(true);
+  }
+  function enterFs() {
+    var fn = viewport.requestFullscreen || viewport.webkitRequestFullscreen;
+    if (!fn) { enterFsFallback(); return; }
+    var p = fn.call(viewport);
+    if (p && p.catch) p.catch(function () { enterFsFallback(); });
+  }
+  function exitFs() {
+    if (d.fullscreenElement || d.webkitFullscreenElement) {
+      (d.exitFullscreen || d.webkitExitFullscreen).call(d);
+    } else {
+      viewport.classList.remove('imap-fs-fallback');
+      d.body.classList.remove('imap-fs-page');
+      setFsUi(false);
+    }
+  }
+  fsExpand.addEventListener('click', enterFs);
+  fsClose.addEventListener('click', exitFs);
+  ['fullscreenchange', 'webkitfullscreenchange'].forEach(function (evName) {
+    d.addEventListener(evName, function () { setFsUi(fsActive()); });
+  });
+  /* the fallback overlay has no native Esc handling of its own */
+  d.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && viewport.classList.contains('imap-fs-fallback')) exitFs();
   });
 
   window.addEventListener('resize', measure);
