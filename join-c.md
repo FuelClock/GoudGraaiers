@@ -85,6 +85,21 @@ scripts:
   <p>Good news on ranks: in game our guild keeps flotilla status, so you can apply at any captain rank; only faction-pledged guilds ask for rank 10. Before you sign, it helps to read <a href="{{ '/' | relative_url }}#doctrine">how the flotilla sails</a>: organized and chill squads, neutrality, and what the ranks mean. Most of all: be a shipmate. That is the whole test.</p>
 </details>
 
+<details class="doctrine-vision" id="vision">
+  <summary>Gerrit&rsquo;s vision</summary>
+  <div class="doctrine-vision-body">
+    <p><strong>Gerrit&rsquo;s vision for our guild:</strong> to foster a community where diverse playstyles and languages converge for seamless and enjoyable cooperation.</p>
+    <p><strong>Faction alignment:</strong> we operate as a flotilla in game and intend to keep it that way, unless the game introduces a Dutch (WIC) faction, or the guild has built the cohesion and strength for port battles and a majority of our members wishes for a pledge.</p>
+    <p>What that means for you:</p>
+    <ul>
+      <li><strong>No faction affiliation:</strong> we are not tied to any specific faction, so we do not take part in port battles.</li>
+      <li><strong>Freedom to engage:</strong> no reputation requirements. Members engage other factions as they see fit; we only keep friendly relations with the other Dutch guilds.</li>
+      <li><strong>Neutrality for safety:</strong> allied standing with every faction significantly reduces the hostile encounters you meet.</li>
+    </ul>
+    <p>If that vision fits you, the practice panel above is exactly how you apply.</p>
+  </div>
+</details>
+
 <noscript>
   <p class="jc-nojs">The practice panel needs JavaScript. The plain steps above cover everything it teaches.</p>
 </noscript>
