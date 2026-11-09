@@ -1,11 +1,12 @@
-name: Deploy guild site (main + redesign preview)
+name: Deploy guild site
 
-# Builds the production site from main AND the redesign branch in one run,
-# deploys both: main at https://gg.donkey.beauty/ and the redesign preview
-# at https://gg.donkey.beauty/redesign/
+# Single-branch deploy: builds main and publishes it at the site root.
+# (The old redesign branch and its /redesign/ preview were removed once the
+# redesign was fully merged and verified on main.)
+
 on:
   push:
-    branches: [main, redesign]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -27,33 +28,19 @@ jobs:
           ref: main
           path: main
 
-      - name: Checkout redesign (preview)
-        uses: actions/checkout@v4
-        with:
-          ref: redesign
-          path: redesign
-
-      - name: Build production site (main)
+      - name: Build production site
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./main
           destination: ./site
 
-      - name: Build redesign preview
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./redesign
-          destination: ./site-redesign
-
-      - name: Assemble production + preview
+      - name: Assemble artifact
         run: |
           # jekyll-build-pages outputs root-owned dirs, so use sudo to read-copy
           mkdir -p ./assembled
           sudo cp -a ./site/. ./assembled/
-          sudo cp -a ./site-redesign ./assembled/redesign
-          sudo rm -f ./assembled/redesign/CNAME
           sudo chown -R "$(id -u):$(id -g)" ./assembled
-          echo "Assembled: $(find ./assembled -maxdepth 1 -type f | wc -l) root files, $(find ./assembled/redesign -type f | wc -l) preview files"
+          echo "Assembled: $(find ./assembled -maxdepth 1 -type f | wc -l) root files"
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
