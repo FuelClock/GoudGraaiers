@@ -8,7 +8,7 @@ plate_alt: Ships in distress off a rocky coast, oil painting by Ludolf Bakhuizen
 ---
 {% include_relative assets/pages/joining.md %}
 
-<details class="doctrine-vision" id="vision">
+<details class="doctrine-vision" id="vision" open>
   <summary>Gerrit&rsquo;s vision</summary>
   <div class="doctrine-vision-body">
     <p><strong>Gerrit&rsquo;s vision for our guild:</strong> to foster a community where diverse playstyles and languages converge for seamless and enjoyable cooperation.</p>
