@@ -4,15 +4,15 @@ title: The Map
 lead: "The current game world, drawn by the game's own chart. Click a port for what it docks, trades and demands."
 body_class: imap-page
 styles:
-  - /assets/css/map-page.css?v=5
+  - /assets/css/map-page.css?v=6
 scripts:
-  - /assets/js/map-data.js?v=6
-  - /assets/js/map-page.js?v=7
+  - /assets/js/map-data.js?v=7
+  - /assets/js/map-page.js?v=8
 ---
 
 <h2>World chart</h2>
 
-<p>Drag to sail around, scroll or pinch to zoom, click a port for its details. The search box above the chart jumps straight to a port. The layer chips reveal fast travel points, research spots, production sites, forts and NPC trade routes (they appear once you zoom in a little; toggling one zooms you there). Markers come from the game files of the current build, so the chart stays honest after every game update.</p>
+<p>Drag to sail around, scroll or pinch to zoom, click a port for its details. The search box above the chart jumps straight to a port. The layer chips reveal fast travel points, traders and settlements, personal islands, resource sites, points of interest, forts and NPC trade routes (they appear once you zoom in a little; toggling one zooms you there). Markers come from the game files of the current build, so the chart stays honest after every game update.</p>
 
 <div class="imap" id="imap">
   <div class="imap-toolbar">
@@ -27,11 +27,14 @@ scripts:
     </div>
   </div>
   <div class="imap-layers">
-    <label class="imap-chip"><input type="checkbox" id="imap-lvl-pharos" checked> Fast travel</label>
-    <label class="imap-chip"><input type="checkbox" id="imap-lvl-finds" checked> Special finds</label>
-    <label class="imap-chip"><input type="checkbox" id="imap-lvl-production" checked> Production</label>
-    <label class="imap-chip"><input type="checkbox" id="imap-lvl-forts"> Forts &amp; towers</label>
-    <label class="imap-chip"><input type="checkbox" id="imap-lvl-routes"> Trade routes</label>
+    <label class="imap-chip"><input type="checkbox" id="imap-lvl-pharos" checked> <img class="imap-chip-icon" src="/img/map-icons/pharos.png" alt=""> Fast travel</label>
+    <label class="imap-chip"><input type="checkbox" id="imap-lvl-traders" checked> <img class="imap-chip-icon" src="/img/map-icons/trader.png" alt=""> Traders &amp; settlements</label>
+    <label class="imap-chip"><input type="checkbox" id="imap-lvl-personal" checked> <img class="imap-chip-icon" src="/img/map-icons/mine.png" alt=""> Personal islands</label>
+    <label class="imap-chip"><input type="checkbox" id="imap-lvl-resource"> <img class="imap-chip-icon" src="/img/map-icons/resource.png" alt=""> Resource sites</label>
+    <label class="imap-chip"><input type="checkbox" id="imap-lvl-regions" checked> <img class="imap-chip-icon" src="/img/map-icons/poi-region.png" alt=""> Points of interest: regions</label>
+    <label class="imap-chip"><input type="checkbox" id="imap-lvl-collections" checked> <img class="imap-chip-icon" src="/img/map-icons/poi-collection.png" alt=""> Points of interest: collections</label>
+    <label class="imap-chip"><input type="checkbox" id="imap-lvl-forts"> <img class="imap-chip-icon" src="/img/map-icons/forts.png" alt=""> Forts &amp; towers</label>
+    <label class="imap-chip"><input type="checkbox" id="imap-lvl-routes"> <img class="imap-chip-icon" src="/img/map-icons/routes.png" alt=""> Trade routes</label>
   </div>
   <div class="imap-viewport" id="imap-viewport">
     <div class="imap-stage" id="imap-stage">
@@ -49,7 +52,7 @@ scripts:
   <div class="imap-legend">
     <span class="imap-legend-item"><span class="imap-legend-dot imap-dot-port"></span> port</span>
     <span class="imap-legend-item"><span class="imap-legend-dot imap-dot-gather"></span> fleet gathering point</span>
-    <span class="imap-legend-item"><span class="imap-legend-ring"></span> PvP circle</span>
+    <span class="imap-legend-item"><img class="imap-legend-icon" src="/img/map-icons/bone.png" alt=""> PvP circle, drawn as the game's line of bones</span>
   </div>
 </div>
 

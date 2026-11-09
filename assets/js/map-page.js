@@ -46,8 +46,16 @@
     if (port.gather) badges += badge('Fleet gathering point', 'is-good');
     var goods = '';
     if (port.market) {
-      goods = '<p class="imap-popup-goods-label">Market goods</p><div class="imap-popup-goods">' +
-        port.goods.map(function (g) { return '<span>' + g + '</span>'; }).join('') + '</div>';
+      /* only the goods the market SELLS: its own economy region's goods,
+         stocked cheap (WosbTrading.A). The rest of the list in game is what
+         the port BUYS, which must not appear here (Thimon's call) */
+      var sells = port.sells || [];
+      if (sells.length) {
+        goods = '<p class="imap-popup-goods-label">Market sells</p><div class="imap-popup-goods">' +
+          sells.map(function (g) { return '<span>' + g + '</span>'; }).join('') + '</div>';
+      } else {
+        goods = '<p class="imap-popup-goods-label">No goods of its own region</p>';
+      }
     } else {
       goods = '<p class="imap-popup-goods-label">No trade market</p>';
     }
@@ -111,12 +119,36 @@
     bySlug[slug(port.name)] = { port: port, el: el };
   });
 
-  /* pvp ring: a div in stage space; border stays a constant 2px on screen */
+  /* pvp ring: drawn as the game's line of bones. The client (wosb_game/B/C.cs,
+     A(Vector3[])) places 100 hazardZoneEdgeIcon sprites evenly around the
+     WorldHazardZones circle, each rotated to the angle + PI with +-0.5 rad of
+     jitter at opacity White*0.75. A dashed CSS border never looked like that. */
   var pvpRing = d.getElementById('imap-pvp-ring');
   var pc = DATA.pvpCircle;
   var pvpR = pc.rOfW; /* radius as a fraction of chart width */
+  var bones = [];
+  (function buildBones() {
+    var rOfH = pvpR * IMG_W / IMG_H;
+    var N = 100;
+    var frag = d.createDocumentFragment();
+    for (var i = 0; i < N; i++) {
+      var ang = (i / N) * Math.PI * 2;
+      var jitter = ((i * 137 % 100) / 100 - 0.5); /* deterministic +-0.5 rad */
+      var b = d.createElement('span');
+      b.className = 'imap-bone';
+      b.style.left = ((pc.u[0] + Math.cos(ang) * pvpR) * 100) + '%';
+      b.style.top = ((pc.u[1] + Math.sin(ang) * rOfH) * 100) + '%';
+      b.setAttribute('data-rot', (ang + Math.PI + jitter).toFixed(3));
+      frag.appendChild(b);
+      bones.push(b);
+    }
+    stage.appendChild(frag);
+  })();
 
-  /* phase-2 layers: fast travel, special finds, production, forts, routes */
+  /* phase-2 layers: fast travel, traders/settlements, personal islands,
+     resource sites, points of interest (regions + collections), forts, routes.
+     Markers render with the game's own map-legend icons (img/map-icons/,
+     extracted from the client's AtlWorldMap atlas). */
   var CAT_BADGE = { Regional: 'Regional landmark', Shipwrecks: 'Shipwreck', Figurines: 'Rank figurine', LonghornHistory: 'Longhorn history', Weapons: 'Lost weapon' };
   var RES_NAME = { wood: 'Wood', iron: 'Iron', coal: 'Coal', ice: 'Ice', farm: 'Farm', rum: 'Rum', resin: 'Resin', copper: 'Copper', mhidden: 'Rare goods' };
   function secondaryMarker(layer, cls, title, html) {
@@ -145,17 +177,32 @@
       '<p class="imap-popup-dock">A lighthouse of the fast travel network: sail here once and you can teleport between its kind.</p>');
   });
   (DATA.layers ? DATA.layers.finds || [] : []).forEach(function (p) {
-    secondaryMarker(p, 'is-lvl-finds', p.name,
+    /* the in-game legend splits special finds into two rows: points of
+       interest REGIONS (interestPoint icon) and COLLECTIONS (collectionPoint) */
+    var cls = p.cat === 'Regional' ? 'is-lvl-regions' : 'is-lvl-collections';
+    secondaryMarker(p, cls, p.name,
       '<h3 class="imap-popup-name">' + p.name + '</h3>' +
       '<div class="imap-popup-badges">' + badge(CAT_BADGE[p.cat] || p.cat, 'is-info') + '</div>' +
       (p.reward ? '<p class="imap-popup-dock">Research reward: ' + p.reward + '</p>' : ''));
   });
+  (DATA.layers ? DATA.layers.traders || [] : []).forEach(function (p) {
+    secondaryMarker(p, 'is-lvl-traders', p.kind,
+      '<h3 class="imap-popup-name">' + p.kind + '</h3>' +
+      '<div class="imap-popup-badges">' + badge('Traders and settlements', 'is-info') + '</div>' +
+      '<p class="imap-popup-dock">One of the world\'s static trader settlements, straight from the game files.</p>');
+  });
   (DATA.layers ? DATA.layers.production || [] : []).forEach(function (p) {
     var res = RES_NAME[p.res] || p.res;
-    secondaryMarker(p, 'is-lvl-production', res + ' site',
-      '<h3 class="imap-popup-name">' + res + ' site</h3>' +
-      '<div class="imap-popup-badges">' + badge('Production', 'is-info') + '</div>' +
-      '<p class="imap-popup-dock">A ' + res.toLowerCase() + ' production site for guild factories.</p>');
+    secondaryMarker(p, 'is-lvl-personal', res + ' isle',
+      '<h3 class="imap-popup-name">' + res + ' isle</h3>' +
+      '<div class="imap-popup-badges">' + badge('Personal island', 'is-info') + '</div>' +
+      '<p class="imap-popup-dock">A mine or factory isle: claim it with a personal island to produce ' + res.toLowerCase() + ' for the guild.</p>');
+  });
+  (DATA.layers ? DATA.layers.resource || [] : []).forEach(function (p) {
+    secondaryMarker(p, 'is-lvl-resource', 'Resource site',
+      '<h3 class="imap-popup-name">Resource site</h3>' +
+      '<div class="imap-popup-badges">' + badge('Resource sites', 'is-info') + '</div>' +
+      '<p class="imap-popup-dock">In game the shovel marks loot spots the server spawns on the fly; on this static chart it marks the mine and factory isles.</p>');
   });
   (DATA.layers ? DATA.layers.forts || [] : []).forEach(function (p) {
     secondaryMarker(p, 'is-lvl-forts', p.kind,
@@ -172,7 +219,7 @@
   }
 
   /* layer toggles */
-  var LAYERS = ['pharos', 'finds', 'production', 'forts', 'routes'];
+  var LAYERS = ['pharos', 'traders', 'personal', 'resource', 'regions', 'collections', 'forts', 'routes'];
   var layerState = {};
   try { layerState = JSON.parse(localStorage.getItem('imap-layers') || '{}'); } catch (e) { layerState = {}; }
   LAYERS.forEach(function (name) {
@@ -209,8 +256,14 @@
     stage.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + k + ')';
     var inv = 1 / k;
     markersEl.querySelectorAll('.imap-marker').forEach(function (m) {
-      m.style.transform = 'translate(-50%,-50%) scale(' + inv + ')';
+      /* resource-site shovels sit a touch off their mine icon when both
+         layers are on, so the pair reads as two marks, not one blob */
+      var shift = m.classList.contains('is-lvl-resource') ? ' translate(30%, 30%)' : '';
+      m.style.transform = 'translate(-50%,-50%)' + shift + ' scale(' + inv + ')';
       m.classList.toggle('is-labeled', k >= 2.2);
+    });
+    bones.forEach(function (b) {
+      b.style.transform = 'translate(-50%,-50%) rotate(' + b.getAttribute('data-rot') + 'rad) scale(' + inv + ')';
     });
     if (pvpRing) {
       var rOfH = pvpR * IMG_W / IMG_H; /* the circle is round on screen: radius in height fractions is larger */
@@ -218,7 +271,6 @@
       pvpRing.style.top = ((pc.u[1] - rOfH) * 100) + '%';
       pvpRing.style.width = (pvpR * 2 * 100) + '%';
       pvpRing.style.height = (rOfH * 2 * 100) + '%';
-      pvpRing.style.borderWidth = (2 * k) + 'px';
     }
     if (routesSvg) routesSvg.style.strokeWidth = (3 / k) + 'px';
     syncHi();
@@ -258,7 +310,9 @@
 
   var drag = null;
   viewport.addEventListener('pointerdown', function (e) {
-    if (e.target.closest('.imap-marker')) return;
+    /* markers and the popup handle their own clicks; capturing the pointer
+       here would retarget the close button's click to the viewport */
+    if (e.target.closest('.imap-marker') || e.target.closest('.imap-popup')) return;
     drag = { x: e.clientX, y: e.clientY, tx: tx, ty: ty, id: e.pointerId };
     viewport.setPointerCapture(e.pointerId);
     viewport.classList.add('is-dragging');
