@@ -7,12 +7,12 @@ styles:
   - /assets/css/map-page.css?v=5
 scripts:
   - /assets/js/map-data.js?v=4
-  - /assets/js/map-page.js?v=5
+  - /assets/js/map-page.js?v=6
 ---
 
 <h2>World chart</h2>
 
-<p>Drag to sail around, scroll or pinch to zoom, click a port for its details. The search box above the chart jumps straight to a port. Markers come from the game files of the current build, so the chart stays honest after every game update.</p>
+<p>Drag to sail around, scroll or pinch to zoom, click a port for its details. The search box above the chart jumps straight to a port. The layer chips reveal fast travel points, research spots, production sites, forts and NPC trade routes (they appear once you zoom in a little; toggling one zooms you there). Markers come from the game files of the current build, so the chart stays honest after every game update.</p>
 
 <div class="imap" id="imap">
   <div class="imap-toolbar">
