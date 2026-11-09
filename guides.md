@@ -4,13 +4,13 @@ title: Guides & Trade Tool
 lead: "The flotilla's shared knowledge: sail the guild's Trade Fever route, plan your own optimal trade loop, and find the tools we use."
 scripts:
   - /assets/js/trade-data.js?v=10
-  - /assets/js/trade-planner.js?v=6
+  - /assets/js/trade-planner.js?v=7
 plate: /img/paintings/porcellis-ships-in-distress-stormy-sea.jpg
 plate_alt: Ships in distress on a stormy sea, oil painting by Jan Porcellis
 ---
 ## The Trade Fever loop
 
-From our Trade Fever voyages: gather at St Jean and sail the loop counterclockwise. Buy in the north, Arabia and the south, the sell ports are marked in green. There in port you move all the trade goods into the port storage, and in the trading tab you press the button "At the best price"; every load sells one leg further on. Twenty to thirty seconds in port is enough: warehouse, market, buy, out at the lighthouse. This is the route we sail at the events; sailing something else tonight? Open the planner below and it plans your own loop.
+From our Trade Fever voyages: gather at St Jean and sail the loop counterclockwise. Buy in the north, Arabia and the south, the sell ports are marked in green. There in port you move all the trade goods into the port storage, and in the trading tab you press the button "At the best price". Twenty to thirty seconds in port should be enough: warehouse, market, buy and quickly exit at the lighthouse. This is the route we sail at the events; sailing something else tonight? Open the planner below and it plans your own loop.
 
 <figure class="map-route">
   <div class="map-route-frame">
