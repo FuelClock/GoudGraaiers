@@ -17,32 +17,15 @@
 
 /* toolbar */
 .imap { margin: clamp(24px, 3vw, 40px) 0 0; }
-.imap-layers {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0 0 12px;
-}
-.imap-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 14px;
-  background: var(--surface-2);
-  border: 1px solid var(--surface-2);
-  color: var(--ink);
-  font-size: 0.875rem;
-  cursor: pointer;
-  user-select: none;
-}
-.imap-chip input { accent-color: var(--gold); margin: 0; }
 .imap-chip-icon {
   width: var(--imap-icon);
   height: var(--imap-icon);
   object-fit: contain;
   flex-shrink: 0;
 }
-.imap-chip:hover { filter: brightness(1.15); }
+/* the site gives .article-body imgs 24px vertical margins - they inflate
+   every legend row around these little icons */
+.imap-legend img { margin: 0; }
 .imap-toolbar {
   display: flex;
   align-items: center;
@@ -233,11 +216,19 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
   user-select: none;
   -webkit-user-drag: none;
 }
-.imap-marker .imap-marker-label {
+/* labels live in their own overlay (.imap-labels, inserted after
+   .imap-markers by map-page.js): every name sits above every icon, and
+   port names (z 30) win overlaps against the other names (z 10) */
+.imap-labels {
   position: absolute;
-  left: 50%;
-  bottom: calc(100% + 4px);
-  transform: translateX(-50%);
+  inset: 0;
+  z-index: 15; /* above the markers layer, below the popup (z 20) */
+  pointer-events: none;
+}
+.imap-labels .imap-marker-label {
+  position: absolute;
+  transform-origin: 50% 100%;
+  display: none;
   white-space: nowrap;
   font-family: "EB Garamond", serif;
   /* PORT names: matches the trade chart's port names (46 SVG units on the
@@ -248,21 +239,30 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
   color: #e8e2d2;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9), 0 0 4px rgba(0, 0, 0, 0.7);
   pointer-events: none;
-  display: none;
 }
 /* every OTHER marker label: back to the old size, but dressed like the
    trade chart's goods lines under the port names (28-unit gold #e5cf82,
    weight 500, dark navy #14212c outline - emulated with layered
    text-shadows since HTML text has no paint-order stroke) */
-.imap-marker.is-secondary .imap-marker-label {
+.imap-labels .imap-marker-label.is-secondary-label {
   font-size: 12px;
   font-weight: 500;
   color: #e5cf82;
   text-shadow:
     -1px -1px 0 #14212c, 1px -1px 0 #14212c, -1px 1px 0 #14212c, 1px 1px 0 #14212c,
     0 1px 2px rgba(0, 0, 0, 0.9);
+  z-index: 10;
 }
-.imap-marker.is-labeled .imap-marker-label { display: block; }
+.imap-labels .imap-marker-label:not(.is-secondary-label) { z-index: 30; }
+.imap-labels .imap-marker-label.is-on { display: block; }
+/* hidden layers mirror the markers container's hide-* classes */
+.imap-labels.hide-pharos .imap-marker-label.is-lvl-pharos,
+.imap-labels.hide-traders .imap-marker-label.is-lvl-traders,
+.imap-labels.hide-personal .imap-marker-label.is-lvl-personal,
+.imap-labels.hide-regions .imap-marker-label.is-lvl-regions,
+.imap-labels.hide-collections .imap-marker-label.is-lvl-collections,
+.imap-labels.hide-forts .imap-marker-label.is-lvl-forts,
+.imap-labels.hide-routes .imap-marker-label.is-lvl-routes { display: none; }
 
 /* popup, fixed to the viewport so it never scales with the chart */
 .imap-popup {
@@ -324,16 +324,39 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
 }
 .imap-popup-gather { margin: 10px 0 0; font-size: 0.875rem; color: #7fc29a; }
 
-/* legend */
+/* legend: sits above the chart and doubles as the layer control surface */
 .imap-legend {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 8px 24px;
-  margin: 12px 0 0;
+  margin: 0 0 12px;
   font-size: 0.875rem;
   color: var(--muted);
 }
 .imap-legend-item { display: inline-flex; align-items: center; gap: 8px; }
+.imap-legend-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: filter 0.15s ease, opacity 0.15s ease;
+}
+.imap-legend-toggle:hover { filter: brightness(1.25); }
+.imap-legend-toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+/* off state: crossed out, dimmed, icon greyed (Thimon: crossed out + dim) */
+.imap-legend-toggle[aria-pressed="false"] {
+  opacity: 0.45;
+  text-decoration: line-through;
+}
+.imap-legend-toggle[aria-pressed="false"] .imap-chip-icon { filter: grayscale(1); }
 .imap-legend-dot {
   width: 12px;
   height: 12px;
