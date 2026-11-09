@@ -240,15 +240,27 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
   transform: translateX(-50%);
   white-space: nowrap;
   font-family: "EB Garamond", serif;
-  /* matches the trade chart's port names: 46 SVG units on the 2400px chart
-     render 23px on screen at the desktop frame width (1200px, scale .5);
-     font family, colour and text-shadow stay the imap's own */
+  /* PORT names: matches the trade chart's port names (46 SVG units on the
+     2400px chart render 23px on screen at the desktop frame width, scale
+     .5); font family, colour and text-shadow stay the imap's own */
   font-size: 23px;
   letter-spacing: 0.01em;
   color: #e8e2d2;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9), 0 0 4px rgba(0, 0, 0, 0.7);
   pointer-events: none;
   display: none;
+}
+/* every OTHER marker label: back to the old size, but dressed like the
+   trade chart's goods lines under the port names (28-unit gold #e5cf82,
+   weight 500, dark navy #14212c outline - emulated with layered
+   text-shadows since HTML text has no paint-order stroke) */
+.imap-marker.is-secondary .imap-marker-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #e5cf82;
+  text-shadow:
+    -1px -1px 0 #14212c, 1px -1px 0 #14212c, -1px 1px 0 #14212c, 1px 1px 0 #14212c,
+    0 1px 2px rgba(0, 0, 0, 0.9);
 }
 .imap-marker.is-labeled .imap-marker-label { display: block; }
 
