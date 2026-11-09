@@ -12,6 +12,26 @@
 
 /* toolbar */
 .imap { margin: clamp(24px, 3vw, 40px) 0 0; }
+.imap-layers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+.imap-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--surface-2);
+  color: var(--ink);
+  font-size: 0.875rem;
+  cursor: pointer;
+  user-select: none;
+}
+.imap-chip input { accent-color: var(--gold); margin: 0; }
+.imap-chip:hover { filter: brightness(1.15); }
 .imap-toolbar {
   display: flex;
   align-items: center;
@@ -101,12 +121,12 @@
   user-select: none;
   -webkit-user-drag: none;
 }
-.imap-overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.imap-pvp {
-  fill: rgba(63, 143, 95, 0.16);
-  stroke: rgba(78, 175, 116, 0.9);
-  stroke-width: 10;
-  stroke-dasharray: 26 16;
+.imap-pvp-ring {
+  position: absolute;
+  border: 2px dashed rgba(196, 90, 76, 0.85);
+  border-radius: 50%;
+  background: rgba(176, 72, 60, 0.10);
+  pointer-events: none;
 }
 
 /* markers: counter-scaled so they keep a constant screen size */
@@ -130,6 +150,41 @@
 }
 .imap-marker.is-pirate { background: #b0483c; }
 .imap-marker.is-active { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
+/* secondary layers: smaller, colour-coded, hidden until zoomed in,
+   and fully hidden when their layer toggle is off */
+.imap-marker.is-secondary {
+  width: 12px;
+  height: 12px;
+  border-width: 1px;
+  display: none;
+}
+.imap-marker.is-lvl-pharos { background: #7fb4d9; }
+.imap-marker.is-lvl-finds { background: #b48fd9; }
+.imap-marker.is-lvl-production { background: #d9a441; }
+.imap-marker.is-lvl-forts { background: #c97b5d; }
+.imap-markers.is-close .imap-marker.is-secondary { display: block; }
+.imap-markers.hide-pharos .imap-marker.is-lvl-pharos,
+.imap-markers.hide-finds .imap-marker.is-lvl-finds,
+.imap-markers.hide-production .imap-marker.is-lvl-production,
+.imap-markers.hide-forts .imap-marker.is-lvl-forts { display: none; }
+.imap-routes { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.imap-routes polyline {
+  fill: none;
+  stroke: rgba(212, 175, 55, 0.4);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.imap-routes.hide-routes-off { display: none; }
+.imap-img-hi {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity .25s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
 .imap-marker .imap-marker-label {
   position: absolute;
   left: 50%;
@@ -229,7 +284,7 @@
   width: 18px;
   height: 12px;
   border-radius: 50%;
-  border: 2px dashed rgba(63, 143, 95, 0.75);
+  border: 2px dashed rgba(196, 90, 76, 0.8);
   display: inline-block;
 }
 

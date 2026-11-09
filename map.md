@@ -4,10 +4,10 @@ title: The Map
 lead: "The current game world, drawn by the game's own chart. Click a port for what it docks, trades and demands."
 body_class: imap-page
 styles:
-  - /assets/css/map-page.css?v=2
+  - /assets/css/map-page.css?v=5
 scripts:
-  - /assets/js/map-data.js?v=2
-  - /assets/js/map-page.js?v=2
+  - /assets/js/map-data.js?v=3
+  - /assets/js/map-page.js?v=4
 ---
 
 <h2>World chart</h2>
@@ -26,12 +26,19 @@ scripts:
       <button type="button" id="imap-zoom-in" aria-label="Zoom in">+</button>
     </div>
   </div>
+  <div class="imap-layers">
+    <label class="imap-chip"><input type="checkbox" id="imap-lvl-pharos" checked> Fast travel</label>
+    <label class="imap-chip"><input type="checkbox" id="imap-lvl-finds" checked> Special finds</label>
+    <label class="imap-chip"><input type="checkbox" id="imap-lvl-production" checked> Production</label>
+    <label class="imap-chip"><input type="checkbox" id="imap-lvl-forts"> Forts &amp; towers</label>
+    <label class="imap-chip"><input type="checkbox" id="imap-lvl-routes"> Trade routes</label>
+  </div>
   <div class="imap-viewport" id="imap-viewport">
     <div class="imap-stage" id="imap-stage">
       <img class="imap-img" src="/img/map-web.jpg" alt="The World of Sea Battle world chart" draggable="false">
-      <svg class="imap-overlay" viewBox="0 0 2400 1989" preserveAspectRatio="none" aria-hidden="true">
-        <circle class="imap-pvp" id="imap-pvp-circle" cx="0" cy="0" r="0"/>
-      </svg>
+      <img class="imap-img-hi" id="imap-img-hi" alt="" draggable="false">
+      <svg class="imap-routes" id="imap-routes" viewBox="0 0 2400 1987" preserveAspectRatio="none" aria-hidden="true"></svg>
+      <div class="imap-pvp-ring" id="imap-pvp-ring" aria-hidden="true"></div>
       <div class="imap-markers" id="imap-markers"></div>
     </div>
     <div class="imap-popup" id="imap-popup" hidden>
