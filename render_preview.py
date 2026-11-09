@@ -131,7 +131,7 @@ def render(tpl, ctx):
     tpl = re.sub(r"{{\s*(.+?)\s*}}", val, tpl)
     return tpl
 
-PAGES = ["index.md", "events.md", "crew.md", "join.md", "join-b.md", "join-c.md", "teamspeak.md", "guides.md"]
+PAGES = ["index.md", "events.md", "crew.md", "join.md", "teamspeak.md", "guides.md"]
 os.makedirs(OUT, exist_ok=True)
 
 for name in PAGES:

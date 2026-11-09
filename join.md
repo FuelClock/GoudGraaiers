@@ -3,10 +3,42 @@ layout: article
 title: Join the fleet
 lead: "Two ways aboard: apply in-game, or step onto our TeamSpeak first and meet the fleet."
 ts_action: true
+body_class: join-b
 plate: /img/paintings/bakhuizen-ships-in-distress-rocky-coast.jpg
 plate_alt: Ships in distress off a rocky coast, oil painting by Ludolf Bakhuizen
+styles:
+  - /assets/css/join-b.css?v=1
+  - /assets/css/join-c.css?v=3
+scripts:
+  - /assets/js/join-c.js?v=3
 ---
-{% include_relative assets/pages/joining.md %}
+<h2>Two ways aboard</h2>
+
+<div class="jb-paths">
+  <a class="jb-path jb-path-primary" href="#apply-in-game" data-modal="jc-sim-dialog">
+    <span class="jb-path-title">Apply in-game</span>
+    <span class="jb-path-text">A few clicks in the Guild Ranking panel. Practice them right here: an admiral accepts you, usually the same evening.</span>
+    <span class="jb-path-go">Practice it now</span>
+  </a>
+  <a class="jb-path" href="#teamspeak">
+    <span class="jb-path-title">Meet us on TeamSpeak first</span>
+    <span class="jb-path-text">Sail with us for an evening before you sign anything. No pressure, no interview.</span>
+    <span class="jb-path-go">How to connect</span>
+  </a>
+</div>
+
+<h2 id="apply-in-game">Boarding in-game</h2>
+
+<ol class="jb-steps">
+  <li><strong>Open the Guild Ranking panel.</strong> The icon sits in the top right corner of your screen.</li>
+  <li><strong>Select the Guild Ranking tab again.</strong> The panel opens on it.</li>
+  <li><strong>Search for NL.</strong> and click on <strong>Goud Graaiers</strong> in the results.</li>
+  <li><strong>Send your join application.</strong> One of our admirals will accept you as soon as possible.</li>
+</ol>
+
+<div class="jb-note">
+  <p>Before you sign, it helps to read <a href="{{ '/' | relative_url }}#doctrine">how the flotilla sails</a>: organized and chill squads, neutrality, and what the ranks mean. Most of all: be a shipmate. That is the whole test.</p>
+</div>
 
 <details class="doctrine-vision" id="vision" open>
   <summary>Gerrit&rsquo;s vision</summary>
@@ -19,14 +51,33 @@ plate_alt: Ships in distress off a rocky coast, oil painting by Ludolf Bakhuizen
       <li><strong>Freedom to engage:</strong> no reputation requirements. Members engage other factions as they see fit; we only keep friendly relations with the other Dutch guilds.</li>
       <li><strong>Neutrality for safety:</strong> allied standing with every faction significantly reduces the hostile encounters you meet.</li>
     </ul>
-    <p>If that vision fits you, the joining steps above get you aboard.</p>
+    <p>If that vision fits you, the steps above get you aboard.</p>
   </div>
 </details>
 
-## Joining the TeamSpeak
+<figure class="jb-plate">
+  <img src="{{ '/img/paintings/bakhuizen-storm-norwegian-coast.jpg' | relative_url }}" alt="Ships fleeing a storm along a Norwegian coast under a Dutch flag, oil painting by Ludolf Bakhuizen" width="1401" height="690" loading="lazy" decoding="async">
+  <figcaption>Ships in a Storm off the Norwegian Coast, Ludolf Bakhuizen, 1694</figcaption>
+</figure>
 
-TeamSpeak is our primary way of communication. It is not a must and we don't enforce its use, but it is a useful tool that helps us coordinate in events and battles.
+<h2 id="teamspeak">Connecting to TeamSpeak</h2>
 
-If you already have TeamSpeak installed, connect with the domain `donkey.beauty`, or [tap here to connect directly](ts3server://donkey.beauty).
+<p>TeamSpeak is our primary way of communication. It is not a must and we don't enforce its use, but it is a useful tool that helps us coordinate in events and battles.</p>
 
-[How to install TeamSpeak and connect to the guild server]({{ '/teamspeak.html' | relative_url }})
+<p>If you already have TeamSpeak installed, connect with the domain <code>donkey.beauty</code>, or tap the button below to connect directly.</p>
+
+<div class="jb-actions">
+  <a class="jb-button" href="ts3server://donkey.beauty">Connect to TeamSpeak</a>
+  <a class="jb-quiet" href="{{ '/teamspeak.html' | relative_url }}">How to install TeamSpeak, step by step</a>
+</div>
+
+<dialog class="voyage-modal jc-modal" id="jc-sim-dialog">
+  <div class="voyage-modal-head">
+    <h3 class="voyage-modal-title">Practice: the Guild Ranking panel</h3>
+    <button type="button" class="voyage-modal-close" aria-label="Close">✕</button>
+  </div>
+  <div class="voyage-modal-body">
+    {% include_relative _includes/jc-sim.html %}
+    <p class="jc-modal-note">Nothing leaves this page: it is a practice copy. The real steps are written out below the painting.</p>
+  </div>
+</dialog>
