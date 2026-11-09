@@ -101,21 +101,21 @@
     update();
   }
 
-  /* statement band gold sheen: no autonomous animation any more (Thimon,
-     2026-11-09). The sheen position is a CSS custom property set here:
-     scrolling the page glides it across the whole band, and the mouse's
-     horizontal position adds a slower swing on top. Both contributions are
-     eased per frame and the whole loop only runs while the band is on
-     screen. Reduced motion: CSS hides the sheen entirely. */
+  /* statement band gold sheen: no autonomous animation (Thimon,
+     2026-11-09); scroll-driven only — the mouse influence was removed when
+     the perimeter outline comet took over the fancy duty. The sheen
+     position is a CSS custom property set here, driven by the BAND'S OWN
+     trip through the viewport, so it sweeps across exactly while the
+     visitor scrolls past it. Eased per frame, running only while the band
+     intersects the viewport. Reduced motion: CSS hides the sheen entirely. */
   function shine() {
     var band = d.querySelector('.statement-band');
     if (!band || reduce) return;
-    var target = -120, current = -120, mouseT = 0, mouse = 0, raf = null, visible = false;
+    var target = -120, current = -120, raf = null, visible = false;
     function frame() {
       current += (target - current) * 0.08;
-      mouse += (mouseT - mouse) * 0.06;
-      band.style.setProperty('--sheen-x', (current + mouse).toFixed(2) + '%');
-      if (Math.abs(target - current) > 0.5 || Math.abs(mouseT - mouse) > 0.5) {
+      band.style.setProperty('--sheen-x', current.toFixed(2) + '%');
+      if (Math.abs(target - current) > 0.5) {
         raf = requestAnimationFrame(frame);
       } else {
         raf = null;
@@ -134,11 +134,6 @@
       kick();
     }
     window.addEventListener('scroll', function () { if (visible) retarget(); }, { passive: true });
-    window.addEventListener('mousemove', function (ev) {
-      if (!visible) return;
-      mouseT = (ev.clientX / window.innerWidth - 0.5) * 60;
-      kick();
-    }, { passive: true });
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
