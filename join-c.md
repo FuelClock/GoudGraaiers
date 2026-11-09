@@ -7,9 +7,9 @@ body_class: join-c
 plate: /img/paintings/bakhuizen-ships-in-distress-rocky-coast.jpg
 plate_alt: Ships in distress off a rocky coast, oil painting by Ludolf Bakhuizen
 styles:
-  - /assets/css/join-c.css?v=1
+  - /assets/css/join-c.css?v=2
 scripts:
-  - /assets/js/join-c.js?v=1
+  - /assets/js/join-c.js?v=2
 ---
 <h2>Try the boarding steps</h2>
 
@@ -22,6 +22,7 @@ scripts:
   </div>
   <div class="jc-dots" aria-hidden="true">
     <span class="jc-dot is-on"></span>
+    <span class="jc-dot"></span>
     <span class="jc-dot"></span>
     <span class="jc-dot"></span>
   </div>
@@ -38,7 +39,7 @@ scripts:
         <span class="jc-result-tag">[NL.]</span>
       </button>
     </div>
-    <p class="jc-note">In the game, the Guild Ranking icon sits in the top right corner of your screen. Type NL. here, or tap the tag to fill it in.</p>
+    <p class="jc-note">In the game, the Guild Ranking icon sits in the top right corner of your screen. The real search box holds up to 12 characters and filters the list by tag first.</p>
   </div>
 
   <div class="jc-stage" id="jc-stage-guild" hidden>
@@ -48,8 +49,18 @@ scripts:
     </div>
     <p class="jc-guild-text">A combined Dutch and English flotilla under one flag: organized and chill squads, neutrality first.</p>
     <div class="jc-actionsrow">
-      <button type="button" class="jc-button" id="jc-apply">Send application</button>
+      <button type="button" class="jc-button" id="jc-apply">Submit an application</button>
       <button type="button" class="jc-back" id="jc-back">Back to search</button>
+    </div>
+  </div>
+
+  <div class="jc-stage" id="jc-stage-message" hidden>
+    <label class="jc-label" for="jc-message">Enter a message for the guild&rsquo;s leaders</label>
+    <textarea id="jc-message" class="jc-textarea" rows="3" maxlength="250" placeholder="Hi, I would like to join Goud Graaiers"></textarea>
+    <p class="jc-note">The game asks every applicant for a short message, up to 250 characters. It is optional here.</p>
+    <div class="jc-actionsrow">
+      <button type="button" class="jc-button" id="jc-send">Send application</button>
+      <button type="button" class="jc-back" id="jc-back2">Back</button>
     </div>
   </div>
 
@@ -66,12 +77,12 @@ scripts:
 <details class="jc-plain">
   <summary>Prefer the plain steps?</summary>
   <ol class="jc-steps">
-    <li><strong>Open the Guild Ranking panel.</strong> The icon sits in the top right corner of your screen.</li>
-    <li><strong>Select the Guild Ranking tab again.</strong> The panel opens on it.</li>
-    <li><strong>Search for NL.</strong> and click on <strong>Goud Graaiers</strong> in the results.</li>
-    <li><strong>Send your join application.</strong> One of our admirals will accept you as soon as possible.</li>
+    <li><strong>Open the Guild Ranking panel.</strong> The icon sits in the top right corner of your screen. It opens the ranking only while you are not in a guild yet: once you are a member, the same spot opens your own guild window.</li>
+    <li><strong>Stay on the Guild Ranking tab.</strong> The window opens on it, above a list you can sort with the tabs By rating, By ports and New.</li>
+    <li><strong>Type NL. in the search box</strong> (it holds up to 12 characters) <strong>and click on Goud Graaiers</strong> in the list. The game filters by tag first. If nothing matches, a search button appears that asks the server; it needs at least 3 characters.</li>
+    <li><strong>Submit an application.</strong> A box opens for a message to the guild&rsquo;s leaders, up to 250 characters. Send it and the button reads Application sent. One of our admirals will accept you as soon as possible.</li>
   </ol>
-  <p>Before you sign, it helps to read <a href="{{ '/' | relative_url }}">how the flotilla sails</a>: organized and chill squads, neutrality, and what the ranks mean. Most of all: be a shipmate. That is the whole test.</p>
+  <p>One gate to know: you can join a guild from rank 10, so make sure your captain is rank 10 or higher before you apply. Before you sign, it also helps to read <a href="{{ '/' | relative_url }}#doctrine">how the flotilla sails</a>: organized and chill squads, neutrality, and what the ranks mean. Most of all: be a shipmate. That is the whole test.</p>
 </details>
 
 <noscript>

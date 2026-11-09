@@ -34,7 +34,7 @@ styles:
 </ol>
 
 <div class="jb-note">
-  <p>Before you sign, it helps to read <a href="{{ '/' | relative_url }}">how the flotilla sails</a>: organized and chill squads, neutrality, and what the ranks mean. Most of all: be a shipmate. That is the whole test.</p>
+  <p>Before you sign, it helps to read <a href="{{ '/' | relative_url }}#doctrine">how the flotilla sails</a>: organized and chill squads, neutrality, and what the ranks mean. Most of all: be a shipmate. That is the whole test.</p>
 </div>
 
 <figure class="jb-plate">
