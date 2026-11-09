@@ -186,8 +186,3 @@ From our Trade Fever voyages: gather at St Jean and sail the loop counterclockwi
 ## Useful instruments
 
 **WosbCraft**: calculate crafting costs easily: [wosbcraft.com](https://www.wosbcraft.com/)
-
-**WOSB trading spreadsheet**: profitable trade routes, which goods to buy where:
-
-- [Visual map of trade routes](https://docs.google.com/spreadsheets/d/167fXMSUOoureMP7blZZXRSqQPoXIJK3MenyGpGulP_E/edit?gid=1827480102#gid=1827480102)
-- [Where to buy what](https://docs.google.com/spreadsheets/d/167fXMSUOoureMP7blZZXRSqQPoXIJK3MenyGpGulP_E/edit?gid=0#gid=0)
