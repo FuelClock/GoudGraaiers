@@ -47,8 +47,19 @@
     });
   }
 
-  /* voyage plan modals: Read the plan opens a dialog with the full plan */
+  /* voyage plan modals: Read the plan opens a dialog with the full plan.
+     Generic [data-modal] triggers open any dialog by id (join-b: the
+     practice sim); the anchor default is suppressed so nothing scrolls. */
   function modals() {
+    d.querySelectorAll('[data-modal]').forEach(function (btn) {
+      btn.addEventListener('click', function (ev) {
+        ev.preventDefault();
+        var dlg = d.getElementById(btn.getAttribute('data-modal'));
+        if (!dlg) return;
+        if (dlg.showModal) dlg.showModal();
+        else dlg.setAttribute('open', '');
+      });
+    });
     d.querySelectorAll('.card-link[data-voyage]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var dlg = d.getElementById('voyage-' + btn.getAttribute('data-voyage'));
