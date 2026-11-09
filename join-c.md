@@ -82,7 +82,7 @@ scripts:
     <li><strong>Type NL. in the search box</strong> (it holds up to 12 characters) <strong>and click on Goud Graaiers</strong> in the list. The game filters by tag first. If nothing matches, a search button appears that asks the server; it needs at least 3 characters.</li>
     <li><strong>Submit an application.</strong> A box opens for a message to the guild&rsquo;s leaders, up to 250 characters. Send it and the button reads Application sent. One of our admirals will accept you as soon as possible.</li>
   </ol>
-  <p>Good news on ranks: Goud Graaiers is a flotilla, so you can apply at any captain rank. Only faction-pledged guilds ask for rank 10; a flotilla, at any rank. Before you sign, it helps to read <a href="{{ '/' | relative_url }}#doctrine">how the flotilla sails</a>: organized and chill squads, neutrality, and what the ranks mean. Most of all: be a shipmate. That is the whole test.</p>
+  <p>Good news on ranks: in game our guild keeps flotilla status, so you can apply at any captain rank; only faction-pledged guilds ask for rank 10. Before you sign, it helps to read <a href="{{ '/' | relative_url }}#doctrine">how the flotilla sails</a>: organized and chill squads, neutrality, and what the ranks mean. Most of all: be a shipmate. That is the whole test.</p>
 </details>
 
 <noscript>

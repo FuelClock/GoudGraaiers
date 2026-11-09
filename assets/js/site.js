@@ -148,8 +148,20 @@
     retarget();
   }
 
+  /* open a closed details when a #hash points at it (e.g. the FAQ link to
+     Gerrit's vision); also on first load if the URL arrives with a hash */
+  function openHashDetails() {
+    var hash = window.location.hash;
+    if (!hash || hash === '#') return;
+    var target;
+    try { target = d.getElementById(decodeURIComponent(hash.slice(1))); } catch (e) { return; }
+    if (target && target.tagName === 'DETAILS') target.open = true;
+  }
+  window.addEventListener('hashchange', openHashDetails);
+  openHashDetails();
+
   if (d.readyState === 'loading') {
-    d.addEventListener('DOMContentLoaded', function () { hero(); entrances(); parallax(); modals(); shine(); });
+    d.addEventListener('DOMContentLoaded', function () { hero(); entrances(); parallax(); modals(); shine(); openHashDetails(); });
   } else {
     hero(); entrances(); parallax(); modals(); shine();
   }

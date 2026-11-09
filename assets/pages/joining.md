@@ -1,6 +1,6 @@
 ## Joining in-game
 
-To join our flotilla in the game follow these steps:
+To join our guild in the game follow these steps:
 
 *   In the top right corner of your screen click the icon for **Guild Ranking**
 *   Stay on the **Guild Ranking** tab: the window opens on it
