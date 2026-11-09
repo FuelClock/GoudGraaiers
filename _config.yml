@@ -23,5 +23,5 @@ defaults:
     values:
       layout: "default"
 
-# Preview builds deploy under /redesign/ (see .github/workflows/deploy.yml)
+# Single-branch deploy: main is built and published at the site root
 baseurl: ""
