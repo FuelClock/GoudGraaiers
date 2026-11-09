@@ -1,0 +1,152 @@
+/* Join the fleet, variant B: the design-forward rebuild (A/B/C test).
+   Scoped under .article-body.join-b (body_class frontmatter) so nothing
+   leaks into other pages. Loads AFTER style.css via frame.html page.styles. */
+
+.article-body.join-b h2 {
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--gold);
+  background: var(--gold-text);
+  -webkit-background-clip: text;
+  background-clip: text; /* taste-skill-ignore: metallic gold is the brand request */
+  -webkit-text-fill-color: transparent;
+  margin-top: clamp(48px, 6vw, 80px);
+}
+.article-body.join-b h2:first-child { margin-top: clamp(8px, 1.5vw, 24px); }
+
+/* the choice: one gold field (the page's single gold moment) beside an
+   outline-toned alternative, asymmetric 3/2 split */
+.article-body.join-b .jb-paths {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 16px;
+  margin: clamp(24px, 3vw, 40px) 0 0;
+}
+.article-body.join-b .jb-path {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(20px, 2.4vw, 32px);
+  background: var(--surface-2);
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform .15s ease, filter .15s ease;
+}
+.article-body.join-b .jb-path:hover { transform: translateY(-3px); filter: brightness(1.1); }
+.article-body.join-b .jb-path:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.article-body.join-b .jb-path-primary {
+  background: var(--gold-ramp);
+  color: var(--gold-ink);
+}
+.article-body.join-b .jb-path-title {
+  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+  font-weight: 500;
+  line-height: 1.15;
+}
+.article-body.join-b .jb-path-text {
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 42ch;
+}
+.article-body.join-b .jb-path-primary .jb-path-text { color: var(--gold-ink); opacity: 0.82; }
+.article-body.join-b .jb-path-go {
+  margin-top: auto;
+  padding-top: 8px;
+  font-weight: 500;
+  font-size: 1.0625rem;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.article-body.join-b .jb-path-go::after { content: " \203A"; }
+.article-body.join-b .jb-path-primary .jb-path-go { color: var(--gold-ink); }
+
+@media (max-width: 800px) {
+  .article-body.join-b .jb-paths { grid-template-columns: 1fr; }
+}
+
+/* the steps: editorial list, big gold numerals, no boxes */
+.article-body.join-b .jb-steps {
+  list-style: none;
+  padding: 0;
+  margin: clamp(24px, 3vw, 36px) 0 0;
+  counter-reset: jb;
+  max-width: 62ch;
+}
+.article-body.join-b .jb-steps li {
+  counter-increment: jb;
+  position: relative;
+  padding: 12px 0 12px 60px;
+  line-height: 1.55;
+}
+.article-body.join-b .jb-steps li::before {
+  content: counter(jb);
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  font-size: 1.9rem;
+  line-height: 1;
+  font-weight: 500;
+  color: var(--gold);
+  background: none;
+  -webkit-text-fill-color: var(--gold);
+}
+.article-body.join-b .jb-steps strong { font-weight: 500; }
+@media (max-width: 480px) {
+  .article-body.join-b .jb-steps li { padding-left: 44px; }
+  .article-body.join-b .jb-steps li::before { left: 0; }
+}
+
+/* the before-you-sign note */
+.article-body.join-b .jb-note {
+  margin: 20px 0 0;
+  padding: clamp(16px, 2vw, 24px);
+  background: var(--surface-2);
+}
+.article-body.join-b .jb-note p { margin: 0; }
+
+/* the big painting moment: whole painting, caption reads as one block */
+.article-body.join-b .jb-plate { margin: clamp(40px, 5vw, 64px) 0 0; }
+.article-body.join-b .jb-plate img {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  margin: 0;
+}
+.article-body.join-b .jb-plate figcaption {
+  background: var(--surface-2);
+  margin-top: 0;
+  padding: 12px 16px;
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+
+/* actions */
+.article-body.join-b .jb-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 28px;
+  margin: 24px 0 0;
+}
+.article-body.join-b .jb-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 0 30px;
+  background: var(--gold-button);
+  color: var(--gold-ink);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform .15s ease, filter .15s ease;
+}
+.article-body.join-b .jb-button:hover { transform: translateY(-2px); filter: brightness(1.12); color: var(--gold-ink); }
+.article-body.join-b .jb-button:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
+.article-body.join-b .jb-quiet { color: var(--gold); }
+
+.article-body.join-b code {
+  background: var(--surface-2);
+  padding: 2px 8px;
+}
