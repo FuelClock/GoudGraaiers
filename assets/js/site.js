@@ -123,14 +123,14 @@
     }
     function kick() { if (!raf) raf = requestAnimationFrame(frame); }
     function retarget() {
-      /* drive the sheen by the band's own trip through the viewport, so it
-         sweeps across exactly while the visitor scrolls past it (the old
-         whole-page mapping only lit the band in a narrow mid-page window) */
+      /* at the top of the page the sheen rests off-view on the left; as the
+         band crosses the viewport it flashes past during the first half of
+         the trip and rests off-view on the right (2026-11-09, Thimon) */
       var r = band.getBoundingClientRect();
       var vh = window.innerHeight;
       var p = (vh - r.top) / (vh + r.height);
       if (p < 0) p = 0; else if (p > 1) p = 1;
-      target = -120 + p * 240;
+      target = p < 0.5 ? -120 + (p / 0.5) * 240 : 120;
       kick();
     }
     window.addEventListener('scroll', function () { if (visible) retarget(); }, { passive: true });
