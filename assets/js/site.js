@@ -123,8 +123,13 @@
     }
     function kick() { if (!raf) raf = requestAnimationFrame(frame); }
     function retarget() {
-      var range = d.documentElement.scrollHeight - window.innerHeight;
-      var p = range > 0 ? window.scrollY / range : 0;
+      /* drive the sheen by the band's own trip through the viewport, so it
+         sweeps across exactly while the visitor scrolls past it (the old
+         whole-page mapping only lit the band in a narrow mid-page window) */
+      var r = band.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var p = (vh - r.top) / (vh + r.height);
+      if (p < 0) p = 0; else if (p > 1) p = 1;
       target = -120 + p * 240;
       kick();
     }
