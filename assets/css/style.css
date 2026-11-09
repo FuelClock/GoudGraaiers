@@ -347,7 +347,7 @@ main { position: relative; z-index: 1; }
   background: var(--gold-ramp);
   color: var(--gold-ink);
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 24px;
   padding: clamp(16px, 2vw, 30px) clamp(20px, 3vw, 44px);
@@ -356,8 +356,8 @@ main { position: relative; z-index: 1; }
 }
 /* gold shine: a sheen glides across the band, driven by the page's scroll
    and the visitor's mouse (site.js sets --sheen-x); no autonomous animation.
-   Quieter band: smaller slogan and padding so it stops shouting
-   (both 2026-11-09, Thimon) */
+   It passes BEHIND the black text (z-index layering below), not over it.
+   Single-line slogan keeps the band thin (both 2026-11-09, Thimon) */
 .statement-band::after {
   content: "";
   position: absolute;
@@ -366,7 +366,10 @@ main { position: relative; z-index: 1; }
   transform: translateX(var(--sheen-x, -120%));
   pointer-events: none;
   will-change: transform;
+  z-index: 0;
 }
+.statement-band .slogan,
+.statement-band .statement-lang { position: relative; z-index: 1; }
 .statement-band .slogan {
   font-size: clamp(2.1rem, 4.2vw, 3.75rem);
   line-height: 0.95;
