@@ -4,7 +4,7 @@ title: The Map
 lead: "The current game world, drawn by the game's own chart. Click a port for what it docks, trades and demands."
 body_class: imap-page
 styles:
-  - /assets/css/map-page.css?v=12
+  - /assets/css/map-page.css?v=13
 scripts:
   - /assets/js/map-data.js?v=10
   - /assets/js/map-page.js?v=12
