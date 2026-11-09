@@ -9,7 +9,9 @@
   var results = document.getElementById('jc-results');
   var result = document.getElementById('jc-result');
   var applyBtn = document.getElementById('jc-apply');
+  var sendBtn = document.getElementById('jc-send');
   var backBtn = document.getElementById('jc-back');
+  var back2Btn = document.getElementById('jc-back2');
   var restartBtn = document.getElementById('jc-restart');
   var state = document.getElementById('jc-state');
   var copyBtn = document.getElementById('jc-copy');
@@ -20,11 +22,12 @@
   var stageEls = {
     search: document.getElementById('jc-stage-search'),
     guild: document.getElementById('jc-stage-guild'),
+    message: document.getElementById('jc-stage-message'),
     sent: document.getElementById('jc-stage-sent')
   };
   var dots = sim.querySelectorAll('.jc-dot');
-  var stageLabels = { search: 'Find the fleet', guild: 'The fleet', sent: 'Application sent' };
-  var order = ['search', 'guild', 'sent'];
+  var stageLabels = { search: 'Find the fleet', guild: 'The fleet', message: 'Your message', sent: 'Application sent' };
+  var order = ['search', 'guild', 'message', 'sent'];
 
   function show(name) {
     order.forEach(function (k) { stageEls[k].hidden = k !== name; });
@@ -61,8 +64,10 @@
     show('guild');
   });
 
-  applyBtn.addEventListener('click', function () { show('sent'); });
+  applyBtn.addEventListener('click', function () { show('message'); });
+  sendBtn.addEventListener('click', function () { show('sent'); });
   backBtn.addEventListener('click', function () { show('search'); });
+  back2Btn.addEventListener('click', function () { show('guild'); });
   restartBtn.addEventListener('click', function () {
     input.value = '';
     results.hidden = true;

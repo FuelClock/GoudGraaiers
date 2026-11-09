@@ -98,6 +98,25 @@
 }
 .article-body.join-c .jc-chip:hover { filter: brightness(1.15); }
 
+.article-body.join-c .jc-sim textarea.jc-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--surface-2);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 84px;
+}
+.article-body.join-c .jc-sim textarea.jc-textarea::placeholder { color: var(--muted); }
+.article-body.join-c .jc-sim textarea.jc-textarea:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+
 .article-body.join-c .jc-results { margin-top: 10px; }
 .article-body.join-c .jc-result {
   display: flex;
