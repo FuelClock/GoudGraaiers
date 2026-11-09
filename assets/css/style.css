@@ -342,6 +342,55 @@ main { position: relative; z-index: 1; }
 .statement {
   padding: 0 var(--margin);
   margin-top: var(--section-gap);
+  position: relative;
+}
+/* perimeter comet: a light runs around the OUTSIDE edges of the gold band
+   plus the grey panel below it, treated as one composite outline
+   (2026-11-09, Thimon). Pure CSS animation over SVG pathLength=100 units,
+   so it stays correct at any width: a static hairline gold outline, a
+   fading tail and a bright head traveling clockwise. */
+.statement-outline {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--margin);
+  width: calc(100% - 2 * var(--margin));
+  height: 100%;
+  pointer-events: none;
+  display: block;
+}
+.statement-outline rect {
+  x: 0.75px;
+  y: 0.75px;
+  width: calc(100% - 1.5px);
+  height: calc(100% - 1.5px);
+  fill: none;
+}
+.statement-outline .so-base {
+  stroke: rgba(212, 175, 55, 0.3);
+  stroke-width: 1.5;
+}
+.statement-outline .so-tail {
+  stroke: rgba(242, 220, 134, 0.4);
+  stroke-width: 2.5;
+  stroke-dasharray: 22 78;
+  animation: outline-run-tail 11s linear infinite;
+}
+.statement-outline .so-head {
+  stroke: #f2dc86;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 7 93;
+  animation: outline-run 11s linear infinite;
+}
+@keyframes outline-run {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+/* the tail runs the same loop shifted 15 units back, so it trails the head */
+@keyframes outline-run-tail {
+  from { stroke-dashoffset: 115; }
+  to { stroke-dashoffset: 15; }
 }
 .statement-band {
   background: var(--gold-ramp);
@@ -973,4 +1022,6 @@ main { position: relative; z-index: 1; }
   html { scroll-behavior: auto; }
   .deck-card { transition: none !important; }
   .statement-band::after { display: none; }
+  .statement-outline .so-tail,
+  .statement-outline .so-head { animation: none; opacity: 0; }
 }
