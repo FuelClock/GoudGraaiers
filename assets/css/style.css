@@ -844,7 +844,7 @@ details.trade-tool .planner-notes { margin-top: 24px; }
   padding: clamp(32px, 4vw, 64px) clamp(24px, 3vw, 48px);
   background: var(--surface);
 }
-.article-body { max-width: 1200px; }
+.article-body { max-width: 1200px; margin-left: auto; margin-right: auto; }
 
 .article-body h2 { font-size: clamp(2rem, 3.6vw, 3.25rem); margin-top: clamp(64px, 8vw, 104px); }
 .article-body h2:first-child { margin-top: clamp(24px, 4vw, 56px); }
