@@ -104,20 +104,21 @@
 .imap-zoom button:hover { filter: brightness(1.15); color: var(--gold-hi); }
 .imap-zoom button:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
 
-/* the chart itself: full bleed across the band and the same proportions as
-   the chart image, so at full zoom-out the map covers the box exactly and
-   the fallback background never peeks out (Thimon) */
+/* the chart itself: spans the band's width (the band is inset from the page
+   edges by --margin on each side) and keeps the chart's own aspect ratio, so
+   at full zoom-out the map covers the box exactly and the fallback background
+   never peeks out */
 .imap-viewport {
   position: relative;
   overflow: hidden;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
+  width: calc(100vw - 3 * var(--margin));
+  margin-left: calc(50% - 50vw + 1.5 * var(--margin));
   aspect-ratio: 2400 / 1989;
   background: #0d171f;
   cursor: grab;
   touch-action: none;
 }
-body { overflow-x: clip; } /* 100vw includes the scrollbar; clip the sliver */
+body { overflow-x: clip; } /* guard against stray horizontal overflow */
 .imap-viewport.is-dragging { cursor: grabbing; }
 .imap-stage { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; }
 /* must beat the generic `.article-body img` rule (margin + max-width 720):
@@ -199,6 +200,10 @@ body { overflow-x: clip; } /* 100vw includes the scrollbar; clip the sliver */
 .imap-marker.is-lvl-regions { background-image: url("/img/map-icons/poi-region.png"); }
 .imap-marker.is-lvl-collections { background-image: url("/img/map-icons/poi-collection.png"); }
 .imap-marker.is-lvl-forts { background-image: url("/img/map-icons/forts.png"); }
+/* the ring hugs the icon like the ports' does (ports: ring ~1.25x the dot;
+   with the default 2px offset the ring dwarfed the drawn icon) */
+.imap-marker.is-secondary:hover,
+.imap-marker.is-secondary:focus-visible { outline-offset: 0; }
 .imap-markers.hide-pharos .imap-marker.is-lvl-pharos,
 .imap-markers.hide-traders .imap-marker.is-lvl-traders,
 .imap-markers.hide-personal .imap-marker.is-lvl-personal,
