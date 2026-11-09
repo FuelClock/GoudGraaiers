@@ -9,6 +9,11 @@
   var viewport = d.getElementById('imap-viewport');
   var stage = d.getElementById('imap-stage');
   var markersEl = d.getElementById('imap-markers');
+  /* labels live in their own overlay so a name is never buried under
+     another marker's icon: icons (markers layer) < other labels < port names */
+  var labelsEl = d.createElement('div');
+  labelsEl.className = 'imap-labels';
+  labelsEl.setAttribute('aria-hidden', 'true');
   var popup = d.getElementById('imap-popup');
   var popupBody = d.getElementById('imap-popup-body');
   var popupClose = d.getElementById('imap-popup-close');
@@ -102,6 +107,16 @@
   });
 
   /* build markers */
+  markersEl.insertAdjacentElement('afterend', labelsEl);
+  function addLabel(text, extraCls, u) {
+    var lbl = d.createElement('span');
+    lbl.className = 'imap-marker-label' + (extraCls ? ' ' + extraCls : '');
+    lbl.textContent = text;
+    lbl.style.left = (u[0] * 100) + '%';
+    lbl.style.top = (u[1] * 100) + '%';
+    labelsEl.appendChild(lbl);
+    return lbl;
+  }
   var bySlug = {};
   DATA.ports.forEach(function (port) {
     var el = d.createElement('button');
@@ -110,7 +125,7 @@
     el.style.left = (port.u[0] * 100) + '%';
     el.style.top = (port.u[1] * 100) + '%';
     el.setAttribute('aria-label', port.name);
-    el.innerHTML = '<span class="imap-marker-label">' + port.name + '</span>';
+    el._label = addLabel(port.name, '', port.u);
     el.addEventListener('click', function (ev) {
       ev.stopPropagation();
       openPopup(port, el);
@@ -161,7 +176,7 @@
     el.style.left = (layer.u[0] * 100) + '%';
     el.style.top = (layer.u[1] * 100) + '%';
     el.setAttribute('aria-label', title);
-    el.innerHTML = '<span class="imap-marker-label">' + title + '</span>';
+    el._label = addLabel(title, 'is-secondary-label ' + cls, layer.u);
     el.addEventListener('click', function (ev) {
       ev.stopPropagation();
       popupBody.innerHTML = html;
@@ -215,22 +230,26 @@
     }).join('');
   }
 
-  /* layer toggles */
+  /* layer toggles: legend buttons, aria-pressed instead of a checkbox */
   var LAYERS = ['pharos', 'traders', 'personal', 'regions', 'collections', 'forts', 'routes'];
   var layerState = {};
   try { layerState = JSON.parse(localStorage.getItem('imap-layers') || '{}'); } catch (e) { layerState = {}; }
   LAYERS.forEach(function (name) {
-    var box = d.getElementById('imap-lvl-' + name);
-    if (!box) return;
-    box.checked = layerState[name] !== undefined ? !!layerState[name] : box.checked;
-    function sync(userAction) {
-      layerState[name] = box.checked;
-      markersEl.classList.toggle('hide-' + name, !box.checked);
-      if (name === 'routes') routesSvg.classList.toggle('hide-routes-off', !box.checked);
+    var btn = d.getElementById('imap-lvl-' + name);
+    if (!btn) return;
+    layerState[name] = layerState[name] !== undefined ? !!layerState[name] : btn.getAttribute('aria-pressed') === 'true';
+    function sync() {
+      btn.setAttribute('aria-pressed', layerState[name] ? 'true' : 'false');
+      markersEl.classList.toggle('hide-' + name, !layerState[name]);
+      labelsEl.classList.toggle('hide-' + name, !layerState[name]);
+      if (name === 'routes') routesSvg.classList.toggle('hide-routes-off', !layerState[name]);
       try { localStorage.setItem('imap-layers', JSON.stringify(layerState)); } catch (e) {}
     }
-    box.addEventListener('change', function () { sync(true); });
-    sync(false);
+    btn.addEventListener('click', function () {
+      layerState[name] = !layerState[name];
+      sync();
+    });
+    sync();
   });
 
   /* hi-res chart: loaded with the page (src in the markup) and shown on top
@@ -251,12 +270,12 @@
     var inv = 1 / k;
     markersEl.querySelectorAll('.imap-marker').forEach(function (m) {
       m.style.transform = 'translate(-50%,-50%) scale(' + inv + ')';
-      /* names stay on at every zoom (Thimon); lighthouses and trader
-         villages need no name - the icons say it all */
-      if (m.classList.contains('is-lvl-pharos') || m.classList.contains('is-lvl-traders')) {
-        m.classList.remove('is-labeled');
-      } else {
-        m.classList.add('is-labeled');
+      /* names live in the labels overlay, above every icon (Thimon);
+         lighthouses and trader villages need no name - the icons say it all */
+      var named = !(m.classList.contains('is-lvl-pharos') || m.classList.contains('is-lvl-traders'));
+      if (m._label) {
+        m._label.classList.toggle('is-on', named);
+        m._label.style.transform = 'translate(-50%,-100%) translateY(calc(-1 * (var(--imap-icon) / 2 + 4px))) scale(' + inv + ')';
       }
     });
     bones.forEach(function (b) {

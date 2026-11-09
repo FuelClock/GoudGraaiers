@@ -4,17 +4,29 @@ title: The Map
 lead: "The current game world, drawn by the game's own chart. Click a port for what it docks, trades and demands."
 body_class: imap-page
 styles:
-  - /assets/css/map-page.css?v=13
+  - /assets/css/map-page.css?v=15
 scripts:
   - /assets/js/map-data.js?v=10
-  - /assets/js/map-page.js?v=12
+  - /assets/js/map-page.js?v=13
 ---
 
 <h2>World chart</h2>
 
-<p>Drag to sail around, scroll or pinch to zoom, click a port for its details. The search box above the chart jumps straight to a port. The layer chips reveal fast travel points, traders and settlements, mines, points of interest, forts and NPC trade routes; everything on the chart is drawn at every zoom level, so zooming out always shows the whole world. Markers come from the game files of the current build, so the chart stays honest after every game update.</p>
+<p>Drag to sail around, ctrl + scroll or pinch to zoom, click a port for its details. The search box above the chart jumps straight to a port.</p>
 
 <div class="imap" id="imap">
+  <div class="imap-legend" id="imap-legend">
+    <button type="button" class="imap-legend-toggle" id="imap-lvl-pharos" aria-pressed="true"><img class="imap-chip-icon" src="/img/map-icons/pharos.png" alt=""> Fast travel</button>
+    <button type="button" class="imap-legend-toggle" id="imap-lvl-traders" aria-pressed="true"><img class="imap-chip-icon" src="/img/map-icons/trader.png" alt=""> Traders &amp; settlements</button>
+    <button type="button" class="imap-legend-toggle" id="imap-lvl-personal" aria-pressed="true"><img class="imap-chip-icon" src="/img/map-icons/mine.png" alt=""> Mines</button>
+    <button type="button" class="imap-legend-toggle" id="imap-lvl-regions" aria-pressed="true"><img class="imap-chip-icon" src="/img/map-icons/poi-region.png" alt=""> Points of interest: regions</button>
+    <button type="button" class="imap-legend-toggle" id="imap-lvl-collections" aria-pressed="true"><img class="imap-chip-icon" src="/img/map-icons/poi-collection.png" alt=""> Points of interest: collections</button>
+    <button type="button" class="imap-legend-toggle" id="imap-lvl-forts" aria-pressed="false"><img class="imap-chip-icon" src="/img/map-icons/forts.png" alt=""> Forts &amp; towers</button>
+    <button type="button" class="imap-legend-toggle" id="imap-lvl-routes" aria-pressed="false"><img class="imap-chip-icon" src="/img/map-icons/routes.png" alt=""> Trade routes</button>
+    <span class="imap-legend-item"><span class="imap-legend-dot imap-dot-port"></span> port</span>
+    <span class="imap-legend-item"><span class="imap-legend-dot imap-dot-gather"></span> fleet gathering point</span>
+    <span class="imap-legend-item"><img class="imap-legend-icon" src="/img/map-icons/bone.png" alt=""> PvP circle, drawn as the game's line of bones</span>
+  </div>
   <div class="imap-toolbar">
     <div class="imap-search">
       <input id="imap-search" type="text" placeholder="Find a port..." autocomplete="off" spellcheck="false" aria-label="Find a port">
@@ -25,15 +37,6 @@ scripts:
       <button type="button" id="imap-zoom-reset" aria-label="Reset view">Reset</button>
       <button type="button" id="imap-zoom-in" aria-label="Zoom in">+</button>
     </div>
-  </div>
-  <div class="imap-layers">
-    <label class="imap-chip"><input type="checkbox" id="imap-lvl-pharos" checked> <img class="imap-chip-icon" src="/img/map-icons/pharos.png" alt=""> Fast travel</label>
-    <label class="imap-chip"><input type="checkbox" id="imap-lvl-traders" checked> <img class="imap-chip-icon" src="/img/map-icons/trader.png" alt=""> Traders &amp; settlements</label>
-    <label class="imap-chip"><input type="checkbox" id="imap-lvl-personal" checked> <img class="imap-chip-icon" src="/img/map-icons/mine.png" alt=""> Mines</label>
-    <label class="imap-chip"><input type="checkbox" id="imap-lvl-regions" checked> <img class="imap-chip-icon" src="/img/map-icons/poi-region.png" alt=""> Points of interest: regions</label>
-    <label class="imap-chip"><input type="checkbox" id="imap-lvl-collections" checked> <img class="imap-chip-icon" src="/img/map-icons/poi-collection.png" alt=""> Points of interest: collections</label>
-    <label class="imap-chip"><input type="checkbox" id="imap-lvl-forts"> <img class="imap-chip-icon" src="/img/map-icons/forts.png" alt=""> Forts &amp; towers</label>
-    <label class="imap-chip"><input type="checkbox" id="imap-lvl-routes"> <img class="imap-chip-icon" src="/img/map-icons/routes.png" alt=""> Trade routes</label>
   </div>
   <div class="imap-viewport" id="imap-viewport">
     <div class="imap-stage" id="imap-stage">
@@ -48,14 +51,9 @@ scripts:
       <div class="imap-popup-body" id="imap-popup-body"></div>
     </div>
   </div>
-  <div class="imap-legend">
-    <span class="imap-legend-item"><span class="imap-legend-dot imap-dot-port"></span> port</span>
-    <span class="imap-legend-item"><span class="imap-legend-dot imap-dot-gather"></span> fleet gathering point</span>
-    <span class="imap-legend-item"><img class="imap-legend-icon" src="/img/map-icons/bone.png" alt=""> PvP circle, drawn as the game's line of bones</span>
-  </div>
 </div>
 
-<p class="imap-note">The chart itself is the game's hand-drawn parchment, so a marker can sit a hair off the exact shoreline: that imprecision is the game's, not the data's. Ports without a market list no goods. Full route planning lives in the <a href="{{ '/guides.html' | relative_url }}">trade tool</a>.</p>
+<p class="imap-note">Full route planning lives in the <a href="{{ '/guides.html' | relative_url }}">trade tool</a>.</p>
 
 <noscript>
   <p class="imap-nojs">The interactive chart needs JavaScript. The <a href="/img/map-full.jpg">full-size chart</a> works without it.</p>
