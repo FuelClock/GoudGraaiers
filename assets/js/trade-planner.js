@@ -18,7 +18,16 @@
     popup.hidden = true;
     frame.appendChild(popup);
     var hideTimer = null;
-    function hidePopup() { popup.hidden = true; }
+    var pinned = false; /* opened by click: stays until a click elsewhere */
+    function hidePopup() { pinned = false; popup.hidden = true; }
+    /* hide 180ms from now, unless the cursor comes back over the dot or
+       the popup (each of those re-arms/disarms, so the popup can never get
+       stuck open just because the cursor crossed it once on the way out) */
+    function armHide() {
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(function () { if (!pinned) hidePopup(); }, 180);
+    }
+    function disarmHide() { clearTimeout(hideTimer); }
     function showPopup(a, x, y) {
       var hasSell = !!Object.keys(a.sell).length;
       var buys = a.buys || [];
@@ -50,6 +59,8 @@
     document.addEventListener('click', function (ev) {
       if (!popup.contains(ev.target) && !(ev.target.classList && ev.target.classList.contains('plan-dot'))) hidePopup();
     });
+    popup.addEventListener('mouseenter', disarmHide);
+    popup.addEventListener('mouseleave', function () { if (!pinned) armHide(); });
 
     function render() {
       var rate = rateSel.value;
@@ -89,13 +100,16 @@
         c.setAttribute('stroke', '#14212c'); c.setAttribute('stroke-width', 5);
         c.setAttribute('class', 'plan-dot');
         c.addEventListener('mouseenter', function () {
-          clearTimeout(hideTimer);
+          disarmHide();
           showPopup(a, x, y);
         });
-        c.addEventListener('mouseleave', function () {
-          hideTimer = setTimeout(function () { if (!popup.matches(':hover')) hidePopup(); }, 180);
+        c.addEventListener('mouseleave', function () { if (!pinned) armHide(); });
+        c.addEventListener('click', function (ev) {
+          ev.stopPropagation();
+          pinned = true;
+          disarmHide();
+          showPopup(a, x, y);
         });
-        c.addEventListener('click', function (ev) { ev.stopPropagation(); showPopup(a, x, y); });
         stopsG.appendChild(c);
         var t = document.createElementNS(NS, 'text');
         t.setAttribute('x', x); t.setAttribute('y', y + 13);
