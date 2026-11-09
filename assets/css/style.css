@@ -772,6 +772,33 @@ main { position: relative; z-index: 1; }
   border: 1px solid var(--surface-2);
   padding: clamp(24px, 3vw, 40px);
 }
+/* intro pairing: the lead sits beside the painting column on the right
+   (2026-11-09, Thimon: the centered band plate wasted space; the right
+   side, because every other painting on the site sits left of its text) */
+.voyages-intro {
+  display: grid;
+  grid-template-columns: 1fr minmax(280px, 30%);
+  gap: clamp(24px, 3vw, 48px);
+  align-items: center;
+  margin: clamp(8px, 1vw, 16px) 0 clamp(36px, 5vw, 64px);
+}
+.voyages-intro-lead {
+  font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+  line-height: 1.45;
+  margin: 0;
+  max-width: 56ch;
+}
+.voyages-intro-plate { margin: 0; }
+.voyages-intro-plate img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0;
+}
+@media (max-width: 900px) {
+  .voyages-intro { grid-template-columns: 1fr; gap: 20px; }
+  .voyages-intro-plate { max-width: 440px; }
+}
 .article-body a { color: var(--gold); }
 .trade-chart, .article-body svg { width: 100%; height: auto; margin: 24px 0; }
 .map-figure { margin: 24px 0; }
