@@ -396,6 +396,24 @@ main { position: relative; z-index: 1; }
   max-width: 62ch;
   color: var(--ink);
 }
+/* quiet CTA under the statement text: says "events", not "voyages", so
+   non-members know what they get; the voyages page then teaches the term.
+   Outline style on purpose: it must not compete with the hero's solid
+   gold "Join the flotilla" button (2026-11-09, Thimon) */
+.statement-cta {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 10px 24px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  background: none;
+  text-decoration: none;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  width: max-content;
+  transition: background .15s ease, color .15s ease;
+}
+.statement-cta:hover { background: var(--gold); color: var(--gold-ink); }
 
 /* ---------- about: facts beside the two squad claims ---------- */
 
