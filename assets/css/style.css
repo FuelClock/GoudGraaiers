@@ -350,33 +350,31 @@ main { position: relative; z-index: 1; }
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
-  padding: clamp(20px, 2.5vw, 40px) clamp(20px, 3vw, 48px);
+  padding: clamp(16px, 2vw, 30px) clamp(20px, 3vw, 44px);
   position: relative;
   overflow: hidden;
 }
-/* gold shine: a sheen sweeps across the band so the flat gold reads as
-   polished metal instead of a flashbang block (Thimon, 2026-11-08) */
+/* gold shine: a sheen glides across the band, driven by the page's scroll
+   and the visitor's mouse (site.js sets --sheen-x); no autonomous animation.
+   Quieter band: smaller slogan and padding so it stops shouting
+   (both 2026-11-09, Thimon) */
 .statement-band::after {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(105deg, transparent 40%, rgba(255, 252, 235, 0.55) 50%, transparent 60%);
-  transform: translateX(-120%);
-  animation: gold-shine 8s ease-in-out infinite;
+  transform: translateX(var(--sheen-x, -120%));
   pointer-events: none;
-}
-@keyframes gold-shine {
-  0%, 50% { transform: translateX(-120%); }
-  90%, 100% { transform: translateX(120%); }
+  will-change: transform;
 }
 .statement-band .slogan {
-  font-size: clamp(2.5rem, 5.2vw, 4.75rem);
+  font-size: clamp(2.1rem, 4.2vw, 3.75rem);
   line-height: 0.95;
   text-transform: uppercase;
   margin: 0;
 }
 .statement-lang {
-  font-size: clamp(1.375rem, 2.2vw, 2rem);
+  font-size: clamp(1.125rem, 1.8vw, 1.625rem);
   margin: 0;
 }
 .statement-body {
@@ -704,25 +702,76 @@ main { position: relative; z-index: 1; }
 .article-body ul, .article-body ol { padding-left: 1.4em; line-height: 1.55; }
 .article-body img { max-width: min(100%, 720px); height: auto; margin: 24px 0; }
 
-/* upcoming voyage cards: deck-card styling inside the article panel
-   (sync script emits .upcoming-card markup, 2026-11-08 Thimon) */
+/* voyages page: the bot-written upcoming cards borrow the home deck's
+   language, and the page heading carries the same metallic caps treatment
+   as the home sections (sync script emits .upcoming-card markup,
+   2026-11-08 Thimon; restyled 2026-11-09 to fit the homepage) */
+.event-log > h2 {
+  font-size: var(--step-head);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  font-style: normal;
+  font-weight: 500;
+  color: var(--gold);
+  background: var(--gold-text);
+  -webkit-background-clip: text;
+  background-clip: text; /* taste-skill-ignore: metallic gold is the brand request */
+  -webkit-text-fill-color: transparent;
+  margin: clamp(24px, 4vw, 56px) 0 clamp(28px, 4vw, 48px);
+}
 .article-body .upcoming-card {
-  background: var(--ground-2);
-  padding: clamp(20px, 2.5vw, 32px);
+  background: var(--surface);
+  border: 1px solid var(--surface-2);
+  padding: clamp(24px, 3vw, 40px) clamp(24px, 3.5vw, 48px);
   margin: 0 0 28px;
 }
+/* every second card drops to the deck's quieter tone, like the home deck */
+.article-body article.upcoming-card:nth-of-type(even) { background: var(--surface-2); }
+.article-body .upcoming-card::before {
+  content: "Upcoming voyage";
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 14px;
+}
 .article-body .upcoming-card-title {
-  font-size: 1.875rem;
+  font-size: clamp(1.75rem, 2.6vw, 2.25rem);
   line-height: 1.1;
   font-weight: 500;
   margin: 0;
 }
-.article-body .upcoming-card-date { margin: 14px 0 0; font-size: 1rem; color: var(--muted); }
-.article-body .upcoming-card-host { margin: 6px 0 0; font-size: 1rem; color: var(--muted); }
-.article-body .upcoming-card-plan { margin-top: 20px; }
+.article-body .upcoming-card-date { margin: 12px 0 0; font-size: 1rem; color: var(--muted); }
+.article-body .upcoming-card-host { margin: 4px 0 0; font-size: 1rem; color: var(--muted); }
+.article-body .upcoming-card-plan {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--surface-2);
+}
 .article-body .upcoming-card-plan p { margin: 0 0 14px; line-height: 1.55; }
 .article-body .upcoming-card-plan p:last-child { margin-bottom: 0; }
-.article-body .upcoming-card-plan p.upcoming-card-section { color: var(--gold); }
+.article-body .upcoming-card-plan p.upcoming-card-section {
+  color: var(--gold);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 20px 0 8px;
+}
+.article-body .upcoming-card-plan p.upcoming-card-section:first-child { margin-top: 0; }
+/* quiet-hours state: the "no events" line reads as one calm field,
+   not a stray italic sentence floating in the panel */
+.event-log > p em {
+  display: block;
+  font-style: normal;
+  font-size: 1.125rem;
+  color: var(--muted);
+  background: var(--ground-2);
+  border: 1px solid var(--surface-2);
+  padding: clamp(24px, 3vw, 40px);
+}
 .article-body a { color: var(--gold); }
 .trade-chart, .article-body svg { width: 100%; height: auto; margin: 24px 0; }
 .map-figure { margin: 24px 0; }
@@ -844,8 +893,8 @@ main { position: relative; z-index: 1; }
   .title-plate { display: none; }
 
   .statement-band { flex-direction: column; align-items: flex-start; gap: 12px; }
-  .statement-band .slogan { font-size: 9.5vw; }
-  .statement-lang { font-size: 1.5rem; }
+  .statement-band .slogan { font-size: 8vw; }
+  .statement-lang { font-size: 1.25rem; }
   .statement-body { grid-template-columns: 1fr; gap: 32px; }
   .statement-text { font-size: 1.125rem; }
 
@@ -875,5 +924,5 @@ main { position: relative; z-index: 1; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .deck-card { transition: none !important; }
-  .statement-band::after { animation: none; opacity: 0.25; }
+  .statement-band::after { display: none; }
 }
