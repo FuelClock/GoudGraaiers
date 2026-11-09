@@ -193,16 +193,10 @@
   });
   (DATA.layers ? DATA.layers.production || [] : []).forEach(function (p) {
     var res = RES_NAME[p.res] || p.res;
-    secondaryMarker(p, 'is-lvl-personal', res + ' isle',
-      '<h3 class="imap-popup-name">' + res + ' isle</h3>' +
+    secondaryMarker(p, 'is-lvl-personal', res,
+      '<h3 class="imap-popup-name">' + res + '</h3>' +
       '<div class="imap-popup-badges">' + badge('Personal island', 'is-info') + '</div>' +
       '<p class="imap-popup-dock">A mine or factory isle: claim it with a personal island to produce ' + res.toLowerCase() + ' for the guild.</p>');
-  });
-  (DATA.layers ? DATA.layers.resource || [] : []).forEach(function (p) {
-    secondaryMarker(p, 'is-lvl-resource', 'Resource site',
-      '<h3 class="imap-popup-name">Resource site</h3>' +
-      '<div class="imap-popup-badges">' + badge('Resource sites', 'is-info') + '</div>' +
-      '<p class="imap-popup-dock">In game the shovel marks loot spots the server spawns on the fly; on this static chart it marks the mine and factory isles.</p>');
   });
   (DATA.layers ? DATA.layers.forts || [] : []).forEach(function (p) {
     secondaryMarker(p, 'is-lvl-forts', p.kind,
@@ -219,7 +213,7 @@
   }
 
   /* layer toggles */
-  var LAYERS = ['pharos', 'traders', 'personal', 'resource', 'regions', 'collections', 'forts', 'routes'];
+  var LAYERS = ['pharos', 'traders', 'personal', 'regions', 'collections', 'forts', 'routes'];
   var layerState = {};
   try { layerState = JSON.parse(localStorage.getItem('imap-layers') || '{}'); } catch (e) { layerState = {}; }
   LAYERS.forEach(function (name) {
@@ -230,9 +224,6 @@
       layerState[name] = box.checked;
       markersEl.classList.toggle('hide-' + name, !box.checked);
       if (name === 'routes') routesSvg.classList.toggle('hide-routes-off', !box.checked);
-      /* layer markers are zoom-gated (k >= 1.5): switching a layer on while
-         zoomed out must give immediate feedback, so zoom to the gate */
-      if (userAction && box.checked && k < 1.5) zoomAt(vw / 2, vh / 2, 1.5 / k);
       try { localStorage.setItem('imap-layers', JSON.stringify(layerState)); } catch (e) {}
     }
     box.addEventListener('change', function () { sync(true); });
@@ -256,11 +247,10 @@
     stage.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + k + ')';
     var inv = 1 / k;
     markersEl.querySelectorAll('.imap-marker').forEach(function (m) {
-      /* resource-site shovels sit a touch off their mine icon when both
-         layers are on, so the pair reads as two marks, not one blob */
-      var shift = m.classList.contains('is-lvl-resource') ? ' translate(30%, 30%)' : '';
-      m.style.transform = 'translate(-50%,-50%)' + shift + ' scale(' + inv + ')';
-      m.classList.toggle('is-labeled', k >= 2.2);
+      m.style.transform = 'translate(-50%,-50%) scale(' + inv + ')';
+      /* names stay on at every zoom (Thimon); a lighthouse needs no name */
+      if (m.classList.contains('is-lvl-pharos')) m.classList.remove('is-labeled');
+      else m.classList.add('is-labeled');
     });
     bones.forEach(function (b) {
       b.style.transform = 'translate(-50%,-50%) rotate(' + b.getAttribute('data-rot') + 'rad) scale(' + inv + ')';
@@ -274,7 +264,6 @@
     }
     if (routesSvg) routesSvg.style.strokeWidth = (3 / k) + 'px';
     syncHi();
-    markersEl.classList.toggle('is-close', k >= 1.5);
     if (!popup.hidden && activeMarker) positionPopup(activeMarker);
   }
 
@@ -291,8 +280,17 @@
   function measure() {
     vw = viewport.clientWidth;
     vh = viewport.clientHeight;
-    IMG_W_FIT = vw;
-    IMG_H_FIT = IMG_W_FIT * IMG_H / IMG_W;
+    /* contain fit: at k = 1 the WHOLE chart is visible inside the box,
+       centred on both axes, as large as the box allows (Thimon: zooming out
+       must cleanly show the entire map, equal margins left/right) */
+    var fit = Math.min(vw / IMG_W, vh / IMG_H);
+    IMG_W_FIT = IMG_W * fit;
+    IMG_H_FIT = IMG_H * fit;
+    /* JS owns the stage geometry: the imgs just fill it. Leaving the size to
+       the CSS img (width:100%) resolved against the viewport and skewed every
+       marker as soon as the fit stopped being width-based */
+    stage.style.width = IMG_W_FIT + 'px';
+    stage.style.height = IMG_H_FIT + 'px';
     clampPan();
     apply();
   }
@@ -376,6 +374,9 @@
   });
 
   window.addEventListener('resize', measure);
+  /* the box also changes size without a window resize (orientation,
+     container-driven), so observe it directly */
+  if (window.ResizeObserver) new ResizeObserver(measure).observe(viewport);
   measure();
   apply();
 

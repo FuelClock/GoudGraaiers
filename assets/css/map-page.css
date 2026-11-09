@@ -124,7 +124,7 @@
 .article-body .imap-img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   margin: 0;
   max-width: none;
   user-select: none;
@@ -173,8 +173,10 @@
 }
 .imap-marker.is-pirate { background: #b0483c; }
 .imap-marker.is-active { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
-/* secondary layers: render as the game's own map-legend icons, hidden until
-   zoomed in, and fully hidden when their layer toggle is off */
+/* secondary layers: render as the game's own map-legend icons at every zoom
+   (Thimon: zooming out must never hide markers or their names). The sprite
+   files are pre-centred on their content, so background center = icon centre
+   = the hover box centre. */
 .imap-marker.is-secondary {
   width: 18px;
   height: 18px;
@@ -185,20 +187,16 @@
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  display: none;
 }
 .imap-marker.is-lvl-pharos { background-image: url("/img/map-icons/pharos.png"); }
-.imap-marker.is-lvl-traders { background-image: url("/img/map-icons/trader.png"); }
-.imap-marker.is-lvl-personal { background-image: url("/img/map-icons/mine.png"); }
-.imap-marker.is-lvl-resource { background-image: url("/img/map-icons/resource.png"); }
+.imap-marker.is-lvl-traders { width: 36px; height: 36px; background-image: url("/img/map-icons/trader.png"); }
+.imap-marker.is-lvl-personal { width: 36px; height: 36px; background-image: url("/img/map-icons/mine.png"); }
 .imap-marker.is-lvl-regions { background-image: url("/img/map-icons/poi-region.png"); }
 .imap-marker.is-lvl-collections { background-image: url("/img/map-icons/poi-collection.png"); }
 .imap-marker.is-lvl-forts { background-image: url("/img/map-icons/forts.png"); }
-.imap-markers.is-close .imap-marker.is-secondary { display: block; }
 .imap-markers.hide-pharos .imap-marker.is-lvl-pharos,
 .imap-markers.hide-traders .imap-marker.is-lvl-traders,
 .imap-markers.hide-personal .imap-marker.is-lvl-personal,
-.imap-markers.hide-resource .imap-marker.is-lvl-resource,
 .imap-markers.hide-regions .imap-marker.is-lvl-regions,
 .imap-markers.hide-collections .imap-marker.is-lvl-collections,
 .imap-markers.hide-forts .imap-marker.is-lvl-forts { display: none; }
