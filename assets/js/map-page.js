@@ -134,11 +134,14 @@
     for (var i = 0; i < N; i++) {
       var ang = (i / N) * Math.PI * 2;
       var jitter = ((i * 137 % 100) / 100 - 0.5); /* deterministic +-0.5 rad */
+      /* our bone sprite lies horizontal, so radius-angle + PI pointed it
+         across the circle (spokes); + PI/2 lays its long side ALONG the
+         circle, matching the in-game look (Thimon) */
       var b = d.createElement('span');
       b.className = 'imap-bone';
       b.style.left = ((pc.u[0] + Math.cos(ang) * pvpR) * 100) + '%';
       b.style.top = ((pc.u[1] + Math.sin(ang) * rOfH) * 100) + '%';
-      b.setAttribute('data-rot', (ang + Math.PI + jitter).toFixed(3));
+      b.setAttribute('data-rot', (ang + Math.PI * 1.5 + jitter).toFixed(3));
       frag.appendChild(b);
       bones.push(b);
     }
@@ -248,9 +251,13 @@
     var inv = 1 / k;
     markersEl.querySelectorAll('.imap-marker').forEach(function (m) {
       m.style.transform = 'translate(-50%,-50%) scale(' + inv + ')';
-      /* names stay on at every zoom (Thimon); a lighthouse needs no name */
-      if (m.classList.contains('is-lvl-pharos')) m.classList.remove('is-labeled');
-      else m.classList.add('is-labeled');
+      /* names stay on at every zoom (Thimon); lighthouses and trader
+         villages need no name - the icons say it all */
+      if (m.classList.contains('is-lvl-pharos') || m.classList.contains('is-lvl-traders')) {
+        m.classList.remove('is-labeled');
+      } else {
+        m.classList.add('is-labeled');
+      }
     });
     bones.forEach(function (b) {
       b.style.transform = 'translate(-50%,-50%) rotate(' + b.getAttribute('data-rot') + 'rad) scale(' + inv + ')';

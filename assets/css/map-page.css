@@ -104,16 +104,20 @@
 .imap-zoom button:hover { filter: brightness(1.15); color: var(--gold-hi); }
 .imap-zoom button:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
 
-/* the chart itself */
+/* the chart itself: full bleed across the band and the same proportions as
+   the chart image, so at full zoom-out the map covers the box exactly and
+   the fallback background never peeks out (Thimon) */
 .imap-viewport {
   position: relative;
   overflow: hidden;
-  height: clamp(380px, 62vh, 760px);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  aspect-ratio: 2400 / 1989;
   background: #0d171f;
-  border: 1px solid var(--surface-2);
   cursor: grab;
   touch-action: none;
 }
+body { overflow-x: clip; } /* 100vw includes the scrollbar; clip the sliver */
 .imap-viewport.is-dragging { cursor: grabbing; }
 .imap-stage { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; }
 /* must beat the generic `.article-body img` rule (margin + max-width 720):
@@ -176,12 +180,13 @@
 /* secondary layers: render as the game's own map-legend icons at every zoom
    (Thimon: zooming out must never hide markers or their names). The sprite
    files are pre-centred on their content, so background center = icon centre
-   = the hover box centre. */
+   = the hover box centre, and the round hover outline circles the icon like
+   the port markers do. */
 .imap-marker.is-secondary {
   width: 18px;
   height: 18px;
   border: none;
-  border-radius: 0;
+  border-radius: 50%;
   background-color: transparent;
   box-shadow: none;
   background-size: contain;
