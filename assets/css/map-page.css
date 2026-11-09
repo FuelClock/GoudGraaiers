@@ -92,15 +92,16 @@
 .imap-zoom button:hover { filter: brightness(1.15); color: var(--gold-hi); }
 .imap-zoom button:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
 
-/* the chart itself: spans the band's width (the band is inset from the page
-   edges by --margin on each side) and keeps the chart's own aspect ratio, so
-   at full zoom-out the map covers the box exactly and the fallback background
-   never peeks out */
+/* the chart on the page: Thimon wants the whole chart visible without
+   scrolling, so the box is capped at a share of the viewport height and
+   centred on the band. At k = 1 the contain fit covers the box exactly, so
+   the fallback background never peeks out. Fullscreen takes over from here. */
 .imap-viewport {
+  --imap-w: min(calc(100vw - 3 * var(--margin)), calc(66vh * 2400 / 1989));
   position: relative;
   overflow: hidden;
-  width: calc(100vw - 3 * var(--margin));
-  margin-left: calc(50% - 50vw + 1.5 * var(--margin));
+  width: var(--imap-w);
+  margin-left: calc(50% - var(--imap-w) / 2);
   aspect-ratio: 2400 / 1989;
   background: #0d171f;
   cursor: grab;
@@ -385,8 +386,76 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
 .imap-nojs { color: var(--ink); }
 .imap-nojs a { color: var(--gold-hi); }
 
+/* fullscreen mode: the expand button lives on the chart's top-right corner;
+   in fullscreen the same corner carries the X, and a floating copy of the
+   legend overlays the map so the layers stay toggleable (Thimon) */
+.imap-fs-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 25; /* above the labels (15) and the popup (20) */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+  background: rgba(13, 23, 31, 0.85);
+  border: 1px solid var(--surface-2);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: filter .15s ease, color .15s ease;
+}
+.imap-fs-btn:hover { filter: brightness(1.2); color: var(--gold-hi); }
+.imap-fs-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.imap-fs-btn[hidden] { display: none; }
+.imap-viewport.imap-is-fs { cursor: grab; }
+.imap-viewport:fullscreen,
+.imap-viewport:-webkit-full-screen {
+  width: 100%;
+  height: 100%;
+  margin-left: 0;
+}
+/* browsers without the Fullscreen API (iPhone Safari): fixed overlay.
+   MAIN is a stacking context (relative, z 1) below the sticky header
+   (z 20), so the page lifts its main context above the header while the
+   overlay is open; native fullscreen skips all of this (top layer) */
+body.imap-fs-page main { z-index: 300; }
+.imap-viewport.imap-fs-fallback {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  width: 100%;
+  height: 100%;
+  margin-left: 0;
+}
+.imap-fs-legend {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 18; /* floats over the chart, below the corner buttons */
+  max-width: min(400px, calc(100% - 76px));
+  max-height: calc(100% - 24px);
+  overflow-y: auto;
+  pointer-events: none; /* only the panel itself catches clicks */
+}
+.imap-fs-legend .imap-legend {
+  pointer-events: auto;
+  margin: 0;
+  padding: 12px 14px;
+  gap: 8px 20px;
+  background: rgba(13, 23, 31, 0.88);
+  border: 1px solid var(--surface-2);
+  box-shadow: 0 16px 48px rgba(4, 10, 14, 0.65);
+  font-size: 0.8125rem;
+}
+.imap-fs-legend[hidden] { display: none; }
+
 @media (prefers-reduced-motion: reduce) {
-  .imap-marker, .imap-zoom button, .imap-results button { transition: none; }
+  .imap-marker, .imap-zoom button, .imap-results button, .imap-fs-btn { transition: none; }
 }
 /* phones: compact chips so two fit a row instead of a tall chip column */
 @media (max-width: 600px) {
