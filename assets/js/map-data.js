@@ -6,10 +6,10 @@ window.MAP_DATA = {
  "generated": "from game client files (see skill references/wosb-game-data.md); all world-derived positions use the residual-calibrated mapping (global affine + IDW correction against the 42 verified trade-tool dots)",
  "pvpCircle": {
   "u": [
-   0.54375,
-   0.39065
+   0.46875,
+   0.29613
   ],
-  "rOfW": 0.17435
+  "rOfW": 0.106
  },
  "layers": {
   "pharos": [
