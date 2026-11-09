@@ -10,57 +10,100 @@
     var summary = document.getElementById('trade-summary');
     var skippedEl = document.getElementById('trade-skipped');
 
-    /* hover popup: hovering (or tapping) a port dot opens a small window
-       with that port's full ranked goods list */
-    var frame = document.getElementById('plan-stops').closest('.map-route-frame');
-    var popup = document.createElement('div');
-    popup.className = 'plan-popup';
-    popup.hidden = true;
-    frame.appendChild(popup);
+    /* hover popups: hovering (or tapping) a port dot opens a small window
+       with that port's full ranked goods list. Shared by BOTH maps on this
+       page: the planner chart and the static Trade Fever chart. */
     var hideTimer = null;
     var pinned = false; /* opened by click: stays until a click elsewhere */
-    function hidePopup() { pinned = false; popup.hidden = true; }
+    function hidePopups() {
+      pinned = false;
+      document.querySelectorAll('.plan-popup').forEach(function (p) { p.hidden = true; });
+    }
     /* hide 180ms from now, unless the cursor comes back over the dot or
        the popup (each of those re-arms/disarms, so the popup can never get
        stuck open just because the cursor crossed it once on the way out) */
     function armHide() {
       clearTimeout(hideTimer);
-      hideTimer = setTimeout(function () { if (!pinned) hidePopup(); }, 180);
+      hideTimer = setTimeout(function () { if (!pinned) hidePopups(); }, 180);
     }
     function disarmHide() { clearTimeout(hideTimer); }
-    function showPopup(a, x, y) {
-      var hasSell = !!Object.keys(a.sell).length;
-      var buys = a.buys || [];
-      var html = '<p class="pp-title">' + (hasSell ? '<span class="pp-selldot"></span>' : '') + a.name + '</p>';
-      if (buys.length) {
-        html += '<ol class="pp-goods">' + buys.map(function (t, k) {
-          return '<li><span class="pp-rank">' + (k + 1) + '</span>' + t.g + '</li>';
-        }).join('') + '</ol>';
-      } else {
-        html += '<p class="pp-note">' + (a.name === 'St. Jean' ? 'gather here, start the loop' : 'no profitable trade here') + '</p>';
-      }
-      popup.innerHTML = html;
-      popup.hidden = false;
-      /* keep the little window inside the map frame: above the dot when it
-         fits, otherwise below, otherwise clamped to the frame edge */
-      var fw = frame.clientWidth, fh = frame.clientHeight;
-      var px = x / 2400 * fw, py = y / 1987 * fh;
-      popup.style.maxHeight = Math.max(160, fh - 40) + 'px';
-      var ph = popup.offsetHeight;
-      var tx = x > 2050 ? '-95%' : (x < 350 ? '-5%' : '-50%');
-      var tyPx;
-      if (py - ph - 26 >= 0) tyPx = py - ph - 26;
-      else if (py + ph + 26 <= fh) tyPx = py + 26;
-      else tyPx = Math.max(10, Math.min(fh - ph - 10, py - ph / 2));
-      popup.style.left = px + 'px';
-      popup.style.top = '0px';
-      popup.style.transform = 'translate(' + tx + ', ' + tyPx + 'px)';
-    }
     document.addEventListener('click', function (ev) {
-      if (!popup.contains(ev.target) && !(ev.target.classList && ev.target.classList.contains('plan-dot'))) hidePopup();
+      var onPopup = ev.target.closest && ev.target.closest('.plan-popup');
+      if (!onPopup && !(ev.target.classList && ev.target.classList.contains('plan-dot'))) hidePopups();
     });
-    popup.addEventListener('mouseenter', disarmHide);
-    popup.addEventListener('mouseleave', function () { if (!pinned) armHide(); });
+
+    /* wire one map frame: items are {a, x, y, dot}; the popup is appended
+       to the frame and positioned in the frame's pixel space (both maps use
+       the same 2400x1987 viewBox, so the same conversion works for both) */
+    function bindMap(frame, items) {
+      var popup = frame.querySelector('.plan-popup');
+      var created = false;
+      if (!popup) {
+        popup = document.createElement('div');
+        popup.className = 'plan-popup';
+        popup.hidden = true;
+        frame.appendChild(popup);
+        created = true;
+      }
+      function show(a, x, y) {
+        var hasSell = !!(a.sell && Object.keys(a.sell).length);
+        var buys = a.buys || [];
+        var html = '<p class="pp-title">' + (hasSell ? '<span class="pp-selldot"></span>' : '') + a.name + '</p>';
+        if (buys.length) {
+          html += '<ol class="pp-goods">' + buys.map(function (t, k) {
+            return '<li><span class="pp-rank">' + (k + 1) + '</span>' + t.g + '</li>';
+          }).join('') + '</ol>';
+        } else {
+          html += '<p class="pp-note">' + (a.name === 'St. Jean' ? 'gather here, start the loop' : 'no profitable trade here') + '</p>';
+        }
+        popup.innerHTML = html;
+        popup.hidden = false;
+        /* keep the little window inside the map frame: above the dot when it
+           fits, otherwise below, otherwise clamped to the frame edge */
+        var fw = frame.clientWidth, fh = frame.clientHeight;
+        var px = x / 2400 * fw, py = y / 1987 * fh;
+        popup.style.maxHeight = Math.max(160, fh - 40) + 'px';
+        var ph = popup.offsetHeight;
+        var tx = x > 2050 ? '-95%' : (x < 350 ? '-5%' : '-50%');
+        var tyPx;
+        if (py - ph - 26 >= 0) tyPx = py - ph - 26;
+        else if (py + ph + 26 <= fh) tyPx = py + 26;
+        else tyPx = Math.max(10, Math.min(fh - ph - 10, py - ph / 2));
+        popup.style.left = px + 'px';
+        popup.style.top = '0px';
+        popup.style.transform = 'translate(' + tx + ', ' + tyPx + 'px)';
+      }
+      items.forEach(function (it) {
+        it.dot.addEventListener('mouseenter', function () { disarmHide(); show(it.a, it.x, it.y); });
+        it.dot.addEventListener('mouseleave', function () { if (!pinned) armHide(); });
+        it.dot.addEventListener('click', function (ev) {
+          ev.stopPropagation();
+          pinned = true;
+          disarmHide();
+          show(it.a, it.x, it.y);
+        });
+      });
+      if (created) {
+        popup.addEventListener('mouseenter', disarmHide);
+        popup.addEventListener('mouseleave', function () { if (!pinned) armHide(); });
+      }
+    }
+
+    /* the static Trade Fever chart: bind its dots (tagged data-port in
+       guides.md) to the rate 3 plan's port data */
+    (function bindFever() {
+      var svg = document.querySelector('.map-route svg[aria-label*="Trade Fever"]');
+      if (!svg) return;
+      var frame = svg.closest('.map-route-frame');
+      var lookup = {};
+      ((TRADE_PLANS['3'] || {}).active || []).forEach(function (a) { lookup[a.name] = a; });
+      var items = [];
+      svg.querySelectorAll('circle[data-port]').forEach(function (c) {
+        var a = lookup[c.getAttribute('data-port')];
+        if (a) items.push({ a: a, x: parseFloat(c.getAttribute('cx')), y: parseFloat(c.getAttribute('cy')), dot: c });
+      });
+      if (items.length) bindMap(frame, items);
+    })();
 
     function render() {
       var rate = rateSel.value;
@@ -87,6 +130,7 @@
       skippedEl.textContent = plan.skipped.length ? 'Sail past without trading: ' + plan.skipped.join(', ') + '.' : '';
 
       var MUW = 120.0516;
+      var mapItems = [];
       active.forEach(function (a, i) {
         var x = a.lng / MUW * 2400, y = (1 - a.lat / 100) * 1987;
         var hasSell = !!Object.keys(a.sell).length;
@@ -99,17 +143,7 @@
         c.setAttribute('fill', hasSell ? '#3f8f5f' : '#d4af37');
         c.setAttribute('stroke', '#14212c'); c.setAttribute('stroke-width', 5);
         c.setAttribute('class', 'plan-dot');
-        c.addEventListener('mouseenter', function () {
-          disarmHide();
-          showPopup(a, x, y);
-        });
-        c.addEventListener('mouseleave', function () { if (!pinned) armHide(); });
-        c.addEventListener('click', function (ev) {
-          ev.stopPropagation();
-          pinned = true;
-          disarmHide();
-          showPopup(a, x, y);
-        });
+        mapItems.push({ a: a, x: x, y: y, dot: c });
         stopsG.appendChild(c);
         var t = document.createElementNS(NS, 'text');
         t.setAttribute('x', x); t.setAttribute('y', y + 13);
@@ -169,6 +203,8 @@
         var d = 'M ' + pts.map(function (pt) { return pt[0].toFixed(0) + ' ' + pt[1].toFixed(0); }).join(' L ');
         document.getElementById('plan-route').setAttribute('d', d);
       }
+      var plannerFrame = document.getElementById('plan-stops').closest('.map-route-frame');
+      bindMap(plannerFrame, mapItems);
     }
 
     rateSel.addEventListener('change', render);
