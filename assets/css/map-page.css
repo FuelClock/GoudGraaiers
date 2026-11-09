@@ -146,7 +146,7 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
 }
 
 /* markers: counter-scaled so they keep a constant screen size */
-.imap-markers { position: absolute; inset: 0; }
+.imap-markers { position: absolute; inset: 0; z-index: 1; }
 .imap-marker {
   position: absolute;
   width: 16px;
@@ -158,6 +158,7 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
   cursor: pointer;
   padding: 0;
   transform: translate(-50%, -50%);
+  z-index: 2; /* port icons above every secondary icon (Thimon) */
 }
 .imap-marker:hover, .imap-marker:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
 .imap-marker.is-gather {
@@ -177,6 +178,7 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
   border: none;
   border-radius: 50%;
   background-color: transparent;
+  z-index: 1; /* below port icons (Thimon: ports above all other icons) */
   box-shadow: none;
   background-size: contain;
   background-position: center;
