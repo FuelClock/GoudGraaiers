@@ -332,7 +332,9 @@
   });
   (DATA.layers ? DATA.layers.production || [] : []).forEach(function (p) {
     var res = RES_NAME[p.res] || p.res;
-    secondaryMarker(p, 'is-lvl-personal', res,
+    /* battle-mark isles carry the game's own res_37 item icon */
+    var cls = 'is-lvl-personal' + (p.res === 'mhidden' ? ' is-res-mhidden' : '');
+    secondaryMarker(p, cls, res,
       '<h3 class="imap-popup-name">' + res + '</h3>' +
       '<p class="imap-popup-game">Mine or factory isle: claim it with a personal island.</p>' +
       '<div class="imap-popup-badges">' + badge('Mines', 'is-info') + '</div>' +
