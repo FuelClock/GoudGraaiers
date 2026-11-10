@@ -339,6 +339,7 @@
   }
 
   var IMG_W_FIT = 1, IMG_H_FIT = 1; /* stage size at k = 1 */
+  var fsEnterAt = 0; /* ms timestamp: while freshly entered, every re-measure also re-centres (the fullscreen box can settle several frames late, and the loosened fs pan clamp no longer auto-centres, so a single early measure left the chart stuck in a corner - Thimon caught it) */
   function measure() {
     vw = viewport.clientWidth;
     vh = viewport.clientHeight;
@@ -354,6 +355,10 @@
     stage.style.width = IMG_W_FIT + 'px';
     stage.style.height = IMG_H_FIT + 'px';
     clampPan();
+    if (fsEnterAt && fsActive() && performance.now() - fsEnterAt < 800) {
+      tx = (vw - IMG_W_FIT * k) / 2;
+      ty = (vh - IMG_H_FIT * k) / 2;
+    }
     apply();
   }
 
@@ -375,6 +380,7 @@
        the viewport (the close button never received its click once) */
     if (e.target.closest('.imap-marker') || e.target.closest('.imap-popup') ||
         e.target.closest('.imap-fs-btn') || e.target.closest('.imap-fs-legend')) return;
+    fsEnterAt = 0; /* a user drag cancels the freshly-entered re-centring window */
     drag = { x: e.clientX, y: e.clientY, tx: tx, ty: ty, id: e.pointerId };
     viewport.setPointerCapture(e.pointerId);
     viewport.classList.add('is-dragging');
@@ -462,6 +468,7 @@
     fsClose.hidden = !on;
     fsLegend.hidden = !on;
     if (on) {
+      fsEnterAt = performance.now();
       measure(); /* re-fit the stage to the fullscreen box */
       /* keep the zoom but start from the centred view: entering fullscreen
          shows the whole chart, exactly the page default */
@@ -469,18 +476,14 @@
       ty = (vh - IMG_H_FIT * k) / 2;
       clampPan();
       apply();
-      /* the fullscreen box can settle a frame late (fallback overlay,
-         native fullscreen resize): re-fit and re-centre once it has, or
-         the chart enters shifted and only the pan clamp (which no longer
-         recentres in fullscreen) keeps it off-centre */
-      requestAnimationFrame(function () {
-        measure();
-        tx = (vw - IMG_W_FIT * k) / 2;
-        ty = (vh - IMG_H_FIT * k) / 2;
-        clampPan();
-        apply();
-      });
+      /* the fullscreen box can settle several frames late (native top-layer
+         promotion, fallback overlay): every measure() within 800ms of entry
+         re-centres too (see fsEnterAt in measure), so a late resize can
+         never leave the chart stuck off-centre */
+      requestAnimationFrame(function () { measure(); });
+      setTimeout(function () { measure(); }, 350);
     } else {
+      fsEnterAt = 0;
       k = Math.max(MIN_K, k); /* the page view never zooms below the fit */
       measure();
       requestAnimationFrame(measure);
