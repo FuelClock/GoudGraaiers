@@ -1,5 +1,24 @@
 # Recent voyages queue: max 3, newest first.
 # Maintained by sync_events_to_website.py; feeds the home deck cards.
+- title: "Ship Hunt at Al-Khalif"
+  slug: "ship-hunt-at-al-khalif"
+  date_label: "11 November 2026"
+  excerpt: "SHIP HUNT AT AL-KHALIF 11/11/2026 at 20:00 What will we be doing? Be sure to gather at Al-Khalif port before 20:00 as this is the time we will leave the port together. We'll sail to the..."
+  url: "/events.html#ship-hunt-at-al-khalif"
+  plan: |
+    **SHIP HUNT AT AL-KHALIF**
+    
+    11/11/2026 at 20:00
+    
+    **What will we be doing?**
+    
+    Be sure to gather at Al-Khalif port before 20:00 as this is the time we will leave the port together.
+    
+    We'll sail to the northeast of the port and we'll be blockading the 2 trade routes, but this time there is no boarding: we shoot and sink every ship that sails those routes.
+    
+    Depending on how many people show up we can split into squads and cover both trade routes at once.
+    
+    Bring your best gunship, plenty of ammo and repairs, and we'll sink as many ships as we can. The goal is efficiency and fun!
 - title: "Trade Fever run"
   slug: "trade-fever-run"
   date_label: "11 November 2026"
@@ -7,9 +26,7 @@
   url: "/events.html#trade-fever-run"
   plan: |
     We sail the Trade Fever loop.
-    
     Gathering: St Jean, 20:00 sharp.
-    
     Bring: cargo space and nerve.
 - title: "Trade Fever"
   slug: "trade-fever"
@@ -30,15 +47,3 @@
     In the North you buy: Beer, Wine, Grog. You sell the northern goods in port Assab.
     In the Arabian you buy: Paprika, Silk, Rugs, Saffron, Dates. You sell the Arabian goods in San martinas.
     In the South you buy: Leather, Nuts, Oil, Tobacco, Coffee. You sell the southern goods in Gray Island.
-- title: "Slave Capturing"
-  slug: "slave-capturing"
-  date_label: "6 September 2026"
-  excerpt: "Be sure to gather at Everston port before 20:00 as this is the time we will leave the port together. We'll sail towards the iron mine northwest of the port and blockade the trade routes to capture all the ships we can, sharing the loot in the end."
-  url: "/events.html#slave-capturing"
-  plan: |
-    **SLAVE CAPTURING**
-    Sunday 6th September at 20:00 / 8pm
-    **What will we be doing?**
-    Be sure to gather at Everston port before 20:00 as this is the time we will leave the port together.
-    We'll sail into the direction of the iron mine to the North West of port Everston and we'll be blockading the trade routes to capture all the ships we can and have their crew "voluntarily change employer".
-    We'll work together to capture as many slaves as possible so be sure to bring a boarding loadout. If you don't want to or dont have a boarding loadout to bring, you're more then welcome to help us get the health of the enemy ships down so your fellow squad mates can do the boarding instead as we will be sharing the loot in the end anyway.
