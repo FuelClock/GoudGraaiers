@@ -417,6 +417,15 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
 /* fullscreen mode: the expand button lives on the chart's top-right corner;
    in fullscreen the same corner carries the X, and a floating copy of the
    legend overlays the map so the layers stay toggleable (Thimon) */
+/* style.css stretches every .article-body svg to width:100% + 24px
+   margins (a trade-chart rule): without this override the button's icon
+   blows the button up into a 44x72 rectangle */
+.imap-fs-btn svg {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  display: block;
+}
 .imap-fs-btn {
   position: absolute;
   top: 12px;
@@ -471,20 +480,26 @@ body.imap-fs-page main { z-index: 300; }
   pointer-events: none; /* only the panel itself catches clicks */
 }
 .imap-fs-legend .imap-legend {
-  display: flex; /* the page legend is a rail at this width; the floating fullscreen copy stays a wrapping row */
-  flex-direction: row;
+  display: flex; /* the page legend is a rail at this width; the floating fullscreen copy is a vertical list down the map's left edge (Thimon, 2026-11-09) */
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-start;
   pointer-events: auto;
   margin: 0;
-  padding: 12px 14px;
-  gap: 8px 20px;
+  padding: 14px 16px;
+  gap: 12px;
   background: rgba(13, 23, 31, 0.88);
   border: 1px solid var(--surface-2);
   box-shadow: 0 16px 48px rgba(4, 10, 14, 0.65);
   font-size: 0.8125rem;
+  max-width: min(320px, calc(100% - 76px));
 }
 .imap-fs-legend .imap-legend-keys {
   flex-basis: auto;
-  padding-top: 0;
+  padding-top: 12px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
 }
 .imap-fs-legend[hidden] { display: none; }
 
