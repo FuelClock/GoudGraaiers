@@ -13,6 +13,8 @@ nav:
     url: /join.html
   - label: Guides & Trade Tool
     url: /guides.html
+  - label: Members
+    url: https://members.donkey.beauty
   - label: Map
     url: /map.html
 
