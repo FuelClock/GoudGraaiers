@@ -208,6 +208,8 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
 .imap-marker.is-lvl-forts { background-image: url("/img/map-icons/forts.png"); }
 /* imperial (world) forts: the game's own fortEmpire sprite */
 .imap-marker.is-lvl-empire { background-image: url("/img/map-icons/fort-empire.png"); }
+/* battle-mark isles: the game's own res_37 item texture, not the mine icon */
+.imap-marker.is-res-mhidden { background-image: url("/img/map-icons/battle-marks.png"); }
 /* the ring hugs the icon like the ports' does (ports: ring ~1.25x the dot;
    with the default 2px offset the ring dwarfed the drawn icon) */
 .imap-marker.is-secondary:hover,
