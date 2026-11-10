@@ -26,7 +26,9 @@
   var TYPE_LABEL = { Bay: 'Faction bay', City: 'City', NeutralBay: 'Neutral bay', PirateBay: 'Pirate bay' };
   var IMG_W = 2400, IMG_H = 1989; /* map-web.jpg */
   var MIN_K = 1, MAX_K = 5, FS_MIN_K = 0.75; /* fullscreen may zoom out a bit further (Thimon) */
+  var FS_ENTER_K = 1 / 1.15; /* fullscreen DEFAULT: exactly one wheel notch out (Thimon, 2026-11-09: keeps the battle-mark isles on screen) */
   function minK() { return fsActive() ? FS_MIN_K : MIN_K; }
+  function defaultK() { return fsActive() ? FS_ENTER_K : MIN_K; }
 
   var k = 1, tx = 0, ty = 0; /* stage transform: translate(tx,ty) scale(k) */
   var vw = 0, vh = 0;
@@ -169,8 +171,39 @@
      Markers render with the game's own map-legend icons (img/map-icons/,
      extracted from the client's AtlWorldMap atlas). */
   var CAT_BADGE = { Regional: 'Regional landmark', Shipwrecks: 'Shipwreck', Figurines: 'Rank figurine', LonghornHistory: 'Longhorn history', Weapons: 'Lost weapon' };
-  var RES_NAME = { wood: 'Wood', iron: 'Iron', coal: 'Coal', ice: 'Ice', farm: 'Farm', rum: 'Rum', resin: 'Resin', copper: 'Copper', mhidden: 'Rare goods' };
-  function secondaryMarker(layer, cls, title, html) {
+  var RES_NAME = { wood: 'Wood', iron: 'Iron', coal: 'Coal', ice: 'Ice', farm: 'Farm', rum: 'Rum', resin: 'Resin', copper: 'Copper', mhidden: 'Battle marks' };
+  /* Factory production per level, straight from the client decomp
+     (Common.Game/WosbCrafting.cs A(): the FactoryMineLivelInfo table).
+     Rates are PER HOUR (the game's own UI: MineUi_21 "{1} (+{0} per hour)").
+     i = [resId, count/hour] input (39 = Rations), o = output count/hour,
+     h = internal storage capacity. resId names: RES_OF_ID below.
+     Battle marks = the mhidden isles (NUnderground, produces res 37). */
+  var RES_OF_ID = { 1: 'wood', 2: 'rum', 5: 'water', 6: 'sugar', 10: 'grain', 12: 'coal', 13: 'pitch', 16: 'plate', 22: 'animals', 29: 'bulkhead', 31: 'iron ore', 32: 'copper ore', 37: 'battle marks', 39: 'rations' };
+  var FACTORIES = {
+    wood:   { out: 'wood',        levels: [{o: 20, h: 820}, {o: 30, h: 1440}, {i: [39, 1], o: 70, h: 3920}, {i: [39, 2], o: 110, h: 7150}] },
+    iron:   { out: 'iron ore',    levels: [{o: 15, h: 615}, {o: 22, h: 1080}, {i: [39, 1], o: 52, h: 2940}, {i: [39, 2], o: 82, h: 5362}] },
+    copper: { out: 'copper ore',  levels: [{o: 2, h: 82}, {o: 3, h: 144}, {i: [39, 1], o: 6, h: 392}, {i: [39, 2], o: 10, h: 715}] },
+    resin:  { out: 'pitch',       levels: [{o: 2, h: 82}, {o: 3, h: 144}, {i: [39, 1], o: 6, h: 336}, {i: [39, 2], o: 9, h: 585}] },
+    rum:    { out: 'rum',         levels: [{o: 5, h: 205}, {i: [6, 1], o: 12, h: 576}, {i: [6, 2], o: 19, h: 1064}, {i: [6, 3], o: 26, h: 1690}] },
+    farm:   { out: 'animals',     levels: [{i: [10, 3], o: 12, h: 200}, {i: [10, 3], o: 12, h: 400}, {i: [10, 4], o: 16, h: 600}, {i: [10, 5], o: 20, h: 750}] },
+    ice:    { out: 'water',       levels: [{o: 20, h: 820}, {i: [12, 2], o: 40, h: 1920}, {i: [12, 5], o: 70, h: 3920}, {i: [12, 10], o: 110, h: 7150}] },
+    coal:   { out: 'coal',        levels: [{o: 4, h: 164}, {o: 6, h: 288}, {i: [39, 1], o: 14, h: 784}, {i: [39, 2], o: 22, h: 1430}] },
+    mhidden:{ out: 'battle marks',levels: [{o: 1, h: 40}, {i: [39, 2], o: 2, h: 90}, {i: [39, 3], o: 3, h: 120}, {i: [39, 4], o: 4, h: 140}] }
+  };
+  /* upgrade costs, same for every factory (WosbCrafting m_A tables):
+     the cost to REACH the level with that index (0 = build the level 1) */
+  var FACTORY_COSTS = [
+    { gold: 500 },
+    { gold: 3000 },
+    { gold: 9000 },
+    { items: [[29, 20], [16, 20], [5, 1000]] }
+  ];
+  /* captives (bondmen) double production AND input consumption
+     (WosbCrafting.BondmanFactoryBoostAmount = 2, bondman_factory_tt);
+     without supplies a factory runs at quarter speed with the right
+     captain perk, or stops without it (FactoryMineLivelInfo.WorkingSpeed) */
+  var FACTORY_BONDMAN_X = 2, FACTORY_NOSUPPLY_X = 0.25;
+  function secondaryMarker(layer, cls, title, html, onOpen) {
     var el = d.createElement('button');
     el.type = 'button';
     el.className = 'imap-marker is-secondary ' + cls;
@@ -182,6 +215,7 @@
       ev.stopPropagation();
       popupBody.innerHTML = html;
       popup.hidden = false;
+      if (onOpen) onOpen(popupBody);
       if (activeMarker) activeMarker.classList.remove('is-active');
       activeMarker = el;
       el.classList.add('is-active');
@@ -189,6 +223,75 @@
     });
     markersEl.appendChild(el);
     return el;
+  }
+  /* ---- factory (mine) stats popup: per-level production with captives /
+     supplies toggles and upgrade costs, tabbed with arrows like the game's
+     upgrade UI. All numbers from the client decomp (see FACTORIES above). */
+  function fmtN(n) {
+    return (Math.round(n * 10) / 10).toString().replace(/\.5$/, '.5');
+  }
+  function fmtRes(n, name) {
+    return fmtN(n) + ' ' + ((Math.round(n * 10) / 10) === 1 ? name.replace(/s$/, '') : name);
+  }
+  function factoryCostChips(cost) {
+    if (cost.gold) return '<span class="imap-goods-chip">' + cost.gold.toLocaleString('en-US') + ' gold</span>';
+    return cost.items.map(function (it) {
+      return '<span class="imap-goods-chip">' + it[1].toLocaleString('en-US') + ' ' + RES_OF_ID[it[0]] + '</span>';
+    }).join('');
+  }
+  function initFactoryStats(el, resKey) {
+    var f = FACTORIES[resKey];
+    if (!f) { el.innerHTML = ''; return; }
+    var st = { lvl: 0, bondman: false, supplies: true };
+    function render() {
+      var lv = f.levels[st.lvl];
+      var x = st.bondman ? FACTORY_BONDMAN_X : 1;
+      var needs = 'nothing';
+      var outX = x;
+      var note = '';
+      if (lv.i) {
+        if (st.supplies) {
+          needs = fmtRes(lv.i[1] * x, RES_OF_ID[lv.i[0]]) + ' / hour';
+        } else {
+          outX *= FACTORY_NOSUPPLY_X;
+          note = '<p class="imap-fact-note">Quarter speed without supplies (with the captain perk; without it the mine stands still).</p>';
+        }
+      }
+      if (resKey === 'farm') {
+        note = '<p class="imap-fact-note">The more animals in storage, the faster the farm produces; level 2 only adds storage.</p>';
+      }
+      var costLabel = st.lvl === 0 ? 'Build cost' : 'Upgrade to this level';
+      el.innerHTML =
+        '<div class="imap-fact-lvl">' +
+          '<button type="button" class="imap-fact-arrow" data-dir="-1" aria-label="Previous level"' + (st.lvl === 0 ? ' disabled' : '') + '>&lsaquo;</button>' +
+          '<span class="imap-fact-lvlname">Level ' + (st.lvl + 1) + ' of ' + f.levels.length + '</span>' +
+          '<button type="button" class="imap-fact-arrow" data-dir="1" aria-label="Next level"' + (st.lvl === f.levels.length - 1 ? ' disabled' : '') + '>&rsaquo;</button>' +
+        '</div>' +
+        '<div class="imap-fact-toggles">' +
+          '<button type="button" class="imap-fact-toggle" data-t="bondman" aria-pressed="' + st.bondman + '">Captives &times;2</button>' +
+          (lv.i ? '<button type="button" class="imap-fact-toggle" data-t="supplies" aria-pressed="' + st.supplies + '">Supplies</button>' : '') +
+        '</div>' +
+        '<div class="imap-fact-row"><span>Output</span><b>+' + fmtRes(lv.o * outX, f.out) + ' / hour</b></div>' +
+        '<div class="imap-fact-row"><span>Needs</span><b>' + needs + '</b></div>' +
+        '<div class="imap-fact-row"><span>Storage</span><b>' + lv.h.toLocaleString('en-US') + '</b></div>' +
+        '<p class="imap-popup-goods-label">' + costLabel + '</p>' +
+        '<div class="imap-popup-goods imap-fact-cost">' + factoryCostChips(FACTORY_COSTS[st.lvl]) + '</div>' +
+        note;
+      el.querySelectorAll('.imap-fact-arrow').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var nl = st.lvl + parseInt(b.getAttribute('data-dir'), 10);
+          if (nl >= 0 && nl < f.levels.length) { st.lvl = nl; render(); }
+        });
+      });
+      el.querySelectorAll('.imap-fact-toggle').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var key = b.getAttribute('data-t');
+          st[key] = !st[key];
+          render();
+        });
+      });
+    }
+    render();
   }
   (DATA.layers ? DATA.layers.pharos || [] : []).forEach(function (p) {
     secondaryMarker(p, 'is-lvl-pharos', 'Fast travel',
@@ -214,8 +317,10 @@
     var res = RES_NAME[p.res] || p.res;
     secondaryMarker(p, 'is-lvl-personal', res,
       '<h3 class="imap-popup-name">' + res + '</h3>' +
+      '<p class="imap-popup-game">Mine or factory isle: claim it with a personal island.</p>' +
       '<div class="imap-popup-badges">' + badge('Mines', 'is-info') + '</div>' +
-      '<p class="imap-popup-dock">A mine or factory isle: claim it with a personal island to produce ' + res.toLowerCase() + ' for the guild.</p>');
+      '<div class="imap-fact" data-res="' + p.res + '"></div>',
+      function (body) { initFactoryStats(body.querySelector('.imap-fact'), p.res); });
   });
   (DATA.layers ? DATA.layers.forts || [] : []).forEach(function (p) {
     secondaryMarker(p, 'is-lvl-forts', p.kind,
@@ -442,12 +547,12 @@
     zoomAt(vw / 2, vh / 2, 1 / 1.3);
   });
   d.getElementById('imap-zoom-reset').addEventListener('click', function () {
-    k = 1;
+    k = defaultK();
     /* centred contain fit (on the page clampPan re-centres anyway; in
        fullscreen the loose clamp would otherwise leave tx = 0 stuck at
        the left bound) */
-    tx = (vw - IMG_W_FIT) / 2;
-    ty = (vh - IMG_H_FIT) / 2;
+    tx = (vw - IMG_W_FIT * k) / 2;
+    ty = (vh - IMG_H_FIT * k) / 2;
     clampPan();
     apply();
   });
@@ -469,9 +574,10 @@
     fsLegend.hidden = !on;
     if (on) {
       fsEnterAt = performance.now();
+      k = Math.max(FS_MIN_K, Math.min(MAX_K, FS_ENTER_K)); /* the fullscreen default view: one notch out (Thimon) */
       measure(); /* re-fit the stage to the fullscreen box */
-      /* keep the zoom but start from the centred view: entering fullscreen
-         shows the whole chart, exactly the page default */
+      /* start from the centred default view (one notch out); entering
+         fullscreen always opens on the same framing */
       tx = (vw - IMG_W_FIT * k) / 2;
       ty = (vh - IMG_H_FIT * k) / 2;
       clampPan();
