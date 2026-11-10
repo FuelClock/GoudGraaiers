@@ -108,6 +108,13 @@
   d.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !popup.hidden) closePopup();
   });
+  /* click anywhere outside the popup closes it, same as the X (Thimon).
+     Markers are excluded: their own click re-targets the popup anyway. */
+  d.addEventListener('pointerdown', function (e) {
+    if (popup.hidden) return;
+    if (popup.contains(e.target) || e.target.closest('.imap-marker')) return;
+    closePopup();
+  });
 
   /* build markers */
   markersEl.insertAdjacentElement('afterend', labelsEl);
@@ -233,6 +240,15 @@
   function fmtRes(n, name) {
     return fmtN(n) + ' ' + ((Math.round(n * 10) / 10) === 1 ? name.replace(/s$/, '') : name);
   }
+  function fmtDur(hours) {
+    if (!isFinite(hours) || hours <= 0) return 'never';
+    var m = Math.round(hours * 60);
+    if (m < 60) return m + ' min';
+    var h = Math.floor(m / 60), mm = m % 60;
+    if (h < 48) return h + ' h' + (mm ? ' ' + mm + ' min' : '');
+    var d = Math.floor(h / 24);
+    return d + ' d ' + (h % 24) + ' h';
+  }
   function factoryCostChips(cost) {
     if (cost.gold) return '<span class="imap-goods-chip">' + cost.gold.toLocaleString('en-US') + ' gold</span>';
     return cost.items.map(function (it) {
@@ -274,6 +290,7 @@
         '<div class="imap-fact-row"><span>Output</span><b>+' + fmtRes(lv.o * outX, f.out) + ' / hour</b></div>' +
         '<div class="imap-fact-row"><span>Needs</span><b>' + needs + '</b></div>' +
         '<div class="imap-fact-row"><span>Storage</span><b>' + lv.h.toLocaleString('en-US') + '</b></div>' +
+        '<div class="imap-fact-row"><span>Fills in</span><b>' + fmtDur(lv.h / (lv.o * outX)) + '</b></div>' +
         '<p class="imap-popup-goods-label">' + costLabel + '</p>' +
         '<div class="imap-popup-goods imap-fact-cost">' + factoryCostChips(FACTORY_COSTS[st.lvl]) + '</div>' +
         note;
