@@ -242,7 +242,7 @@
   function initFactoryStats(el, resKey) {
     var f = FACTORIES[resKey];
     if (!f) { el.innerHTML = ''; return; }
-    var st = { lvl: 0, bondman: false, supplies: true };
+    var st = { lvl: 0, bondman: false, supplies: false }; /* toggles start OFF (Thimon, 2026-11-09) */
     function render() {
       var lv = f.levels[st.lvl];
       var x = st.bondman ? FACTORY_BONDMAN_X : 1;

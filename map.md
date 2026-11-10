@@ -7,7 +7,7 @@ styles:
   - /assets/css/map-page.css?v=22
 scripts:
   - /assets/js/map-data.js?v=11
-  - /assets/js/map-page.js?v=18
+  - /assets/js/map-page.js?v=19
 ---
 
 <h2>World chart</h2>
