@@ -293,11 +293,16 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
 .imap-labels.hide-empire .imap-marker-label.is-lvl-empire,
 .imap-labels.hide-routes .imap-marker-label.is-lvl-routes { display: none; }
 
-/* popup, fixed to the viewport so it never scales with the chart */
+/* popup, fixed to the viewport so it never scales with the chart; on small
+   screens the stats can outgrow the chart box, so it scrolls internally
+   (it must stay INSIDE the viewport element: outside it, native fullscreen
+   would not show it) */
 .imap-popup {
   position: absolute;
   z-index: 20;
   width: min(320px, calc(100vw - 40px));
+  max-height: calc(100% - 16px);
+  overflow-y: auto;
   background: var(--ground-2);
   border: 1px solid var(--surface-2);
   box-shadow: 0 16px 48px rgba(4, 10, 14, 0.65);
@@ -352,6 +357,65 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
   color: #e5cf82;
 }
 .imap-popup-gather { margin: 10px 0 0; font-size: 0.875rem; color: #7fc29a; }
+
+/* factory (mine) stats block: level tabs with arrows (like the game's
+   upgrade UI), captives/supplies toggles, output and cost rows */
+.imap-fact-lvl {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 2px 0 10px;
+}
+.imap-fact-lvlname {
+  font-family: "EB Garamond", serif;
+  font-size: 1.0625rem;
+  color: var(--gold);
+}
+.imap-fact-arrow {
+  min-width: 34px;
+  min-height: 34px;
+  padding: 0 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--surface-2);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: filter .15s ease;
+}
+.imap-fact-arrow:hover:not([disabled]) { filter: brightness(1.15); color: var(--gold-hi); }
+.imap-fact-arrow:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.imap-fact-arrow[disabled] { opacity: 0.35; cursor: default; }
+.imap-fact-toggles { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 10px; }
+.imap-fact-toggle {
+  padding: 4px 10px;
+  background: none;
+  border: 1px solid var(--surface-2);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  user-select: none;
+  transition: filter .15s ease, opacity .15s ease;
+}
+.imap-fact-toggle[aria-pressed="true"] { color: var(--gold); border-color: rgba(212, 175, 55, 0.5); }
+.imap-fact-toggle:hover { filter: brightness(1.2); }
+.imap-fact-toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.imap-fact-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 3px 0;
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+.imap-fact-row b { color: var(--ink); font-weight: 500; text-align: right; }
+.imap-fact-row:first-of-type b { color: #e5cf82; }
+.imap-fact-cost { margin: 0; }
+.imap-fact-note { margin: 10px 0 0; font-size: 0.8125rem; line-height: 1.45; color: var(--muted); }
 
 /* legend: sits above the chart on narrow screens and doubles as the layer
    control surface; on wide screens it becomes a rail beside the chart */
