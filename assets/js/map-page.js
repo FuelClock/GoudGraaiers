@@ -25,7 +25,8 @@
 
   var TYPE_LABEL = { Bay: 'Faction bay', City: 'City', NeutralBay: 'Neutral bay', PirateBay: 'Pirate bay' };
   var IMG_W = 2400, IMG_H = 1989; /* map-web.jpg */
-  var MIN_K = 1, MAX_K = 5;
+  var MIN_K = 1, MAX_K = 5, FS_MIN_K = 0.75; /* fullscreen may zoom out a bit further (Thimon) */
+  function minK() { return fsActive() ? FS_MIN_K : MIN_K; }
 
   var k = 1, tx = 0, ty = 0; /* stage transform: translate(tx,ty) scale(k) */
   var vw = 0, vh = 0;
@@ -318,6 +319,17 @@
   }
 
   function clampPan() {
+    /* On the page the chart always covers the box (or sits centred in it):
+       a chart edge can never leave the screen border. In FULLSCREEN the
+       clamp is looser (Thimon, 2026-11-09): the chart may travel until its
+       edge reaches the screen CENTRE, so an edge of the map can be viewed
+       in the middle of the screen while zoomed in, while the map can never
+       be dragged fully off-screen (the centre always stays on the chart). */
+    if (fsActive()) {
+      tx = Math.max(vw / 2 - IMG_W_FIT * k, Math.min(vw / 2, tx));
+      ty = Math.max(vh / 2 - IMG_H_FIT * k, Math.min(vh / 2, ty));
+      return;
+    }
     var minX = Math.min(0, vw - IMG_W_FIT * k);
     var minY = Math.min(0, vh - IMG_H_FIT * k);
     tx = Math.max(minX, Math.min(0, tx));
@@ -346,7 +358,7 @@
   }
 
   function zoomAt(cx, cy, factor) {
-    var nk = Math.max(MIN_K, Math.min(MAX_K, k * factor));
+    var nk = Math.max(minK(), Math.min(MAX_K, k * factor));
     if (nk === k) return;
     var wx = (cx - tx) / k, wy = (cy - ty) / k;
     k = nk;
@@ -424,7 +436,12 @@
     zoomAt(vw / 2, vh / 2, 1 / 1.3);
   });
   d.getElementById('imap-zoom-reset').addEventListener('click', function () {
-    k = 1; tx = 0; ty = 0;
+    k = 1;
+    /* centred contain fit (on the page clampPan re-centres anyway; in
+       fullscreen the loose clamp would otherwise leave tx = 0 stuck at
+       the left bound) */
+    tx = (vw - IMG_W_FIT) / 2;
+    ty = (vh - IMG_H_FIT) / 2;
     clampPan();
     apply();
   });
@@ -444,7 +461,30 @@
     fsExpand.hidden = on;
     fsClose.hidden = !on;
     fsLegend.hidden = !on;
-    measure();
+    if (on) {
+      measure(); /* re-fit the stage to the fullscreen box */
+      /* keep the zoom but start from the centred view: entering fullscreen
+         shows the whole chart, exactly the page default */
+      tx = (vw - IMG_W_FIT * k) / 2;
+      ty = (vh - IMG_H_FIT * k) / 2;
+      clampPan();
+      apply();
+      /* the fullscreen box can settle a frame late (fallback overlay,
+         native fullscreen resize): re-fit and re-centre once it has, or
+         the chart enters shifted and only the pan clamp (which no longer
+         recentres in fullscreen) keeps it off-centre */
+      requestAnimationFrame(function () {
+        measure();
+        tx = (vw - IMG_W_FIT * k) / 2;
+        ty = (vh - IMG_H_FIT * k) / 2;
+        clampPan();
+        apply();
+      });
+    } else {
+      k = Math.max(MIN_K, k); /* the page view never zooms below the fit */
+      measure();
+      requestAnimationFrame(measure);
+    }
   }
   function enterFsFallback() {
     viewport.classList.add('imap-fs-fallback');
