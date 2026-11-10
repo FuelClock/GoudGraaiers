@@ -18,9 +18,9 @@ scripts:
   <div class="imap-legend" id="imap-legend">
     <button type="button" class="imap-legend-toggle" data-layer="pharos" id="imap-lvl-pharos" aria-pressed="true"><img class="imap-chip-icon" src="/img/map-icons/pharos.png" alt=""> Fast travel</button>
     <button type="button" class="imap-legend-toggle" data-layer="traders" id="imap-lvl-traders" aria-pressed="true"><img class="imap-chip-icon" src="/img/map-icons/trader.png" alt=""> Traders &amp; settlements</button>
-    <button type="button" class="imap-legend-toggle" data-layer="personal" id="imap-lvl-personal" aria-pressed="true"><img class="imap-chip-icon" src="/img/map-icons/mine.png" alt=""> Mines</button>
-    <button type="button" class="imap-legend-toggle" data-layer="regions" id="imap-lvl-regions" aria-pressed="true"><img class="imap-chip-icon" src="/img/map-icons/poi-region.png" alt=""> Points of interest: regions</button>
-    <button type="button" class="imap-legend-toggle" data-layer="collections" id="imap-lvl-collections" aria-pressed="true"><img class="imap-chip-icon" src="/img/map-icons/poi-collection.png" alt=""> Points of interest: collections</button>
+    <button type="button" class="imap-legend-toggle" data-layer="personal" id="imap-lvl-personal" aria-pressed="false"><img class="imap-chip-icon" src="/img/map-icons/mine.png" alt=""> Mines</button>
+    <button type="button" class="imap-legend-toggle" data-layer="regions" id="imap-lvl-regions" aria-pressed="false"><img class="imap-chip-icon" src="/img/map-icons/poi-region.png" alt=""> Points of interest: regions</button>
+    <button type="button" class="imap-legend-toggle" data-layer="collections" id="imap-lvl-collections" aria-pressed="false"><img class="imap-chip-icon" src="/img/map-icons/poi-collection.png" alt=""> Points of interest: collections</button>
     <button type="button" class="imap-legend-toggle" data-layer="empire" id="imap-lvl-empire" aria-pressed="false"><img class="imap-chip-icon" src="/img/map-icons/fort-empire.png" alt=""> Imperial forts</button>
     <button type="button" class="imap-legend-toggle" data-layer="forts" id="imap-lvl-forts" aria-pressed="false"><img class="imap-chip-icon" src="/img/map-icons/forts.png" alt=""> Port battle &amp; guild forts</button>
     <button type="button" class="imap-legend-toggle" data-layer="routes" id="imap-lvl-routes" aria-pressed="false"><img class="imap-chip-icon" src="/img/map-icons/routes.png" alt=""> Trade routes</button>
