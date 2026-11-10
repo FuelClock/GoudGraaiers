@@ -78,3 +78,5 @@ Now that you have your correct permissions you can join any of the currently exi
 If there are no squadron channels currently available you can create one by joining one of the channels highlighted in red like the "Create new squad" channel.
 
 ![The TeamSpeak 6 channel tree with Squadron Alpha marked green and the create-new-squad channels marked red]({{ '/img/ts6_channel1.png' | relative_url }})
+
+**Already crew?** Log in to the member platform at [members.donkey.beauty](https://members.donkey.beauty).

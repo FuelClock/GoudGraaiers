@@ -81,3 +81,5 @@ scripts:
     <p class="jc-modal-note">Nothing leaves this page: it is a practice copy. The real steps are written out below the painting.</p>
   </div>
 </dialog>
+
+**Already crew?** Log in to the member platform at [members.donkey.beauty](https://members.donkey.beauty).
