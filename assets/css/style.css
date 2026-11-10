@@ -624,6 +624,18 @@ details.trade-tool summary::before {
 }
 details.trade-tool[open] summary::before { transform: rotate(90deg); }
 details.trade-tool summary:hover { color: var(--gold-hi); }
+/* WIP tag on the planner summary (Thimon, 2026-11-09: the tool needs
+   tweaking; quiet chip so it does not fight the gold summary) */
+.wip-tag {
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  border: 1px solid var(--surface-2);
+  padding: 2px 7px;
+  white-space: nowrap;
+  cursor: help;
+}
 details.trade-tool > p {
   margin: 20px 0 0;
   line-height: 1.55;
