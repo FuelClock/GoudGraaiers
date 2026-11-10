@@ -1,22 +1,8 @@
 ## Upcoming voyages
 
 <article class="upcoming-card">
-<h3 class="upcoming-card-title">Trade Fever run</h3>
-<p class="upcoming-card-date">Tue 10th November 23:16</p>
-<p class="upcoming-card-host">Host: Gerrit van der Zee</p>
-<div class="upcoming-card-plan"><p>Gathering: St Jean.</p><p>Bring cargo space.</p></div>
-</article>
-
-<article class="upcoming-card">
-<h3 class="upcoming-card-title">Slave capture</h3>
-<p class="upcoming-card-date">Wed 11th November 00:16</p>
-<p class="upcoming-card-host">Host: SmokeGerrit</p>
-<div class="upcoming-card-plan"><p>Meet at Al-Khalif.</p></div>
-</article>
-
-<article class="upcoming-card">
-<h3 class="upcoming-card-title">Trade Fever run</h3>
-<p class="upcoming-card-date">Thu 12th November 00:17</p>
-<p class="upcoming-card-host">Host: Thimon</p>
-<div class="upcoming-card-plan"><p>We sail the Trade Fever loop.</p><p>Gathering: St Jean, 20:00 sharp.</p><p>Bring: cargo space and nerve.</p></div>
+<h3 class="upcoming-card-title">Ship Hunt at Al-Khalif</h3>
+<p class="upcoming-card-date">Wed 11th November 20:00 until Wed 11th November 22:00</p>
+<p class="upcoming-card-host">Host: Gerrit Grijp / FuelClock</p>
+<div class="upcoming-card-plan"><p class="upcoming-card-section">What will we be doing?</p><p>Be sure to gather at Al-Khalif port before 20:00 as this is the time we will leave the port together.</p><p>We'll sail to the northeast of the port and we'll be blockading the 2 trade routes, but this time there is no boarding: we shoot and sink every ship that sails those routes.</p><p>Depending on how many people show up we can split into squads and cover both trade routes at once.</p><p>Bring your best gunship, plenty of ammo and repairs, and we'll sink as many ships as we can. The goal is efficiency and fun!</p></div>
 </article>
