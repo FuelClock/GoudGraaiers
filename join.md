@@ -67,7 +67,7 @@ scripts:
 <p>If you already have TeamSpeak installed, connect with the domain <code>donkey.beauty</code>, or tap the button below to connect directly.</p>
 
 <div class="jb-actions">
-  <a class="jb-button" href="ts3server://donkey.beauty">Connect to TeamSpeak</a>
+  <a class="jb-button" href="ts3server://donkey.beauty?addbookmark=%5BNL.%5D%20Goud%20Graaiers">Connect to TeamSpeak</a>
   <a class="jb-quiet" href="{{ '/teamspeak.html' | relative_url }}">How to install TeamSpeak, step by step</a>
 </div>
 
