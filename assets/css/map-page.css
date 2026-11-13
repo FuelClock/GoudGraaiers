@@ -221,7 +221,7 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
 .imap-markers.hide-collections .imap-marker.is-lvl-collections,
 .imap-markers.hide-forts .imap-marker.is-lvl-forts,
 .imap-markers.hide-empire .imap-marker.is-lvl-empire { display: none; }
-.imap-routes { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.article-body .imap-routes { margin: 0; }
 .imap-routes polyline {
   fill: none;
   stroke-linecap: round;
@@ -230,7 +230,13 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
 /* dotted lanes in the client's own per-type colors (wosb_game B/C.cs:
    Main LemonChiffon, Coastal PaleGoldenrod, Supply LightBlue, Central Gold
    at double width, Smuggling Silver; all drawn at 0.8 like the game).
-   Units are viewBox units (2400 wide): dot dia 4u ~= 1.6px on screen. */
+   Units are viewBox units (2400 wide): dot dia 4u ~= 1.6px on screen.
+   The .article-body scoping is REQUIRED: the generic .article-body svg
+   rule (margin 24px 0) pushes this absolutely-positioned overlay 24px
+   down off the chart - the exact bug that made the lanes read "off"
+   since the layer first shipped (caught 2026-11-13). */
+.article-body .imap-routes { margin: 0; }
+.imap-routes { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
 .imap-routes polyline.imap-route-main { stroke: rgba(255, 250, 205, 0.8); }
 .imap-routes polyline.imap-route-coastal { stroke: rgba(238, 232, 170, 0.75); }
 .imap-routes polyline.imap-route-supply { stroke: rgba(150, 205, 225, 0.75); }
