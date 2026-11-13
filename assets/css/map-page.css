@@ -224,10 +224,20 @@ body { overflow-x: clip; } /* guard against stray horizontal overflow */
 .imap-routes { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
 .imap-routes polyline {
   fill: none;
-  stroke: rgba(212, 175, 55, 0.4);
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+/* dotted lanes in the client's own per-type colors (wosb_game B/C.cs:
+   Main LemonChiffon, Coastal PaleGoldenrod, Supply LightBlue, Central Gold
+   at double width, Smuggling Silver; all drawn at 0.8 like the game).
+   Units are viewBox units (2400 wide): dot dia 4u ~= 1.6px on screen. */
+.imap-routes polyline.imap-route-main { stroke: rgba(255, 250, 205, 0.8); }
+.imap-routes polyline.imap-route-coastal { stroke: rgba(238, 232, 170, 0.75); }
+.imap-routes polyline.imap-route-supply { stroke: rgba(150, 205, 225, 0.75); }
+.imap-routes polyline.imap-route-central { stroke: rgba(255, 215, 0, 0.85); }
+.imap-routes polyline.imap-route-smuggling { stroke: rgba(200, 200, 200, 0.7); }
+.imap-routes polyline { stroke-width: 4; stroke-dasharray: 0.1 12; }
+.imap-routes polyline.imap-route-central { stroke-width: 7; stroke-dasharray: 0.1 10; }
 .imap-routes.hide-routes-off { display: none; }
 .imap-img-hi {
   position: absolute;

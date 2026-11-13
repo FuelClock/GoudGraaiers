@@ -353,11 +353,16 @@
       '<p class="imap-popup-dock">An abandoned fort where the Empire stores resources for its offensive. Bold captains can attack, smash, and plunder it: the reward grows over time.</p>');
   });
 
-  /* npc trade routes (built before the toggle chips that may show/hide them) */
+  /* npc trade routes (built before the toggle chips that may show/hide them).
+     Rebuilt 2026-11-13 from the client's own data: plain affine mapping (no
+     warp), the client's route classification (main/coastal/supply/central/
+     smuggling) and its dotted per-type colors (wosb_game B/C.cs l()). */
   var routesSvg = d.getElementById('imap-routes');
   if (routesSvg && DATA.routes) {
-    routesSvg.innerHTML = DATA.routes.map(function (poly) {
-      return '<polyline points="' + poly.map(function (pt) { return pt[0] + ',' + pt[1]; }).join(' ') + '"/>';
+    routesSvg.innerHTML = DATA.routes.map(function (rt) {
+      var cls = typeof rt.t === 'string' ? ' imap-route-' + rt.t : '';
+      return '<polyline class="' + cls.trim() + '" points="' +
+        rt.u.map(function (pt) { return pt[0] * 2400 + ',' + pt[1] * 1987; }).join(' ') + '"/>';
     }).join('');
   }
 
