@@ -6,7 +6,7 @@ body_class: imap-page
 styles:
   - /assets/css/map-page.css?v=25
 scripts:
-  - /assets/js/map-data.js?v=17
+  - /assets/js/map-data.js?v=18
   - /assets/js/map-page.js?v=22
 ---
 
