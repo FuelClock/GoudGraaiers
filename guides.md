@@ -14,7 +14,7 @@ From our Trade Fever voyages: gather at St Jean and sail the loop counterclockwi
 
 <figure class="map-route">
   <div class="map-route-frame">
-    <img src="{{ '/img/map-web.jpg' | relative_url }}" alt="The world chart with the Trade Fever loop drawn on it: St. Jean, Gray Island, Everston, Oneg, Nordberg, Nisogora, Cursed City, West bastion, Sharhat, Assab, Al-Khalif, El Tigre, Devios and back to St Jean" width="2400" height="1987" loading="lazy" decoding="async">
+    <img src="{{ '/img/map-web.jpg?v=2' | relative_url }}" alt="The world chart with the Trade Fever loop drawn on it: St. Jean, Gray Island, Everston, Oneg, Nordberg, Nisogora, Cursed City, West bastion, Sharhat, Assab, Al-Khalif, El Tigre, Devios and back to St Jean" width="2400" height="1987" loading="lazy" decoding="async">
     <svg viewBox="0 0 2400 1987" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The Trade Fever loop drawn on the world chart: St. Jean, Gray Island, Everston, Oneg, Nordberg, Nisogora, Cursed City, West bastion, Sharhat, Assab, Al-Khalif, El Tigre, Devios and back to St Jean, with the three best cargos at every buy stop.">
       <defs>
         <marker id="route-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -154,7 +154,7 @@ From our Trade Fever voyages: gather at St Jean and sail the loop counterclockwi
 
 <figure class="map-route">
   <div class="map-route-frame">
-    <img src="{{ '/img/map-web.jpg' | relative_url }}" alt="The world chart with your optimal trade loop drawn on it" width="2400" height="1987" loading="lazy" decoding="async">
+    <img src="{{ '/img/map-web.jpg?v=2' | relative_url }}" alt="The world chart with your optimal trade loop drawn on it" width="2400" height="1987" loading="lazy" decoding="async">
     <svg viewBox="0 0 2400 1987" xmlns="http://www.w3.org/2000/svg" aria-label="Your optimal trade loop drawn on the world chart.">
       <defs>
         <marker id="plan-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">

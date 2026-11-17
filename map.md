@@ -43,8 +43,8 @@ scripts:
   </div>
   <div class="imap-viewport" id="imap-viewport">
     <div class="imap-stage" id="imap-stage">
-      <img class="imap-img" src="/img/map-web.jpg" alt="The World of Sea Battle world chart" draggable="false">
-      <img class="imap-img-hi" id="imap-img-hi" src="/img/map-hires.jpg" alt="" draggable="false">
+      <img class="imap-img" src="/img/map-web.jpg?v=2" alt="The World of Sea Battle world chart" draggable="false">
+      <img class="imap-img-hi" id="imap-img-hi" src="/img/map-hires.jpg?v=2" alt="" draggable="false">
       <svg class="imap-routes" id="imap-routes" viewBox="0 0 2400 1987" preserveAspectRatio="none" aria-hidden="true"></svg>
       <div class="imap-pvp-ring" id="imap-pvp-ring" aria-hidden="true"></div>
       <div class="imap-markers" id="imap-markers"></div>
@@ -64,5 +64,5 @@ scripts:
 <p class="imap-note">Full route planning lives in the <a href="{{ '/guides.html' | relative_url }}">trade tool</a>.</p>
 
 <noscript>
-  <p class="imap-nojs">The interactive chart needs JavaScript. The <a href="/img/map-full.jpg">full-size chart</a> works without it.</p>
+  <p class="imap-nojs">The interactive chart needs JavaScript. The <a href="/img/map-full.jpg?v=2">full-size chart</a> works without it.</p>
 </noscript>
